@@ -12,6 +12,11 @@
         <select-color
           :colors="colors"
           @model="changeColor($event)"
+          class="product-top__color"
+        />
+        <select-size
+          :sizes="sizes"
+          class="product-top__size"
         />
       </div>
     </div>
@@ -21,12 +26,14 @@
 <script>
   import BreadCrumbs from './BreadCrumbs.vue';
   import SelectColor from './SelectColor.vue';
+  import SelectSize from './SelectSize.vue';
 
   export default {
     name: 'ProductTop',
     components: {
       BreadCrumbs,
       SelectColor,
+      SelectSize,
     },
     data() {
       return {
@@ -35,6 +42,13 @@
           'blue',
           'orange',
           'purple',
+        ],
+        sizes: [
+          'xs',
+          's',
+          'm',
+          'l',
+          'xl',
         ],
       };
     },
@@ -67,6 +81,11 @@
       margin-bottom: 40px;
       font-size: 36px;
       display: block;
+    }
+
+    &__color,
+    &__size {
+      margin-bottom: 40px;
     }
   }
 
