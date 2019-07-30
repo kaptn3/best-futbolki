@@ -18,6 +18,7 @@
           :sizes="sizes"
           class="product-top__size"
         />
+        <quantity/>
       </div>
     </div>
   </div>
@@ -27,6 +28,7 @@
   import BreadCrumbs from './BreadCrumbs.vue';
   import SelectColor from './SelectColor.vue';
   import SelectSize from './SelectSize.vue';
+  import Quantity from './Quantity.vue';
 
   export default {
     name: 'ProductTop',
@@ -34,6 +36,7 @@
       BreadCrumbs,
       SelectColor,
       SelectSize,
+      Quantity,
     },
     data() {
       return {
