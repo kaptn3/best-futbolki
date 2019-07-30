@@ -19,6 +19,10 @@
           class="product-top__size"
         />
         <quantity/>
+        <a-button
+          class="product-top__btn"
+          text="Add to cart"
+        />
       </div>
     </div>
   </div>
@@ -29,6 +33,7 @@
   import SelectColor from './SelectColor.vue';
   import SelectSize from './SelectSize.vue';
   import Quantity from './Quantity.vue';
+  import AButton from './Button.vue';
 
   export default {
     name: 'ProductTop',
@@ -37,6 +42,7 @@
       SelectColor,
       SelectSize,
       Quantity,
+      AButton,
     },
     data() {
       return {
@@ -87,8 +93,13 @@
     }
 
     &__color,
-    &__size {
+    &__size,
+    &__btn {
       margin-bottom: 40px;
+    }
+
+    &__btn {
+      margin-top: 35px;
     }
   }
 
