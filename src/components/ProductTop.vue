@@ -9,7 +9,6 @@
         <h1>Product Name</h1>
         <span class="product-top__model">model</span>
         <span class="product-top__price">2500</span>
-        <span>Color: <b>{{ color }}</b></span>
         <select-color
           :colors="colors"
           @model="changeColor($event)"
@@ -43,9 +42,6 @@
       changeColor(value) {
         this.color = value;
       },
-    },
-    mounted() {
-      this.color = this.colors[0];
     },
   };
 </script>
