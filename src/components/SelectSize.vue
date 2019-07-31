@@ -3,11 +3,11 @@
     <span class="current-size">Size: <b>{{ size }}</b></span>
     <label
       v-for="(item, index) in sizes"
-      :for="item"
+      :for="'size-' + item"
       :key="index"
     >
       <input
-        :id="item"
+        :id="'size-' + item"
         :value="item"
         :checked="index === 0"
         @input="changeSize($event.target.value)"
@@ -81,6 +81,7 @@
     height: 40px;
     border: 1px solid #bdbdbd;
     margin-right: 10px;
+    margin-bottom: 10px;
     color: #bdbdbd;
     text-transform: uppercase;
 

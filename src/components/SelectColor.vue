@@ -3,11 +3,11 @@
     <span class="current-color">Color: <b>{{ color }}</b></span>
     <label
       v-for="(item, index) in colors"
-      :for="item"
+      :for="'color-' + item"
       :key="index"
     >
       <input
-        :id="item"
+        :id="'color-' + item"
         :value="item"
         :checked="index === 0"
         @input="changeColor($event.target.value)"
@@ -53,6 +53,7 @@
 <style lang="scss" scoped>
   label {
     margin-right: 10px;
+    margin-bottom: 10px;
     display: inline-block;
   }
 
@@ -79,6 +80,7 @@
     padding: 2px;
     border: 1px solid transparent;
     border-radius: 100%;
+    border-color: #bdbdbd;
   }
 
   .color-inside {

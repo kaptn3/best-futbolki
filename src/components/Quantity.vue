@@ -5,6 +5,7 @@
       type="number"
       name="quantity"
       id="quantity"
+      value="1"
     >
   </label>
 </template>

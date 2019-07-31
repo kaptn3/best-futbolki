@@ -25,7 +25,7 @@
 
 <style lang="scss" scoped>
   .header {
-    background-color: #e0e0e0;
+    background-color: #f2f2f2;
 
     &__container {
       display: flex;
