@@ -41,12 +41,12 @@
 
 <script>
   import axios from 'axios';
-  import Carousel from './product/Carousel.vue';
+  import Carousel from './Carousel.vue';
   import BreadCrumbs from './BreadCrumbs.vue';
-  import SelectColor from './SelectColor.vue';
-  import SelectSize from './SelectSize.vue';
+  import SelectColor from '../SelectColor.vue';
+  import SelectSize from '../SelectSize.vue';
   import Quantity from './Quantity.vue';
-  import AButton from './Button.vue';
+  import AButton from '../Button.vue';
   import AddTo from './AddTo.vue';
 
   export default {

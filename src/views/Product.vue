@@ -5,7 +5,7 @@
 </template>
 
 <script>
-  import ProductTop from '@/components/ProductTop.vue';
+  import ProductTop from '@/components/product/ProductTop.vue';
 
   export default {
     components: {
