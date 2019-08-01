@@ -12,12 +12,17 @@
         {{ cart.model }}
       </span>
       <span>
+        Print: {{ cart.print_type_name }}
+      </span>
+      <span>
         Color: {{ cart.colorName }}
       </span>
       <span>
         Size: {{ cart.sizeName }}
       </span>
-      <span class="cart-item__stock">
+      <span
+        :class="{ 'green': cart.available, 'red': !cart.available }"
+        class="cart-item__stock">
         In stock!
       </span>
       <quantity
@@ -111,8 +116,12 @@
       margin-top: 100px;
     }
 
-    &__stock {
+    &__stock.green {
       color: #4dba87;
+    }
+
+    &__stock.red {
+      color: #eb5757;
     }
 
     &__quantity {
