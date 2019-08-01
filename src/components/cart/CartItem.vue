@@ -33,6 +33,7 @@
     </div>
     <div>
       <span class="cart-item__price">{{ cart.price }} руб</span>
+      <span class="cart-item__price_old">{{ cart.old_price }} руб</span>
       <button
         class="cart-item__remove"
         @click="$store.commit('removeFromCart', cart)"
@@ -103,6 +104,11 @@
 
     &__price {
       font-size: 18px;
+
+      &_old {
+        color: #828282;
+        text-decoration: line-through;
+      }
     }
 
     &__remove {

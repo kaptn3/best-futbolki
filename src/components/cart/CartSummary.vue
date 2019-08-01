@@ -8,9 +8,21 @@
       </span>
     </div>
     <div class="summary__item">
+      <h4>Price without discount</h4>
+      <span>
+        {{ price('old_price') }} руб
+      </span>
+    </div>
+    <div class="summary__item">
+      <h4>Discount</h4>
+      <span>
+        {{ discount() }} руб
+      </span>
+    </div>
+    <div class="summary__item">
       <h4>Total</h4>
       <span>
-        {{ price }} руб
+        {{ price('price') }} руб
       </span>
     </div>
   </div>
@@ -19,14 +31,17 @@
 <script>
   export default {
     name: 'CartSummary',
-    computed: {
-      price() {
+    methods: {
+      price(name) {
         const data = this.$store.state.cart;
         let price = 0;
         for (let i = 0; i < data.length; i++) {
-          price += data[i].price * Number(data[i].quantity);
+          price += data[i][name] * Number(data[i].quantity);
         }
         return price;
+      },
+      discount() {
+        return this.price('old_price') - this.price('price');
       },
     },
   };
