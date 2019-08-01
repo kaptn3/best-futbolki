@@ -4,13 +4,15 @@ import overlay from '@/assets/js/overlay';
 
 Vue.use(Vuex);
 
-const cart = JSON.parse(window.localStorage.getItem('cart'));
+let cart = JSON.parse(window.localStorage.getItem('cart'));
 let cartCount = 0;
 if (cart) {
   const product = cart;
   for (let i = 0; i < cart.length; i++) {
     cartCount += Number(product[i].quantity);
   }
+} else {
+  cart = [];
 }
 
 export default new Vuex.Store({
@@ -27,14 +29,17 @@ export default new Vuex.Store({
       overlay.classAction(state.modalVisible);
     },
     addToCart(state, item) {
-      const double = state.cart.filter((product) => {
-        let dublicate = 0;
-        const attr = ['model', 'id', 'sizeName', 'colorName'];
-        for (let i = 0; i < attr.length; i++) {
-          dublicate += (item[attr[i]] === product[attr[i]]) ? 1 : 0;
-        }
-        return dublicate === 4 ? product : false;
-      });
+      let double = [];
+      if (state.cart) {
+        double = state.cart.filter((product) => {
+          let dublicate = 0;
+          const attr = ['model', 'id', 'sizeName', 'colorName'];
+          for (let i = 0; i < attr.length; i++) {
+            dublicate += (item[attr[i]] === product[attr[i]]) ? 1 : 0;
+          }
+          return dublicate === 4 ? product : false;
+        });
+      }
       if (double.length > 0) {
         const index = state.cart.indexOf(double[0]);
         if (index > -1) {
