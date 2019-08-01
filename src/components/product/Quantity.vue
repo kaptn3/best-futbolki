@@ -48,4 +48,10 @@
     display: block;
     font-size: 18px;
   }
+
+  @media screen and (max-width: 565px) {
+    span {
+      font-size: 12px;
+    }
+  }
 </style>

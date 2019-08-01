@@ -71,11 +71,12 @@
 <style lang="scss" scoped>
   img {
     height: 200px;
+    margin-right: 15px;
   }
 
   .cart-item {
     display: flex;
-    align-items: center;
+    align-items: flex-start;
 
     span {
       display: block;
@@ -104,10 +105,12 @@
 
     &__price {
       font-size: 18px;
+      text-align: right;
 
       &_old {
         color: #828282;
         text-decoration: line-through;
+        text-align: right;
       }
     }
 
@@ -132,6 +135,33 @@
 
     &__quantity {
       margin-top: 16px;
+    }
+  }
+
+  @media screen and (max-width: 767px) {
+    img {
+      width: 100px;
+      height: auto;
+    }
+  }
+
+  @media screen and (max-width: 565px) {
+    .cart-item {
+      &__title {
+        font-size: 14px;
+      }
+
+      &__data {
+        font-size: 10px;
+      }
+
+      &__price {
+        font-size: 14px;
+
+        &_old {
+          font-size: 12px;
+        }
+      }
     }
   }
 </style>

@@ -45,4 +45,20 @@
       margin-bottom: 20px;
     }
   }
+
+  @media screen and (max-width: 767px) {
+    .cart-nav {
+      padding: 15px;
+    }
+  }
+
+  @media screen and (max-width: 565px) {
+    .cart-nav {
+      display: block;
+
+      &__return {
+        margin-bottom: 20px;
+      }
+    }
+  }
 </style>

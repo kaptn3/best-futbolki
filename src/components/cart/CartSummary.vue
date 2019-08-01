@@ -67,4 +67,10 @@
       }
     }
   }
+
+  @media screen and (max-width: 767px) {
+    .summary {
+      padding: 15px;
+    }
+  }
 </style>

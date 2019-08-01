@@ -21,7 +21,7 @@
     background-color: #333;
     color: #fff;
     font-size: 18px;
-    width: 250px;
+    min-width: 250px;
     height: 60px;
 
     &:hover,

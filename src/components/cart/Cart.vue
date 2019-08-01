@@ -85,4 +85,14 @@
     font-size: 36px;
     margin: 30px 0;
   }
+
+  @media screen and (max-width: 767px) {
+    h3 {
+      font-size: 24px;
+    }
+
+    .cart__box {
+      padding: 15px;
+    }
+  }
 </style>
