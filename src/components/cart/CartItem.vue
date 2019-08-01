@@ -35,7 +35,7 @@
 </template>
 
 <script>
-  import Quantity from './product/Quantity.vue';
+  import Quantity from '../product/Quantity.vue';
 
   export default {
     name: 'CartItem',
@@ -96,7 +96,7 @@
       height: 22px;
       font-size: 12px;
       padding: 0 30px 0 0;
-      margin-top: 120px;
+      margin-top: 100px;
     }
 
     &__stock {
