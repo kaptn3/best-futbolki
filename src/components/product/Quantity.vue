@@ -7,8 +7,8 @@
       id="quantity"
       min="1"
       max="100"
-      value="1"
-      @input="$emit('input', $event.target.value)"
+      :value="value"
+      @input="$emit('input', Number($event.target.value))"
     >
   </label>
 </template>
@@ -16,6 +16,12 @@
 <script>
   export default {
     name: 'Quantity',
+    props: {
+      value: {
+        type: Number,
+        default: 1,
+      },
+    },
   };
 </script>
 

@@ -20,7 +20,11 @@
       <span class="cart-item__stock">
         In stock!
       </span>
-      <quantity class="cart-item__quantity"/>
+      <quantity
+        class="cart-item__quantity"
+        :value="Number(cart.quantity)"
+        @input="changeCount(cart, $event)"
+      />
     </div>
     <div>
       <span class="cart-item__price">{{ cart.price }} руб</span>
@@ -44,6 +48,14 @@
       cart: {
         type: Object,
         required: true,
+      },
+    },
+    methods: {
+      changeCount(cart, value) {
+        const index = this.$store.state.cart.indexOf(cart);
+        this.$store.state.cart[index].quantity = value;
+        this.$store.commit('updateCartCount');
+        this.$store.commit('saveCart');
       },
     },
   };

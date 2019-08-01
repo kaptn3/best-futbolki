@@ -4,14 +4,20 @@ import overlay from '@/assets/js/overlay';
 
 Vue.use(Vuex);
 
-const cart = window.localStorage.getItem('cart');
-const cartCount = cart ? (JSON.parse(cart)).length : 0;
+const cart = JSON.parse(window.localStorage.getItem('cart'));
+let cartCount = 0;
+if (cart) {
+  const product = cart;
+  for (let i = 0; i < cart.length; i++) {
+    cartCount += Number(product[i].quantity);
+  }
+}
 
 export default new Vuex.Store({
   state: {
     modalVisible: false,
     modalComponent: null,
-    cart: cart ? JSON.parse(cart) : [],
+    cart,
     cartCount: Number(cartCount),
   },
   mutations: {
@@ -21,7 +27,7 @@ export default new Vuex.Store({
       overlay.classAction(state.modalVisible);
     },
     addToCart(state, item) {
-      state.cartCount++;
+      state.cartCount += item.quantity;
       state.cart.push(item);
       this.commit('saveCart');
     },
@@ -30,11 +36,17 @@ export default new Vuex.Store({
 
       if (index > -1) {
         const product = state.cart[index];
-        state.cartCount -= product.quantity;
+        state.cartCount -= Number(product.quantity);
 
         state.cart.splice(index, 1);
       }
       this.commit('saveCart');
+    },
+    updateCartCount(state) {
+      state.cartCount = 0;
+      for (let i = 0; i < state.cart.length; i++) {
+        state.cartCount += Number(state.cart[i].quantity);
+      }
     },
     saveCart(state) {
       window.localStorage.setItem('cart', JSON.stringify(state.cart));
