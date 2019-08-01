@@ -7,6 +7,19 @@
       <i class="modal-cart__close-icon"></i>
     </button>
     <h3>Shopping cart</h3>
+    <div
+      v-for="(item, index) in $store.state.cart"
+      :key="index"
+    >
+      <img
+        :src="item.photo[0].small"
+        alt="Product photo"
+      >
+      {{ item.model }}
+      <button @click="$store.commit('removeFromCart', item)">
+        Remove
+      </button>
+    </div>
   </div>
 </template>
 
