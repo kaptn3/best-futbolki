@@ -2,20 +2,20 @@
   <div>
     <span class="current-size">Size: <b>{{ size }}</b></span>
     <label
-      v-for="(item, index) in sizes"
-      :for="'size-' + item"
+      v-for="(item, index) in sizeData"
+      :for="'size-' + item.id"
       :key="index"
     >
       <input
-        :id="'size-' + item"
-        :value="item"
+        :id="'size-' + item.id"
+        :value="item.id"
         :checked="index === 0"
         @input="changeSize($event.target.value)"
         name="size"
         type="radio"
       >
       <span class="size">
-        {{ item }}
+        {{ item.alias.substring(0, item.alias.indexOf('_')) }}
       </span>
     </label>
     <router-link
@@ -36,20 +36,35 @@
         type: Array,
         required: true,
       },
+      res: {
+        type: Object,
+        required: true,
+      },
     },
     data() {
       return {
         size: '',
+        sizeData: [],
       };
     },
     methods: {
       changeSize(value) {
-        this.size = value;
+        this.size = (this.sizeData.filter(size => size.id === value))[0].name;
         this.$emit('model', value);
       },
     },
-    mounted() {
-      [this.size] = this.sizes;
+    watch: {
+      res() {
+        this.sizeData = this.res.size.filter((size) => {
+          for (let i = 0; i < this.sizes.length; i++) {
+            if (this.sizes[i] === size.id) {
+              return size;
+            }
+          }
+          return false;
+        });
+        this.size = this.sizeData[0].name;
+      },
     },
   };
 </script>

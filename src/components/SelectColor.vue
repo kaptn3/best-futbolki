@@ -2,13 +2,14 @@
   <div>
     <span class="current-color">Color: <b>{{ color }}</b></span>
     <label
-      v-for="item in dataColor"
+      v-for="(item, index) in colorData"
       :for="'color-' + item.id"
-      :key="item.id"
+      :key="index"
     >
       <input
         :id="'color-' + item.id"
         :value="item.id"
+        :checked="index === 0"
         @input="changeColor($event.target.value)"
         name="color"
         type="radio"
@@ -24,8 +25,6 @@
 </template>
 
 <script>
-  import axios from 'axios';
-
   export default {
     name: 'SelectColor',
     props: {
@@ -33,35 +32,34 @@
         type: Array,
         required: true,
       },
+      res: {
+        type: Object,
+        required: true,
+      },
     },
     data() {
       return {
         color: '',
-        dataColor: [],
+        colorData: [],
       };
     },
     methods: {
       changeColor(value) {
-        this.color = (this.dataColor.filter(color => color.id === value))[0].name;
+        this.color = (this.colorData.filter(color => color.id === value))[0].name;
         this.$emit('model', value);
       },
     },
     watch: {
-      colors() {
-        axios.get('/js/reference.json').then((response) => {
-          const { data } = response;
-          this.dataColor = data.color.filter((color) => {
-            for (let i = 0; i < this.colors.length; i++) {
-              if (this.colors[i] === color.id) {
-                return color;
-              }
+      res() {
+        this.colorData = this.res.color.filter((color) => {
+          for (let i = 0; i < this.colors.length; i++) {
+            if (this.colors[i] === color.id) {
+              return color;
             }
-            return false;
-          });
-          this.color = this.dataColor[0].name;
-        }, (error) => {
-          console.log(error);
+          }
+          return false;
         });
+        this.color = this.colorData[0].name;
       },
     },
   };
@@ -107,7 +105,7 @@
 
   .color:hover,
   .color:focus {
-    border-color: #bdbdbd;
+    border-color: #999;
   }
 
   input:checked ~ .color {

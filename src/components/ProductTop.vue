@@ -18,11 +18,13 @@
         </span>
         <select-color
           :colors="colors"
+          :res="res"
           @model="changeColor($event)"
           class="product-top__color"
         />
         <select-size
           :sizes="sizes"
+          :res="res"
           @model="changeSize($event)"
           class="product-top__size"
         />
@@ -71,16 +73,19 @@
         model: '',
         product: [],
         variants: [],
+        res: {},
       };
     },
     mounted() {
       this.slides = [{ big: '/' }]; // fix error with empty array
-      axios.get(process.env.VUE_APP_API)
-        .then((response) => {
+      const url = `${process.env.VUE_APP_API}/data.json`;
+      const urlRef = `${process.env.VUE_APP_API}/reference.json`;
+      axios.get(url)
+        .then((res) => {
           // init all variants for this model
-          this.variants = response.data.variants;
-          this.name = response.data.design.alias;
-          this.model = response.data.categories[0].title;
+          this.variants = res.data.variants;
+          this.name = res.data.design.alias;
+          this.model = res.data.categories[0].title;
 
           // init all colors and sizes
           for (let i = 0; i < this.variants.length; i++) {
@@ -96,7 +101,14 @@
           [this.color] = this.colors;
           [this.size] = this.sizes;
           this.currentProduct();
-        }, (error) => {
+
+          // get colors and sizes data
+          return axios.get(urlRef);
+        })
+        .then((res) => {
+          this.res = res.data;
+        })
+        .catch((error) => {
           console.log(error);
         });
     },
