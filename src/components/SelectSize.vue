@@ -1,21 +1,21 @@
 <template>
   <div>
-    <span class="current-size">Size: <b>{{ size }}</b></span>
+    <span class="current-size">Size: <b>{{ item }}</b></span>
     <label
-      v-for="(item, index) in sizeData"
-      :for="'size-' + item.id"
+      v-for="(size, index) in itemData"
+      :for="'size-' + size.id"
       :key="index"
     >
       <input
-        :id="'size-' + item.id"
-        :value="item.id"
+        :id="'size-' + size.id"
+        :value="size.id"
         :checked="index === 0"
-        @input="changeSize($event.target.value)"
+        @input="changeItem($event.target.value)"
         name="size"
         type="radio"
       >
       <span class="size">
-        {{ item.alias.substring(0, item.alias.indexOf('_')) }}
+        {{ size.alias.substring(0, size.alias.indexOf('_')) }}
       </span>
     </label>
     <router-link
@@ -29,10 +29,13 @@
 </template>
 
 <script>
+  import select from '@/mixins/select';
+
   export default {
     name: 'SelectSize',
+    mixins: [select],
     props: {
-      sizes: {
+      data: {
         type: Array,
         required: true,
       },
@@ -43,28 +46,8 @@
     },
     data() {
       return {
-        size: '',
-        sizeData: [],
+        object: 'size',
       };
-    },
-    methods: {
-      changeSize(value) {
-        this.size = (this.sizeData.filter(size => size.id === value))[0].name;
-        this.$emit('model', value);
-      },
-    },
-    watch: {
-      res() {
-        this.sizeData = this.res.size.filter((size) => {
-          for (let i = 0; i < this.sizes.length; i++) {
-            if (this.sizes[i] === size.id) {
-              return size;
-            }
-          }
-          return false;
-        });
-        this.size = this.sizeData[0].name;
-      },
     },
   };
 </script>

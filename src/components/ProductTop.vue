@@ -17,13 +17,13 @@
           </span>
         </span>
         <select-color
-          :colors="colors"
+          :data="colors"
           :res="res"
           @model="changeColor($event)"
           class="product-top__color"
         />
         <select-size
-          :sizes="sizes"
+          :data="sizes"
           :res="res"
           @model="changeSize($event)"
           class="product-top__size"

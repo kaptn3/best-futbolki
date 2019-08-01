@@ -1,22 +1,22 @@
 <template>
   <div>
-    <span class="current-color">Color: <b>{{ color }}</b></span>
+    <span class="current-color">Color: <b>{{ item }}</b></span>
     <label
-      v-for="(item, index) in colorData"
-      :for="'color-' + item.id"
+      v-for="(color, index) in itemData"
+      :for="'color-' + color.id"
       :key="index"
     >
       <input
-        :id="'color-' + item.id"
-        :value="item.id"
+        :id="'color-' + color.id"
+        :value="color.id"
         :checked="index === 0"
-        @input="changeColor($event.target.value)"
+        @input="changeItem($event.target.value)"
         name="color"
         type="radio"
       >
       <span class="color">
         <span
-          :style="{ 'background-color': item.alias }"
+          :style="{ 'background-color': color.alias }"
           class="color-inside"
         />
       </span>
@@ -25,10 +25,13 @@
 </template>
 
 <script>
+  import select from '@/mixins/select';
+
   export default {
     name: 'SelectColor',
+    mixins: [select],
     props: {
-      colors: {
+      data: {
         type: Array,
         required: true,
       },
@@ -39,28 +42,8 @@
     },
     data() {
       return {
-        color: '',
-        colorData: [],
+        object: 'color',
       };
-    },
-    methods: {
-      changeColor(value) {
-        this.color = (this.colorData.filter(color => color.id === value))[0].name;
-        this.$emit('model', value);
-      },
-    },
-    watch: {
-      res() {
-        this.colorData = this.res.color.filter((color) => {
-          for (let i = 0; i < this.colors.length; i++) {
-            if (this.colors[i] === color.id) {
-              return color;
-            }
-          }
-          return false;
-        });
-        this.color = this.colorData[0].name;
-      },
     },
   };
 </script>
