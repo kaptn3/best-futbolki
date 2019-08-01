@@ -32,6 +32,7 @@
         <a-button
           class="product-top__btn"
           text="Add to cart"
+          @click="addToCart"
         />
         <add-to class="product-top__add-to"/>
       </div>
@@ -133,6 +134,23 @@
         this.slides = this.product.sides; // init photos for this product
         this.price = `${this.product.price} руб`;
         this.old_price = `${this.product.old_price} руб`;
+      },
+      addToCart() {
+        const selected = {
+          title: this.title,
+          model: this.model,
+          price: this.price,
+          size: this.size,
+          color: this.color,
+          quantity: this.quantity,
+          photo: this.product.sides,
+        };
+
+        this.$store.commit('addToCart', selected);
+
+        // const selectedJson = JSON.stringify(selected);
+
+        // localStorage.setItem('cart', selected);
       },
     },
   };

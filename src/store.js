@@ -8,13 +8,18 @@ export default new Vuex.Store({
   state: {
     modalVisible: false,
     modalComponent: null,
-    cart: '',
+    cart: [],
+    cartCount: 0,
   },
   mutations: {
     toggleModal(state, componentName) {
       state.modalVisible = !state.modalVisible;
       state.modalComponent = componentName;
       overlay.classAction(state.modalVisible);
+    },
+    addToCart(state, item) {
+      state.cartCount++;
+      console.log(item);
     },
   },
 });

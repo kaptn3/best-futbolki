@@ -1,22 +1,38 @@
 <template>
   <nav>
     <ul>
-      <li
-        v-for="item in nav"
-        :key="item.name"
-      >
+      <li>
         <button
-          :style="{ 'background-image': 'url(' + item.icon + ')' }"
-          @click="open(item.name)"
+          :style="{ 'background-image': 'url(' + nav[0].icon + ')' }"
         />
+      </li>
+      <li>
+        <button
+          :style="{ 'background-image': 'url(' + nav[1].icon + ')' }"
+        />
+      </li>
+      <li>
+        <button
+          :style="{ 'background-image': 'url(' + nav[2].icon + ')' }"
+          @click="open(nav[2].name)"
+        >
+          <span class="cart-count">
+            {{ $store.state.cartCount }}
+          </span>
+        </button>
         <transition name="slide-left">
           <div
-            v-if="$store.state.modalComponent === item.name"
+            v-if="$store.state.modalComponent === nav[2].name"
             class="right-nav__modal"
           >
             <cart/>
           </div>
         </transition>
+      </li>
+      <li>
+        <button
+          :style="{ 'background-image': 'url(' + nav[3].icon + ')' }"
+        />
       </li>
     </ul>
   </nav>
@@ -106,6 +122,21 @@
       background-color: #fff;
       z-index: 100;
     }
+  }
+
+  .cart-count {
+    background-color: #bdbdbd;
+    color: #fff;
+    font-weight: 500;
+    display: block;
+    position: relative;
+    top: 7px;
+    left: 50%;
+    width: 16px;
+    height: 16px;
+    border-radius: 100%;
+    padding: 0 2px;
+    font-size: 12px;
   }
 
   .slide-left-enter,
