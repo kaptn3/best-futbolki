@@ -7,9 +7,14 @@
       <div class="product-top__side product-top__right">
         <bread-crumbs/>
         <h1>{{ name }}</h1>
-        <span class="product-top__model">model</span>
+        <span class="product-top__model">
+          {{ model }}
+        </span>
         <span class="product-top__price">
           {{ price }}
+          <span class="product-top__old-price">
+            {{ old_price }}
+          </span>
         </span>
         <select-color
           :colors="colors"
@@ -61,7 +66,9 @@
         sizes: [],
         slides: [],
         price: 0,
+        old_price: 0,
         name: '',
+        model: '',
         product: [],
         variants: [],
       };
@@ -72,7 +79,8 @@
         .then((response) => {
           // init all variants for this model
           this.variants = response.data.variants;
-          this.name = response.data.categories[0].title;
+          this.name = response.data.design.alias;
+          this.model = response.data.categories[0].title;
 
           // init all colors and sizes
           for (let i = 0; i < this.variants.length; i++) {
@@ -103,14 +111,15 @@
       },
       currentProduct() {
         // init selected product
-        this.product = this.variants.filter((variant) => {
+        [this.product] = this.variants.filter((variant) => {
           if (variant.relations[0].id === this.color && variant.relations[1].id === this.size) {
             return variant;
           }
           return false;
         });
-        this.slides = this.product[0].sides; // init photos for this product
-        this.price = this.product[0].price;
+        this.slides = this.product.sides; // init photos for this product
+        this.price = `${this.product.price} руб`;
+        this.old_price = `${this.product.old_price} руб`;
       },
     },
   };
@@ -137,6 +146,15 @@
       margin-bottom: 40px;
       font-size: 36px;
       display: block;
+    }
+
+    &__old-price {
+      color: #828282;
+      font-size: 18px;
+      margin-bottom: 10px;
+      display: inline-block;
+      vertical-align: bottom;
+      text-decoration: line-through;
     }
 
     &__color,
