@@ -20,10 +20,15 @@
 </script>
 
 <style lang="scss" scoped>
+  label {
+    display: block;
+  }
+
   span {
     display: block;
     color: #4f4f4f;
     margin-bottom: 2px;
+    font-size: 1rem;
   }
 
   input {

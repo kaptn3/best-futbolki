@@ -11,9 +11,9 @@
           {{ model }}
         </span>
         <span class="product-top__price">
-          {{ price }}
+          {{ price }} руб
           <span class="product-top__old-price">
-            {{ old_price }}
+            {{ old_price }} руб
           </span>
         </span>
         <select-color
@@ -132,25 +132,29 @@
           return false;
         });
         this.slides = this.product.sides; // init photos for this product
-        this.price = `${this.product.price} руб`;
-        this.old_price = `${this.product.old_price} руб`;
+        this.price = this.product.price;
+        this.old_price = this.product.old_price;
       },
       addToCart() {
+        const color = document.querySelector('.current-color b').innerHTML;
+        const size = document.querySelector('.current-size b').innerHTML;
         const selected = {
-          title: this.title,
+          title: this.name,
           model: this.model,
           price: this.price,
-          size: this.size,
-          color: this.color,
+          size: [
+            this.size,
+            size,
+          ],
+          color: [
+            this.color,
+            color,
+          ],
           quantity: this.quantity,
           photo: this.product.sides,
         };
 
         this.$store.commit('addToCart', selected);
-
-        // const selectedJson = JSON.stringify(selected);
-
-        // localStorage.setItem('cart', selected);
       },
     },
   };

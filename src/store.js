@@ -5,14 +5,14 @@ import overlay from '@/assets/js/overlay';
 Vue.use(Vuex);
 
 const cart = window.localStorage.getItem('cart');
-const cartCount = (JSON.parse(cart)).length;
+const cartCount = cart ? (JSON.parse(cart)).length : 0;
 
 export default new Vuex.Store({
   state: {
     modalVisible: false,
     modalComponent: null,
     cart: cart ? JSON.parse(cart) : [],
-    cartCount: cartCount ? Number(cartCount) : 0,
+    cartCount: Number(cartCount),
   },
   mutations: {
     toggleModal(state, componentName) {

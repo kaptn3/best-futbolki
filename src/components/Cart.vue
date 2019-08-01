@@ -1,36 +1,32 @@
 <template>
-  <div class="modal-cart">
+  <div class="cart">
     <button
-      class="modal-cart__close"
+      class="cart__close"
       @click="$store.commit('toggleModal', null)"
     >
-      <i class="modal-cart__close-icon"></i>
+      <i class="cart__close-icon"></i>
     </button>
     <h3>Shopping cart</h3>
-    <div
+    <cart-item
       v-for="(item, index) in $store.state.cart"
       :key="index"
-    >
-      <img
-        :src="item.photo[0].small"
-        alt="Product photo"
-      >
-      {{ item.model }}
-      <button @click="$store.commit('removeFromCart', item)">
-        Remove
-      </button>
-    </div>
+      :cart="item"
+      class="cart__product"
+    />
   </div>
 </template>
 
 <script>
+  import CartItem from './CartItem.vue';
+
   export default {
     name: 'Cart',
+    components: { CartItem },
   };
 </script>
 
 <style lang="scss" scoped>
-  .modal-cart {
+  .cart {
     padding: 20px;
 
     &__close {
@@ -58,10 +54,14 @@
         }
       }
     }
+
+    &__product {
+      margin-bottom: 20px;
+    }
   }
 
   h3 {
     font-size: 36px;
-    margin-top: 30px;
+    margin: 30px;
   }
 </style>
