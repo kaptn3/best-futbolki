@@ -19,7 +19,6 @@ export default new Vuex.Store({
       state.modalVisible = !state.modalVisible;
       state.modalComponent = componentName;
       overlay.classAction(state.modalVisible);
-      console.log(state.cart);
     },
     addToCart(state, item) {
       state.cartCount++;
