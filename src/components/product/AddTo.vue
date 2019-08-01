@@ -34,11 +34,8 @@
 
 <style lang="scss" scoped>
   button {
-    background: transparent;
     font-size: 14px;
     color: #828282;
-    border: none;
-    outline: none;
     width: 50%;
     text-align: left;
 

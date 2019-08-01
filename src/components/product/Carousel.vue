@@ -139,13 +139,6 @@
     width: 100%;
   }
 
-  button {
-    border: none;
-    outline: none;
-    background: transparent;
-    padding: 0;
-  }
-
   .slides-group {
     position: relative;
     overflow: hidden;

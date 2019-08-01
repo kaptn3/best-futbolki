@@ -18,10 +18,7 @@
 
 <style lang="scss" scoped>
   button {
-    padding: 0;
-    outline: none;
     background-color: #333;
-    border: none;
     color: #fff;
     font-size: 18px;
     width: 250px;
