@@ -28,7 +28,7 @@
           @model="changeSize($event)"
           class="product-top__size"
         />
-        <quantity/>
+        <quantity v-model="quantity"/>
         <a-button
           class="product-top__btn"
           text="Add to cart"
@@ -74,6 +74,7 @@
         product: [],
         variants: [],
         res: {},
+        quantity: 1,
       };
     },
     mounted() {

@@ -5,7 +5,10 @@
       type="number"
       name="quantity"
       id="quantity"
+      min="1"
+      max="100"
       value="1"
+      @input="$emit('input', $event.target.value)"
     >
   </label>
 </template>
