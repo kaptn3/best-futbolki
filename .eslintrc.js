@@ -13,7 +13,9 @@ module.exports = {
     'indent': 'off',
     'vue/script-indent': ['warn', 2, {
       'baseIndent': 1
-    }]
+    }],
+    "import/no-unresolved": "off",
+    'no-plusplus': 'off'
   },
   parserOptions: {
     parser: 'babel-eslint',
