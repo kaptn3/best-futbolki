@@ -32,4 +32,10 @@
       opacity: .9;
     }
   }
+
+  @media screen and (max-width: 767px) {
+    button {
+      width: 100%;
+    }
+  }
 </style>

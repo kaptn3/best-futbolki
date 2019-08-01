@@ -68,34 +68,29 @@
     },
     mounted() {
       this.slides = [{ big: '/' }]; // fix error with empty array
-      axios({
-        url: process.env.VUE_APP_API,
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      }).then((response) => {
-        // init all variants for this model
-        this.variants = response.data.variants;
-        this.name = response.data.categories[0].title;
+      axios.get(process.env.VUE_APP_API)
+        .then((response) => {
+          // init all variants for this model
+          this.variants = response.data.variants;
+          this.name = response.data.categories[0].title;
 
-        // init all colors and sizes
-        for (let i = 0; i < this.variants.length; i++) {
-          const { relations } = this.variants[i];
-          if (this.colors.indexOf(relations[0].id) === -1) { // inique values
-            this.colors.push(relations[0].id);
+          // init all colors and sizes
+          for (let i = 0; i < this.variants.length; i++) {
+            const { relations } = this.variants[i];
+            if (this.colors.indexOf(relations[0].id) === -1) { // inique values
+              this.colors.push(relations[0].id);
+            }
+            if (this.sizes.indexOf(relations[1].id) === -1) {
+              this.sizes.push(relations[1].id);
+            }
           }
-          if (this.sizes.indexOf(relations[1].id) === -1) {
-            this.sizes.push(relations[1].id);
-          }
-        }
 
-        [this.color] = this.colors;
-        [this.size] = this.sizes;
-        this.currentProduct();
-      }, (error) => {
-        console.log(error);
-      });
+          [this.color] = this.colors;
+          [this.size] = this.sizes;
+          this.currentProduct();
+        }, (error) => {
+          console.log(error);
+        });
     },
     methods: {
       changeColor(value) {
@@ -127,7 +122,7 @@
     padding-top: 20px;
 
     &__side {
-      width: 50%;
+      width: 100%;
       padding: 0 15px;
       flex-shrink: 1;
     }
@@ -163,5 +158,17 @@
   h1 {
     font-size: 3rem;
     margin: 20px 0;
+  }
+
+  @media screen and (max-width: 767px) {
+    .container {
+      display: block;
+    }
+
+    .product-top {
+      &__side {
+        margin-bottom: 30px;
+      }
+    }
   }
 </style>
