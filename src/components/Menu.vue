@@ -5,18 +5,17 @@
       @click="openMenu"
     ></button>
     <div
-      :class="{ 'menu_open': $store.state.isOpenMenu }"
+      :class="{ 'menu_open': $store.state.modalComponent === 'menu' }"
       class="menu__modal"
     >
       <button
         class="menu__close"
-        @click="openMenu"
+        @click="closeMenu"
       >
         <i class="menu__icon menu__close-icon"></i>
       </button>
       <ul
         class="menu__list"
-        :style="{ 'transform': `translateX(${level * 100}%)` }"
       >
         <menu-item
           v-for="(item, index) in menu"
@@ -56,7 +55,10 @@
     },
     methods: {
       openMenu() {
-        this.$store.commit('menuToggle');
+        this.$store.commit('toggleModal', 'menu');
+      },
+      closeMenu() {
+        this.$store.commit('toggleModal', null);
       },
     },
   };

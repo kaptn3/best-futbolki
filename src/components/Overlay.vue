@@ -1,10 +1,18 @@
 <template>
-  <div v-if="$store.state.isOpenMenu"/>
+  <div
+    v-if="$store.state.modalVisible"
+    @click.self="hide"
+  />
 </template>
 
 <script>
   export default {
     name: 'Overlay',
+    methods: {
+      hide() {
+        this.$store.commit('toggleModal', null);
+      },
+    },
   };
 </script>
 

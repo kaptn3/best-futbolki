@@ -1,27 +1,20 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
+import overlay from '@/assets/js/overlay';
 
 Vue.use(Vuex);
 
-const classAction = (isShow) => {
-  const app = document.querySelector('#app');
-
-  if (isShow) {
-    app.classList.add('modal-open');
-  } else {
-    app.classList.remove('modal-open');
-  }
-};
-
 export default new Vuex.Store({
   state: {
-    isOpenMenu: false,
+    modalVisible: false,
+    modalComponent: null,
+    cart: '',
   },
   mutations: {
-    menuToggle(state) {
-      state.isOpenMenu = !state.isOpenMenu;
-
-      classAction(state.isOpenMenu);
+    toggleModal(state, componentName) {
+      state.modalVisible = !state.modalVisible;
+      state.modalComponent = componentName;
+      overlay.classAction(state.modalVisible);
     },
   },
 });
