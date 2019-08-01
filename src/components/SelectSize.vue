@@ -74,6 +74,12 @@
     font-size: 14px;
   }
 
+  label {
+    display: inline-block;
+    margin-right: 10px;
+    margin-bottom: 10px;
+  }
+
   .current-size {
     display: block;
     color: #4f4f4f;
@@ -95,8 +101,6 @@
     width: 40px;
     height: 40px;
     border: 1px solid #bdbdbd;
-    margin-right: 10px;
-    margin-bottom: 10px;
     color: #bdbdbd;
     text-transform: uppercase;
 
