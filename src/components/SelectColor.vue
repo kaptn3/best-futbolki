@@ -2,21 +2,20 @@
   <div>
     <span class="current-color">Color: <b>{{ color }}</b></span>
     <label
-      v-for="(item, index) in colors"
-      :for="'color-' + item"
-      :key="index"
+      v-for="item in dataColor"
+      :for="'color-' + item.id"
+      :key="item.id"
     >
       <input
-        :id="'color-' + item"
-        :value="item"
-        :checked="index === 0"
+        :id="'color-' + item.id"
+        :value="item.id"
         @input="changeColor($event.target.value)"
         name="color"
         type="radio"
       >
       <span class="color">
         <span
-          :style="{ 'background-color': item }"
+          :style="{ 'background-color': item.alias }"
           class="color-inside"
         />
       </span>
@@ -25,6 +24,8 @@
 </template>
 
 <script>
+  import axios from 'axios';
+
   export default {
     name: 'SelectColor',
     props: {
@@ -36,16 +37,32 @@
     data() {
       return {
         color: '',
+        dataColor: [],
       };
     },
     methods: {
       changeColor(value) {
-        this.color = value;
+        this.color = (this.dataColor.filter(color => color.id === value))[0].name;
         this.$emit('model', value);
       },
     },
-    mounted() {
-      [this.color] = this.colors;
+    watch: {
+      colors() {
+        axios.get('/js/reference.json').then((response) => {
+          const { data } = response;
+          this.dataColor = data.color.filter((color) => {
+            for (let i = 0; i < this.colors.length; i++) {
+              if (this.colors[i] === color.id) {
+                return color;
+              }
+            }
+            return false;
+          });
+          this.color = this.dataColor[0].name;
+        }, (error) => {
+          console.log(error);
+        });
+      },
     },
   };
 </script>
