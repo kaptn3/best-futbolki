@@ -27,8 +27,23 @@ export default new Vuex.Store({
       overlay.classAction(state.modalVisible);
     },
     addToCart(state, item) {
+      const double = state.cart.filter((product) => {
+        let dublicate = 0;
+        const attr = ['model', 'id', 'sizeName', 'colorName'];
+        for (let i = 0; i < attr.length; i++) {
+          dublicate += (item[attr[i]] === product[attr[i]]) ? 1 : 0;
+        }
+        return dublicate === 4 ? product : false;
+      });
+      if (double.length > 0) {
+        const index = state.cart.indexOf(double[0]);
+        if (index > -1) {
+          state.cart[index].quantity += item.quantity;
+        }
+      } else {
+        state.cart.push(item);
+      }
       state.cartCount += item.quantity;
-      state.cart.push(item);
       this.commit('saveCart');
     },
     removeFromCart(state, item) {

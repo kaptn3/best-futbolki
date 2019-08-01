@@ -11,9 +11,9 @@
           {{ model }}
         </span>
         <span class="product-top__price">
-          {{ price }} руб
+          {{ product.price }} руб
           <span class="product-top__old-price">
-            {{ old_price }} руб
+            {{ product.old_price }} руб
           </span>
         </span>
         <select-color
@@ -68,14 +68,13 @@
         size: '',
         sizes: [],
         slides: [],
-        price: 0,
-        old_price: 0,
         name: '',
         model: '',
         product: [],
         variants: [],
         res: {},
         quantity: 1,
+        id: 0,
       };
     },
     mounted() {
@@ -85,6 +84,7 @@
       axios.get(url)
         .then((res) => {
           // init all variants for this model
+          this.id = res.data.design.id;
           this.variants = res.data.variants;
           this.name = res.data.design.alias;
           this.model = res.data.categories[0].title;
@@ -92,11 +92,11 @@
           // init all colors and sizes
           for (let i = 0; i < this.variants.length; i++) {
             const { relations } = this.variants[i];
-            if (this.colors.indexOf(relations[0].id) === -1) { // inique values
-              this.colors.push(relations[0].id);
-            }
-            if (this.sizes.indexOf(relations[1].id) === -1) {
-              this.sizes.push(relations[1].id);
+            const types = ['colors', 'sizes'];
+            for (let k = 0; k < types.length; k++) {
+              if (this[types[k]].indexOf(relations[k].id) === -1) { // inique values
+                this[types[k]].push(relations[k].id);
+              }
             }
           }
 
@@ -132,28 +132,17 @@
           return false;
         });
         this.slides = this.product.sides; // init photos for this product
-        this.price = this.product.price;
-        this.old_price = this.product.old_price;
       },
       addToCart() {
         const color = document.querySelector('.current-color b').innerHTML;
         const size = document.querySelector('.current-size b').innerHTML;
-        const selected = {
-          title: this.name,
-          model: this.model,
-          price: this.price,
-          size: [
-            this.size,
-            size,
-          ],
-          color: [
-            this.color,
-            color,
-          ],
-          quantity: this.quantity,
-          photo: this.product.sides,
-        };
 
+        const selected = this.product;
+        const attr = ['id', 'sizeName', 'colorName', 'quantity', 'title', 'model'];
+        const values = [this.id, size, color, this.quantity, this.name, this.model];
+        for (let i = 0; i < attr.length; i++) {
+          selected[attr[i]] = values[i];
+        }
         this.$store.commit('addToCart', selected);
       },
     },

@@ -1,7 +1,7 @@
 <template>
   <div class="cart-item">
     <img
-      :src="cart.photo[0].small"
+      :src="cart.sides[0].small"
       alt="Product photo"
     >
     <div class="cart-item__data">
@@ -12,10 +12,10 @@
         {{ cart.model }}
       </span>
       <span>
-        Color: {{ cart.color[1] }}
+        Color: {{ cart.colorName }}
       </span>
       <span>
-        Size: {{ cart.size[1] }}
+        Size: {{ cart.sizeName }}
       </span>
       <span class="cart-item__stock">
         In stock!
