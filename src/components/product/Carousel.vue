@@ -1,5 +1,8 @@
 <template>
-  <div class="carousel">
+  <div
+    v-if="slides.length > 0"
+    class="carousel"
+  >
     <transition-group
       :name="transitionName"
       class="slides-group"

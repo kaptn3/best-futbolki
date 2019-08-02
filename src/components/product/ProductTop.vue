@@ -18,13 +18,13 @@
         </span>
         <select-color
           :data="colors"
-          :res="res"
+          :res="relations"
           class="product-top__color"
           @model="changeColor($event)"
         />
         <select-size
           :data="sizes"
-          :res="res"
+          :res="relations"
           class="product-top__size"
           @model="changeSize($event)"
         />
@@ -37,14 +37,10 @@
         <add-to class="product-top__add-to"/>
       </div>
     </div>
-    <product-detail
-      :details="details"
-    />
   </div>
 </template>
 
 <script>
-  import axios from 'axios';
   import Carousel from './Carousel';
   import BreadCrumbs from './BreadCrumbs';
   import SelectColor from '../SelectColor';
@@ -52,7 +48,6 @@
   import Quantity from './Quantity';
   import AButton from '../Button';
   import AddTo from './AddTo';
-  import ProductDetail from './ProductDetail';
 
   export default {
     name: 'ProductTop',
@@ -63,8 +58,29 @@
       SelectSize,
       Quantity,
       AButton,
-      AddTo,
-      ProductDetail
+      AddTo
+    },
+    props: {
+      data: {
+        type: Object,
+        required: true
+      },
+      relations: {
+        type: Object,
+        required: true
+      },
+      id: {
+        type: Number,
+        required: true
+      },
+      name: {
+        type: String,
+        required: true
+      },
+      model: {
+        type: String,
+        required: true
+      }
     },
     data() {
       return {
@@ -73,28 +89,16 @@
         size: '',
         sizes: [],
         slides: [],
-        name: '',
-        model: '',
         product: [],
         variants: [],
-        res: {},
-        quantity: 1,
-        id: 0,
-        details: []
+        quantity: 1
       };
     },
-    mounted() {
-      this.slides = [{ big: '/' }]; // fix error with empty array
-      const url = `${process.env.VUE_APP_API}/data.json`;
-      const urlRef = `${process.env.VUE_APP_API}/reference.json`;
-      axios.get(url)
-        .then((res) => {
+    watch: {
+      data() {
+        if (this.data) {
           // init all variants for this model
-          this.id = res.data.design.id;
-          this.variants = res.data.variants;
-          this.name = res.data.design.alias;
-          this.model = res.data.categories[0].title;
-          this.details = res.data.external_attributes;
+          this.variants = this.data.variants;
 
           // init all colors and sizes
           for (let i = 0; i < this.variants.length; i++) {
@@ -106,20 +110,11 @@
               }
             }
           }
-
           [this.color] = this.colors;
           [this.size] = this.sizes;
           this.currentProduct();
-
-          // get colors and sizes data
-          return axios.get(urlRef);
-        })
-        .then((res) => {
-          this.res = res.data;
-        })
-        .catch((error) => {
-          console.log(error);
-        });
+        }
+      }
     },
     methods: {
       changeColor(value) {
