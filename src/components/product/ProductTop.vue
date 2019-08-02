@@ -1,6 +1,6 @@
 <template>
   <div class="product-top">
-    <div class="container">
+    <div class="container product-top__box">
       <div class="product-top__side product-top__left">
         <carousel :slides="slides"/>
       </div>
@@ -37,6 +37,10 @@
         <add-to class="product-top__add-to"/>
       </div>
     </div>
+    <product-detail
+      :details="details"
+      :data-loaded="details.length > 0"
+    />
   </div>
 </template>
 
@@ -49,6 +53,7 @@
   import Quantity from './Quantity';
   import AButton from '../Button';
   import AddTo from './AddTo';
+  import ProductDetail from './ProductDetail';
 
   export default {
     name: 'ProductTop',
@@ -59,7 +64,8 @@
       SelectSize,
       Quantity,
       AButton,
-      AddTo
+      AddTo,
+      ProductDetail
     },
     data() {
       return {
@@ -74,7 +80,8 @@
         variants: [],
         res: {},
         quantity: 1,
-        id: 0
+        id: 0,
+        details: []
       };
     },
     mounted() {
@@ -88,6 +95,7 @@
           this.variants = res.data.variants;
           this.name = res.data.design.alias;
           this.model = res.data.categories[0].title;
+          this.details = res.data.external_attributes;
 
           // init all colors and sizes
           for (let i = 0; i < this.variants.length; i++) {
@@ -160,6 +168,10 @@
     background-color: #fff;
     padding-top: 20px;
 
+    &__box {
+      display: flex;
+    }
+
     &__side {
       width: 100%;
       padding: 0 15px;
@@ -197,10 +209,6 @@
     &__btn {
       margin-top: 35px;
     }
-  }
-
-  .container {
-    display: flex;
   }
 
   h1 {
