@@ -1,30 +1,32 @@
 <template>
   <div class="cart">
-    <div v-if="$store.state.cartCount !== 0">
-      <div class="cart__box">
-        <button
-          class="cart__close"
-          @click="$store.commit('toggleModal', null)"
-        >
-          <i class="cart__close-icon"></i>
-        </button>
-        <h3>Shopping cart</h3>
-        <cart-item
-          v-for="(item, index) in $store.state.cart"
-          :key="index"
-          :cart="item"
-          class="cart__product"
-        />
+    <div>
+      <button
+        class="cart__close"
+        @click="$store.commit('toggleModal', null)"
+      >
+        <i class="cart__close-icon"></i>
+      </button>
+      <div v-if="$store.state.cartCount !== 0">
+        <div class="cart__box">
+          <h3>Shopping cart</h3>
+          <cart-item
+            v-for="(item, index) in $store.state.cart"
+            :key="index"
+            :cart="item"
+            class="cart__product"
+          />
+        </div>
+        <cart-summary/>
+        <cart-nav/>
       </div>
-      <cart-summary/>
-      <cart-nav/>
-    </div>
-    <div
-      class="cart__box"
-      v-else
-    >
-      <h3>Your shopping cart is empty.</h3>
-      Don't hesitate and browse our catalog to find something beautiful for You!
+      <div
+        class="cart__box"
+        v-else
+      >
+        <h3>Your shopping cart is empty.</h3>
+        Don't hesitate and browse our catalog to find something beautiful for You!
+      </div>
     </div>
   </div>
 </template>
@@ -52,7 +54,7 @@
 
     &__close {
       display: block;
-      padding: 0;
+      padding: 20px;;
       height: 20px;
       width: 100%;
       border: none;
