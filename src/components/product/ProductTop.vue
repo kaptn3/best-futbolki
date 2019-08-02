@@ -39,7 +39,6 @@
     </div>
     <product-detail
       :details="details"
-      :data-loaded="details.length > 0"
     />
   </div>
 </template>

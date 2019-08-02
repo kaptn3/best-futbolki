@@ -1,7 +1,7 @@
 <template>
   <div class="details">
     <div
-      v-if="dataLoaded"
+      v-if="isLoaded"
       class="container details__box"
     >
       <h2>Product Detail</h2>
@@ -38,10 +38,6 @@
       details: {
         type: Array,
         required: true
-      },
-      dataLoaded: {
-        type: Boolean,
-        default: false
       }
     },
     computed: {
@@ -50,6 +46,9 @@
       },
       row2() {
         return [this.details[0], this.details[1], this.details[4]];
+      },
+      isLoaded() {
+        return this.details.length > 0;
       }
     }
   };
