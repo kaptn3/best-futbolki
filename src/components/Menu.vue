@@ -3,7 +3,7 @@
     <button
       class="menu__btn"
       @click="openMenu"
-    ></button>
+    />
     <div
       :class="{ 'menu_open': $store.state.modalComponent === 'menu' }"
       class="menu__modal"
@@ -12,7 +12,7 @@
         class="menu__close"
         @click="closeMenu"
       >
-        <i class="menu__icon menu__close-icon"></i>
+        <i class="menu__icon menu__close-icon"/>
       </button>
       <ul
         class="menu__list"

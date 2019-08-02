@@ -2,9 +2,9 @@
   <label for="quantity">
     <span>Quantity</span>
     <input
+      id="quantity"
       type="number"
       name="quantity"
-      id="quantity"
       min="1"
       max="100"
       :value="value"

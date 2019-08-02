@@ -30,8 +30,8 @@
         v-for="n in slides.length"
         :key="n"
         :class="{ 'carousel__dot_active': current === (n - 1) }"
-        @click="changeSlide(n - 1)"
         class="carousel__dot"
+        @click="changeSlide(n - 1)"
       />
     </div>
   </div>
@@ -55,6 +55,22 @@
         height: 0,
         int: 0
       };
+    },
+    mounted() {
+      this.show = true;
+      this.height = this.slideHeight();
+      // set first height for slider wrapper
+      this.int = setInterval(() => {
+        if (this.height !== '0px') {
+          clearInterval(this.int);
+        } else {
+          this.height = this.slideHeight();
+        }
+      }, 5);
+      window.addEventListener('resize', () => { this.height = this.slideHeight(); });
+    },
+    beforeDestroy() {
+      window.removeEventListener('resize', () => { this.height = this.slideHeight(); });
     },
     methods: {
       slide(dir) {
@@ -82,22 +98,6 @@
         }
         return '0px';
       }
-    },
-    mounted() {
-      this.show = true;
-      this.height = this.slideHeight();
-      // set first height for slider wrapper
-      this.int = setInterval(() => {
-        if (this.height !== '0px') {
-          clearInterval(this.int);
-        } else {
-          this.height = this.slideHeight();
-        }
-      }, 5);
-      window.addEventListener('resize', () => { this.height = this.slideHeight(); });
-    },
-    beforeDestroy() {
-      window.removeEventListener('resize', () => { this.height = this.slideHeight(); });
     }
   };
 </script>

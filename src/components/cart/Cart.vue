@@ -5,7 +5,7 @@
         class="cart__close"
         @click="$store.commit('toggleModal', null)"
       >
-        <i class="cart__close-icon"></i>
+        <i class="cart__close-icon"/>
       </button>
       <div v-if="$store.state.cartCount !== 0">
         <div class="cart__box">
@@ -21,8 +21,8 @@
         <cart-nav/>
       </div>
       <div
-        class="cart__box"
         v-else
+        class="cart__box"
       >
         <h3>Your shopping cart is empty.</h3>
         Don't hesitate and browse our catalog to find something beautiful for You!

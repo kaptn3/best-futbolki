@@ -1,6 +1,9 @@
 <template>
   <router-link to="/product">
-    <img src="/logo.svg" alt="Logotype">
+    <img
+      src="/logo.svg"
+      alt="Logotype"
+    >
   </router-link>
 </template>
 

@@ -3,16 +3,16 @@
     <span class="current-size">Size: <b>{{ item }}</b></span>
     <label
       v-for="(size, index) in itemData"
-      :for="'size-' + size.id"
       :key="index"
+      :for="'size-' + size.id"
     >
       <input
         :id="'size-' + size.id"
         :value="size.id"
         :checked="index === 0"
-        @input="changeItem($event.target.value)"
         name="size"
         type="radio"
+        @input="changeItem($event.target.value)"
       >
       <span class="size">
         {{ size.alias.substring(0, size.alias.indexOf('_')) }}
@@ -22,7 +22,10 @@
       to="#"
       class="size__guide"
     >
-      <img src="/img/icons/size.svg" alt="">
+      <img
+        src="/img/icons/size.svg"
+        alt=""
+      >
       Size guide
     </router-link>
   </div>

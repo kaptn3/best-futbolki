@@ -3,16 +3,16 @@
     <span class="current-color">Color: <b>{{ item }}</b></span>
     <label
       v-for="(color, index) in itemData"
-      :for="'color-' + color.id"
       :key="index"
+      :for="'color-' + color.id"
     >
       <input
         :id="'color-' + color.id"
         :value="color.id"
         :checked="index === 0"
-        @input="changeItem($event.target.value)"
         name="color"
         type="radio"
+        @input="changeItem($event.target.value)"
       >
       <span class="color">
         <span

@@ -3,7 +3,9 @@
     <button
       class="cart-nav__return"
       @click="$store.commit('toggleModal', null)"
-    >Return to shopping</button>
+    >
+      Return to shopping
+    </button>
     <div class="cart-nav__btns">
       <a-button
         text="Go to checkout"

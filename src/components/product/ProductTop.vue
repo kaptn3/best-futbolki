@@ -19,14 +19,14 @@
         <select-color
           :data="colors"
           :res="res"
-          @model="changeColor($event)"
           class="product-top__color"
+          @model="changeColor($event)"
         />
         <select-size
           :data="sizes"
           :res="res"
-          @model="changeSize($event)"
           class="product-top__size"
+          @model="changeSize($event)"
         />
         <quantity v-model="quantity"/>
         <a-button

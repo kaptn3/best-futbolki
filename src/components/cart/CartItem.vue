@@ -22,7 +22,8 @@
       </span>
       <span
         :class="{ 'green': cart.available, 'red': !cart.available }"
-        class="cart-item__stock">
+        class="cart-item__stock"
+      >
         In stock!
       </span>
       <quantity

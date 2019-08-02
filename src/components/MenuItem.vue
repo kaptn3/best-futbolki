@@ -4,7 +4,8 @@
     <div v-if="item.submenu">
       <i
         v-if="item.submenu"
-        class="menu__next-icon"></i>
+        class="menu__next-icon"
+      />
       <ul
         v-if="item.submenu"
         :class="{ 'submenu_open': isSubmenu }"

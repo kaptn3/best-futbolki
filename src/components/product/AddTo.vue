@@ -6,7 +6,8 @@
     >
       <img
         :src="item.icon"
-        :alt="item.name + ' icon'">
+        :alt="item.name + ' icon'"
+      >
       {{ item.name }}
     </button>
   </div>
