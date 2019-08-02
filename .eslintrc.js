@@ -15,7 +15,8 @@ module.exports = {
       'baseIndent': 1
     }],
     "import/no-unresolved": "off",
-    'no-plusplus': 'off'
+    'no-plusplus': 'off',
+    'quote-props': 'off',
   },
   parserOptions: {
     parser: 'babel-eslint',
