@@ -1,7 +1,7 @@
 <template>
   <div class="cart-item">
     <img
-      :src="cart.sides[0].small"
+      :src="cart.photo"
       alt="Product photo"
     >
     <div class="cart-item__data">
@@ -58,10 +58,11 @@
     },
     methods: {
       changeCount(cart, value) {
-        const index = this.$store.state.cart.indexOf(cart);
-        this.$store.state.cart[index].quantity = value;
-        this.$store.commit('updateCartCount');
-        this.$store.commit('saveCart');
+        if (value > 0) {
+          const index = this.$store.state.cart.indexOf(cart);
+          this.$store.state.cart[index].quantity = value;
+          this.$store.commit('saveCart');
+        }
       },
     },
   };

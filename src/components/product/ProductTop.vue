@@ -136,13 +136,19 @@
       addToCart() {
         const color = document.querySelector('.current-color b').innerHTML;
         const size = document.querySelector('.current-size b').innerHTML;
-
-        const selected = this.product;
-        const attr = ['id', 'sizeName', 'colorName', 'quantity', 'title', 'model'];
-        const values = [this.id, size, color, this.quantity, this.name, this.model];
-        for (let i = 0; i < attr.length; i++) {
-          selected[attr[i]] = values[i];
-        }
+        const selected = {
+          'id': this.id,
+          'sizeName': size,
+          'colorName': color,
+          'quantity': this.quantity,
+          'title': this.name,
+          'model': this.model,
+          'available': this.product.available,
+          'photo': this.product.sides[0].small,
+          'old_price': this.product.old_price,
+          'price': this.product.price,
+          'print_type_name': this.product.print_type_name,
+        };
         this.$store.commit('addToCart', selected);
       },
     },
