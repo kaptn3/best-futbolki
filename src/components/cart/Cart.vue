@@ -32,16 +32,16 @@
 </template>
 
 <script>
-  import CartItem from './CartItem.vue';
-  import CartSummary from './CartSummary.vue';
-  import CartNav from './CartNav.vue';
+  import CartItem from './CartItem';
+  import CartSummary from './CartSummary';
+  import CartNav from './CartNav';
 
   export default {
     name: 'Cart',
     components: {
       CartItem,
       CartSummary,
-      CartNav,
+      CartNav
     },
   };
 </script>

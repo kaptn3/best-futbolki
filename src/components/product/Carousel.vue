@@ -43,8 +43,8 @@
     props: {
       slides: {
         type: Array,
-        required: true,
-      },
+        required: true
+      }
     },
     data() {
       return {
@@ -53,7 +53,7 @@
         direction: 1,
         transitionName: 'fade',
         height: 0,
-        int: 0,
+        int: 0
       };
     },
     methods: {
@@ -81,7 +81,7 @@
           return `${document.querySelector('.slide > img').offsetHeight}px`;
         }
         return '0px';
-      },
+      }
     },
     mounted() {
       this.show = true;
@@ -98,7 +98,7 @@
     },
     beforeDestroy() {
       window.removeEventListener('resize', () => { this.height = this.slideHeight(); });
-    },
+    }
   };
 </script>
 

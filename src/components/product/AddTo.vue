@@ -20,15 +20,15 @@
         items: [
           {
             name: 'Add to favorite',
-            icon: '/img/icons/like.svg',
+            icon: '/img/icons/like.svg'
           },
           {
             name: 'Add to compare',
-            icon: '/img/icons/compare.svg',
-          },
-        ],
+            icon: '/img/icons/compare.svg'
+          }
+        ]
       };
-    },
+    }
   };
 </script>
 

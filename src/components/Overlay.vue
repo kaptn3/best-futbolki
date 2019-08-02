@@ -11,8 +11,8 @@
     methods: {
       hide() {
         this.$store.commit('toggleModal', null);
-      },
-    },
+      }
+    }
   };
 </script>
 

@@ -7,13 +7,13 @@
 </template>
 
 <script>
-  import Overlay from '@/components/Overlay.vue';
-  import AHeader from '@/components/Header.vue';
+  import Overlay from '@/components/Overlay';
+  import AHeader from '@/components/Header';
 
   export default {
     components: {
       Overlay,
-      AHeader,
-    },
+      AHeader
+    }
   };
 </script>

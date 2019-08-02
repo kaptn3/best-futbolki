@@ -42,8 +42,8 @@
       },
       discount() {
         return this.price('old_price') - this.price('price');
-      },
-    },
+      }
+    }
   };
 </script>
 

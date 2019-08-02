@@ -45,7 +45,7 @@
 </template>
 
 <script>
-  import Quantity from '../product/Quantity.vue';
+  import Quantity from '../product/Quantity';
 
   export default {
     name: 'CartItem',
@@ -53,7 +53,7 @@
     props: {
       cart: {
         type: Object,
-        required: true,
+        required: true
       },
     },
     methods: {

@@ -10,12 +10,12 @@ export default new Router({
   routes: [
     {
       path: '/',
-      redirect: '/product',
+      redirect: '/product'
     },
     {
       path: '/product',
       name: 'product',
-      component: Product,
-    },
-  ],
+      component: Product
+    }
+  ]
 });

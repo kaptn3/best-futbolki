@@ -16,11 +16,11 @@
 </template>
 
 <script>
-  import AButton from '../Button.vue';
+  import AButton from '../Button';
 
   export default {
     name: 'CartNav',
-    components: { AButton },
+    components: { AButton }
   };
 </script>
 

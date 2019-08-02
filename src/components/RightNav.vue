@@ -51,29 +51,29 @@
         nav: [
           {
             name: 'search',
-            icon: '/img/icons/search.svg',
+            icon: '/img/icons/search.svg'
           },
           {
             name: 'wishlist',
-            icon: '/img/icons/like.svg',
+            icon: '/img/icons/like.svg'
           },
           {
             name: 'cart',
-            icon: '/img/icons/cart.svg',
+            icon: '/img/icons/cart.svg'
           },
           {
             name: 'profile',
-            icon: '/img/icons/user.svg',
-          },
+            icon: '/img/icons/user.svg'
+          }
         ],
-        modal: '',
+        modal: ''
       };
     },
     methods: {
       open(box) {
         this.$store.commit('toggleModal', box);
-      },
-    },
+      }
+    }
   };
 </script>
 

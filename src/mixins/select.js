@@ -22,6 +22,6 @@ export default {
         return false;
       });
       this.item = this.itemData[0].name;
-    },
-  },
+    }
+  }
 };

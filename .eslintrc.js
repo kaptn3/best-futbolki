@@ -1,11 +1,11 @@
 module.exports = {
   root: true,
   env: {
-    node: true,
+    node: true
   },
   extends: [
     'plugin:vue/essential',
-    '@vue/airbnb',
+    '@vue/airbnb'
   ],
   rules: {
     'no-console': process.env.NODE_ENV === 'production' ? 'error' : 'off',
@@ -14,11 +14,13 @@ module.exports = {
     'vue/script-indent': ['warn', 2, {
       'baseIndent': 1
     }],
-    "import/no-unresolved": "off",
+    'import/no-unresolved': 'off',
+    'import/extensions': ['.vue'],
     'no-plusplus': 'off',
     'quote-props': 'off',
+    'comma-dangle': 'off'
   },
   parserOptions: {
-    parser: 'babel-eslint',
-  },
+    parser: 'babel-eslint'
+  }
 };

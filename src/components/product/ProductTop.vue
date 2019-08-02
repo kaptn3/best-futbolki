@@ -42,13 +42,13 @@
 
 <script>
   import axios from 'axios';
-  import Carousel from './Carousel.vue';
-  import BreadCrumbs from './BreadCrumbs.vue';
-  import SelectColor from '../SelectColor.vue';
-  import SelectSize from '../SelectSize.vue';
-  import Quantity from './Quantity.vue';
-  import AButton from '../Button.vue';
-  import AddTo from './AddTo.vue';
+  import Carousel from './Carousel';
+  import BreadCrumbs from './BreadCrumbs';
+  import SelectColor from '../SelectColor';
+  import SelectSize from '../SelectSize';
+  import Quantity from './Quantity';
+  import AButton from '../Button';
+  import AddTo from './AddTo';
 
   export default {
     name: 'ProductTop',
@@ -59,7 +59,7 @@
       SelectSize,
       Quantity,
       AButton,
-      AddTo,
+      AddTo
     },
     data() {
       return {
@@ -74,7 +74,7 @@
         variants: [],
         res: {},
         quantity: 1,
-        id: 0,
+        id: 0
       };
     },
     mounted() {
@@ -147,10 +147,10 @@
           'photo': this.product.sides[0].small,
           'old_price': this.product.old_price,
           'price': this.product.price,
-          'print_type_name': this.product.print_type_name,
+          'print_type_name': this.product.print_type_name
         };
         this.$store.commit('addToCart', selected);
-      },
+      }
     },
   };
 </script>

@@ -23,27 +23,27 @@
         menu: [
           {
             name: 'Default Category',
-            link: '#',
+            link: '#'
           },
           {
             name: 'Women',
-            link: '#',
+            link: '#'
           },
           {
             name: 'Tops',
-            link: '#',
+            link: '#'
           },
           {
             name: 'Tees',
-            link: '#',
+            link: '#'
           },
           {
             name: 'Radiant Tee',
-            link: '#',
-          },
-        ],
+            link: '#'
+          }
+        ]
       };
-    },
+    }
   };
 </script>
 

@@ -28,29 +28,29 @@
 </template>
 
 <script>
-  import MenuItem from './MenuItem.vue';
+  import MenuItem from './MenuItem';
 
   export default {
     name: 'Menu',
     components: {
-      MenuItem,
+      MenuItem
     },
     data() {
       return {
         menu: [
           {
             name: 'Home',
-            link: '#',
+            link: '#'
           },
           {
             name: 'Women',
-            link: '#',
+            link: '#'
           },
           {
             name: 'Men',
-            link: '#',
-          },
-        ],
+            link: '#'
+          }
+        ]
       };
     },
     methods: {
@@ -59,8 +59,8 @@
       },
       closeMenu() {
         this.$store.commit('toggleModal', null);
-      },
-    },
+      }
+    }
   };
 </script>
 

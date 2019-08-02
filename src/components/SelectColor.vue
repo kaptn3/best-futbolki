@@ -33,18 +33,18 @@
     props: {
       data: {
         type: Array,
-        required: true,
+        required: true
       },
       res: {
         type: Object,
-        required: true,
-      },
+        required: true
+      }
     },
     data() {
       return {
-        object: 'color',
+        object: 'color'
       };
-    },
+    }
   };
 </script>
 

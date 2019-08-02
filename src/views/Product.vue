@@ -5,11 +5,11 @@
 </template>
 
 <script>
-  import ProductTop from '@/components/product/ProductTop.vue';
+  import ProductTop from '@/components/product/ProductTop';
 
   export default {
     components: {
-      ProductTop,
-    },
+      ProductTop
+    }
   };
 </script>

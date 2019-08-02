@@ -9,17 +9,17 @@
 </template>
 
 <script>
-  import AMenu from './Menu.vue';
-  import Logotype from './Logotype.vue';
-  import RightNav from './RightNav.vue';
+  import AMenu from './Menu';
+  import Logotype from './Logotype';
+  import RightNav from './RightNav';
 
   export default {
     name: 'Header',
     components: {
       AMenu,
       Logotype,
-      RightNav,
-    },
+      RightNav
+    }
   };
 </script>
 
