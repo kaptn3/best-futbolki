@@ -40,8 +40,12 @@
     align-items: center;
     justify-content: center;
 
-    &:hover,
-    &:focus {
+    &:disabled {
+      opacity: .5;
+    }
+
+    &:hover:not(:disabled),
+    &:focus:not(:disabled) {
       opacity: .9;
     }
   }

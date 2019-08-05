@@ -11,6 +11,7 @@
         text="Go to checkout"
         el="router-link"
         to="/checkout"
+        @click.native="$store.commit('toggleModal', null)"
       />
     </div>
   </div>

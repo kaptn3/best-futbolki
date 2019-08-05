@@ -42,7 +42,7 @@
       CartItem,
       CartSummary,
       CartNav
-    },
+    }
   };
 </script>
 
