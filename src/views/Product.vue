@@ -1,13 +1,23 @@
 <template>
   <div>
     <product-top
+      v-if="!error"
       :id="id"
       :data="data"
       :name="name"
       :model="model"
       :relations="relations"
     />
-    <product-detail :details="details"/>
+    <div
+      v-if="error"
+      class="product__error"
+    >
+      <h1>{{ error }}</h1>
+    </div>
+    <product-detail
+      v-if="!error"
+      :details="details"
+    />
   </div>
 </template>
 
@@ -28,11 +38,13 @@
         id: 0,
         name: '',
         model: '',
-        details: []
+        details: [],
+        error: ''
       };
     },
     mounted() {
-      const url = `${process.env.VUE_APP_API}/data.json`;
+      const productId = this.$route.params.id; // product id for get API
+      const url = `${process.env.VUE_APP_API}/${productId}.json`;
       const urlRef = `${process.env.VUE_APP_API}/reference.json`;
 
       axios.get(url)
@@ -48,9 +60,17 @@
         .then((res) => {
           this.relations = res.data;
         })
-        .catch((error) => {
-          console.log(error);
+        .catch(() => {
+          this.error = 'Товар не найден!';
         });
     }
   };
 </script>
+
+<style lang="scss" scoped>
+  .product__error {
+    text-align: center;
+    margin-top: 50px;
+    font-size: 26px;
+  }
+</style>

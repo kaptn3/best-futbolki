@@ -10,10 +10,10 @@ export default new Router({
   routes: [
     {
       path: '/',
-      redirect: '/product'
+      redirect: '/product/658981_mansmockfull'
     },
     {
-      path: '/product',
+      path: '/product/:id',
       name: 'product',
       component: Product
     }
