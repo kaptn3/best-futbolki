@@ -9,9 +9,8 @@
     <div class="cart-nav__btns">
       <a-button
         text="Go to checkout"
-      />
-      <a-button
-        text="Instant Checkout"
+        el="router-link"
+        to="/checkout"
       />
     </div>
   </div>
