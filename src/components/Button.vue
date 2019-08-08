@@ -1,7 +1,11 @@
 <template>
-  <button @click="$emit('click')">
+  <component
+    :is="el"
+    :to="to"
+    @click="$emit('click')"
+  >
     {{ text }}
-  </button>
+  </component>
 </template>
 
 <script>
@@ -11,27 +15,44 @@
       text: {
         type: String,
         required: true
+      },
+      el: {
+        type: String,
+        default: 'button'
+      },
+      to: {
+        type: String,
+        default: ''
       }
     }
   };
 </script>
 
 <style lang="scss" scoped>
-  button {
+  button,
+  a {
     background-color: #333;
     color: #fff;
     font-size: 18px;
     min-width: 250px;
     height: 60px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
 
-    &:hover,
-    &:focus {
+    &:disabled {
+      opacity: .5;
+    }
+
+    &:hover:not(:disabled),
+    &:focus:not(:disabled) {
       opacity: .9;
     }
   }
 
   @media screen and (max-width: 767px) {
-    button {
+    button,
+    a {
       width: 100%;
     }
   }

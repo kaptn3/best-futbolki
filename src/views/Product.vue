@@ -44,8 +44,8 @@
     },
     mounted() {
       const productId = this.$route.params.id; // product id for get API
-      const url = `${process.env.VUE_APP_API}/${productId}.json`;
-      const urlRef = `${process.env.VUE_APP_API}/reference.json`;
+      const url = `${process.env.VUE_APP_API}/test_api.php/?i=${productId}`;
+      const urlRef = `${process.env.VUE_APP_API}/catalog_references.php`;
 
       axios.get(url)
         .then((res) => {
