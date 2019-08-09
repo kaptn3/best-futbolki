@@ -4,24 +4,24 @@
       <a-input
         id="last-name"
         name="last-name"
-        placeholder="Фамилия *"
+        placeholder="Фамилия"
       />
       <a-input
         id="first-name"
         name="first-name"
-        placeholder="Имя *"
+        placeholder="Имя"
       />
       <a-input
         id="middle-name"
         name="middle-name"
-        placeholder="Отчество *"
+        placeholder="Отчество"
       />
     </div>
     <div class="checkout__input-group">
       <a-input
         id="phone"
         name="phone"
-        placeholder="Телефон *"
+        placeholder="Телефон"
         type="phone"
       />
       <a-input
@@ -32,15 +32,12 @@
       />
     </div>
     <div class="checkout__input-group">
-      <a-input
-        id="city"
-        name="city"
-        placeholder="Город *"
-      />
+      <filter-select/>
     </div>
     <div class="checkout__input-group">
       <a-input
         id="address"
+        :required="false"
         name="address"
         placeholder="Адрес"
       />
@@ -56,12 +53,14 @@
 <script>
   import AInput from '@/components/Input';
   import AButton from '@/components/Button';
+  import FilterSelect from '@/components/FilterSelect';
 
   export default {
     name: 'CheckoutForm',
     components: {
       AInput,
-      AButton
+      AButton,
+      FilterSelect
     }
   };
 </script>

@@ -2,11 +2,17 @@
   <div>
     <input
       :id="id"
+      v-model="input"
       :type="type"
       :name="name"
+      :autocomplete="autocomplete"
+      :required="required"
     >
-    <label :for="id">
-      {{ placeholder }}
+    <label
+      :for="id"
+      :class="{ 'filled': input.length > 0 }"
+    >
+      {{ placeholder }}{{ required ? ' *' : '' }}
     </label>
   </div>
 </template>
@@ -30,6 +36,31 @@
       placeholder: {
         type: String,
         required: true
+      },
+      autocomplete: {
+        type: String,
+        default: 'on'
+      },
+      required: {
+        type: Boolean,
+        default: true
+      },
+      value: {
+        type: String,
+        default: ''
+      }
+    },
+    data() {
+      return {
+        input: this.value
+      };
+    },
+    watch: {
+      value(value) {
+        this.input = value;
+      },
+      input(value) {
+        this.$emit('input', value);
       }
     }
   };
@@ -62,7 +93,8 @@
     transition: .2s top, .2s font-size;
   }
 
-  input:focus ~ label {
+  input:focus ~ label,
+  .filled {
     top: -10px;
     font-size: 14px;
     color: #4dba87;
