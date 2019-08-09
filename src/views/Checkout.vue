@@ -1,92 +1,45 @@
 <template>
-  <div class="container">
+  <div class="container checkout">
     <h1>Корзина</h1>
     <h2>Ваши данные</h2>
-    <form>
-      <div class="checkout__input-group">
-        <a-input
-          id="last-name"
-          name="last-name"
-          placeholder="Фамилия *"
-        />
-        <a-input
-          id="first-name"
-          name="first-name"
-          placeholder="Имя *"
-        />
-        <a-input
-          id="middle-name"
-          name="middle-name"
-          placeholder="Отчество *"
+    <div class="checkout__box">
+      <checkout-form/>
+      <div class="checkout__right">
+        <cart-item
+          v-for="(item, index) in $store.state.cart"
+          :key="index"
+          :cart="item"
+          :checkout="true"
         />
       </div>
-      <div class="checkout__input-group">
-        <a-input
-          id="phone"
-          name="phone"
-          placeholder="Телефон"
-          type="phone"
-        />
-        <a-input
-          id="email"
-          name="email"
-          placeholder="Email"
-          type="email"
-        />
-      </div>
-      <div class="checkout__input-group">
-        <a-input
-          id="city"
-          name="city"
-          placeholder="Город"
-        />
-      </div>
-      <div class="checkout__input-group">
-        <a-input
-          id="address"
-          name="address"
-          placeholder="Адрес"
-        />
-      </div>
-      <a-button
-        class="checkout__btn"
-        text="Оформить заказ"
-        disabled
-      />
-    </form>
+    </div>
   </div>
 </template>
 
 <script>
-  import AInput from '@/components/Input';
-  import AButton from '@/components/Button';
+  import CheckoutForm from '@/components/CheckoutForm';
+  import CartItem from '@/components/cart/CartItem';
 
   export default {
     name: 'Checkout',
     components: {
-      AInput,
-      AButton
+      CheckoutForm,
+      CartItem
     }
   };
 </script>
 
 <style lang="scss" scoped>
   .checkout {
-    &__input-group {
+    &__box {
       display: flex;
-
-      div {
-        width: 100%;
-      }
-
-      & > div:not(:last-child) {
-        margin-right: 10px;
-      }
+      justify-content: space-between;
     }
 
-    &__btn {
-      width: 100%;
-      margin-top: 26px;
+    &__right {
+      border: 2px solid #bdbdbd;
+      border-radius: 8px;
+      padding: 30px 20px;
     }
   }
 </style>

@@ -2,6 +2,7 @@
   <div class="cart-item">
     <img
       :src="cart.photo"
+      :class="{ 'cart-item__img': checkout }"
       alt="Product photo"
     >
     <div class="cart-item__data">
@@ -21,12 +22,17 @@
         Size: {{ cart.sizeName }}
       </span>
       <span
+        v-if="!checkout"
         :class="{ 'green': cart.available, 'red': !cart.available }"
         class="cart-item__stock"
       >
         In stock!
       </span>
+      <span v-if="checkout">
+        Количество: {{ cart.quantity }}
+      </span>
       <quantity
+        v-if="!checkout"
         class="cart-item__quantity"
         :value="Number(cart.quantity)"
         @input="changeCount(cart, $event)"
@@ -34,8 +40,14 @@
     </div>
     <div>
       <span class="cart-item__price">{{ cart.price }} руб</span>
-      <span class="cart-item__price_old">{{ cart.old_price }} руб</span>
+      <span
+        v-if="!checkout"
+        class="cart-item__price_old"
+      >
+        {{ cart.old_price }} руб
+      </span>
       <button
+        v-if="!checkout"
         class="cart-item__remove"
         @click="$store.commit('removeFromCart', cart)"
       >
@@ -56,6 +68,10 @@
         type: Object,
         required: true
       },
+      checkout: {
+        type: Boolean,
+        default: false
+      }
     },
     methods: {
       changeCount(cart, value) {
@@ -79,6 +95,10 @@
   .cart-item {
     display: flex;
     align-items: flex-start;
+
+    &__img {
+      height: 150px;
+    }
 
     span {
       display: block;
