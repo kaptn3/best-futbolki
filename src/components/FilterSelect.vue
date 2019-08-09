@@ -72,6 +72,7 @@
       selectItem(value) {
         this.isOpen = false;
         this.selected = true;
+        this.$store.commit('updateDelivery', value);
         this.searchText = value;
       }
     }

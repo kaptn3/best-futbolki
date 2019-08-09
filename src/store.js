@@ -22,7 +22,8 @@ export default new Vuex.Store({
     modalVisible: false,
     modalComponent: null,
     cart,
-    cartCount: Number(cartCount)
+    cartCount: Number(cartCount),
+    cityDelivery: ''
   },
   mutations: {
     toggleModal(state, componentName) {
@@ -71,6 +72,10 @@ export default new Vuex.Store({
       this.commit('updateCartCount');
       window.localStorage.setItem('cart', JSON.stringify(state.cart));
       window.localStorage.setItem('cartCount', state.cart.length);
+    },
+    updateDelivery(state, value) {
+      console.log(state.cityDelivery);
+      state.cityDelivery = value;
     }
   }
 });

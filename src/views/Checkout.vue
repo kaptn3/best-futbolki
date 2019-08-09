@@ -12,6 +12,7 @@
           :checkout="true"
         />
       </div>
+      <delivery/>
     </div>
   </div>
 </template>
@@ -19,12 +20,14 @@
 <script>
   import CheckoutForm from '@/components/CheckoutForm';
   import CartItem from '@/components/cart/CartItem';
+  import Delivery from '@/components/checkout/Delivery';
 
   export default {
     name: 'Checkout',
     components: {
       CheckoutForm,
-      CartItem
+      CartItem,
+      Delivery
     }
   };
 </script>

@@ -1,5 +1,5 @@
 <template>
-  <form>
+  <div>
     <div class="checkout__input-group">
       <a-input
         id="last-name"
@@ -47,7 +47,7 @@
       text="Оформить заказ"
       disabled
     />
-  </form>
+  </div>
 </template>
 
 <script>
