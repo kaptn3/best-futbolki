@@ -23,7 +23,9 @@ export default new Vuex.Store({
     modalComponent: null,
     cart,
     cartCount: Number(cartCount),
-    cityDelivery: ''
+    cityDelivery: '',
+    pointIdDelivery: 0,
+    address: ''
   },
   mutations: {
     toggleModal(state, componentName) {

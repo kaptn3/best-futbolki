@@ -12,8 +12,8 @@
           :checkout="true"
         />
       </div>
-      <delivery/>
     </div>
+    <delivery/>
   </div>
 </template>
 

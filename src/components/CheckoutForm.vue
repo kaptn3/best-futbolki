@@ -37,10 +37,17 @@
     <div class="checkout__input-group">
       <a-input
         id="address"
+        v-model="$store.state.address"
         :required="false"
         name="address"
         placeholder="Адрес"
       />
+      <input
+        v-model="$store.state.pointIdDelivery"
+        type="text"
+        name="point-id"
+        hidden
+      >
     </div>
     <a-button
       class="checkout__btn"
