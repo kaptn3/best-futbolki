@@ -76,7 +76,6 @@ export default new Vuex.Store({
       window.localStorage.setItem('cartCount', state.cart.length);
     },
     updateDelivery(state, value) {
-      console.log(state.cityDelivery);
       state.cityDelivery = value;
     }
   }

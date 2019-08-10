@@ -1,7 +1,8 @@
 <template>
-  <div>
+  <div class="map map-modal">
+    <slot/>
     <yandex-map
-      v-if="points.length > 0"
+      v-if="points"
       :coords="coords"
       :use-object-manager="true"
       zoom="10"
@@ -44,7 +45,7 @@
     props: {
       points: {
         type: Array,
-        required: true
+        default: () => []
       }
     },
     data() {

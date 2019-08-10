@@ -1,14 +1,37 @@
 <template>
-  <div>
+  <div class="delivery">
     <h3>Способ доставки</h3>
-    <label
+    <div
       v-for="(delivery, index) in deliveries"
       :key="index"
+      class="delivery__item"
     >
-      <input type="radio">
-      {{ delivery.title }}
-    </label>
-    <select-point :points="points"/>
+      <label>
+        <input
+          v-if="city"
+          v-model="type"
+          type="radio"
+          name="type"
+          :value="delivery.alias"
+        >
+        <span class="delivery__name">{{ delivery.title }}</span>
+      </label>
+      <button
+        v-if="delivery.alias === 'merge_postamat_delivery'"
+        class="delivery__select"
+        @click="togglePoints"
+      >
+        Выбрать пункт выдачи
+      </button>
+    </div>
+    <select-point
+      v-if="isOpenModal && points"
+      :points="points"
+    >
+      <button @click="togglePoints">
+        Close
+      </button>
+    </select-point>
   </div>
 </template>
 
@@ -22,7 +45,10 @@
     data() {
       return {
         deliveries: [],
-        points: []
+        points: [],
+        type: 0,
+        group: [],
+        isOpenModal: false
       };
     },
     computed: {
@@ -32,6 +58,19 @@
     },
     watch: {
       city() {
+        this.getData();
+      }
+    },
+    mounted() {
+      if (this.city) {
+        this.getData();
+      }
+    },
+    methods: {
+      togglePoints() {
+        this.isOpenModal = !this.isOpenModal;
+      },
+      getData() {
         const body = {
           user_id: 0,
           cart: [],
@@ -59,9 +98,38 @@
 
         axios(options)
           .then((res) => {
+            this.deliveries = res.data.deliveries;
             this.points = res.data.deliveries[0].pickup_points;
+            this.group = res.data.groups;
           });
       }
     }
   };
 </script>
+
+<style lang="scss" scoped>
+  label {
+    display: block;
+    font-size: 1rem;
+    padding: 10px 0;
+  }
+
+  button {
+    color: #4dba87;
+    font-size: 14px;
+    font-style: italic;
+  }
+
+  .delivery {
+    padding: 40px 0;
+
+    &__name {
+      vertical-align: middle;
+      padding-left: 18px;
+    }
+
+    &__item {
+      margin-bottom: 10px;
+    }
+  }
+</style>
