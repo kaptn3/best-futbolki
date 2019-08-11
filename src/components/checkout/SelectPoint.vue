@@ -1,34 +1,44 @@
 <template>
   <div class="map map-modal">
-    <slot/>
-    <yandex-map
-      v-if="points"
-      :coords="coords"
-      :use-object-manager="true"
-      zoom="10"
-      :init-without-markers="true"
-    >
-      <ymap-marker
-        v-for="(point, index) in points"
-        :key="point.id"
-        :marker-id="point.id"
-        :coords="[point.latitude, point.longitude]"
-        :balloon="{
-          header: balloonHeader(point.name),
-          body: balloonBody(index),
-          footer: balloonFooter(point)
-        }"
-        :cluster-name="point.delivery_brand_alias"
-        :icon="{ color: point.delivery_brand_color }"
-      />
-    </yandex-map>
-    <div class="map__baloon-btns-hidden">
-      <button
-        v-for="point in points"
-        :key="point.id"
-        class="map__baloon-btn"
-        @click="onClick(point.id, point.address)"
-      />
+    <div class="map-modal__wrapper">
+      <div class="map-modal__inner">
+        <slot/>
+        <div
+          v-if="pointSelected"
+          class="map__selected"
+        >
+          Выбран: {{ pointSelected }}
+        </div>
+        <yandex-map
+          v-if="points"
+          :coords="coords"
+          :use-object-manager="true"
+          zoom="10"
+          :init-without-markers="true"
+        >
+          <ymap-marker
+            v-for="(point, index) in points"
+            :key="point.id"
+            :marker-id="point.id"
+            :coords="[point.latitude, point.longitude]"
+            :balloon="{
+              header: balloonHeader(point.name),
+              body: balloonBody(index),
+              footer: balloonFooter(point)
+            }"
+            :cluster-name="point.delivery_brand_alias"
+            :icon="{ color: point.delivery_brand_color }"
+          />
+        </yandex-map>
+        <div class="map__baloon-btns-hidden">
+          <button
+            v-for="point in points"
+            :key="point.id"
+            class="map__baloon-btn"
+            @click="onClick(point.id, point.address)"
+          />
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -52,7 +62,8 @@
       return {
         markerIcon: {
           color: 'red'
-        }
+        },
+        pointSelected: ''
       };
     },
     computed: {
@@ -64,6 +75,7 @@
       onClick(id, address) {
         this.$store.state.pointIdDelivery = id;
         this.$store.state.address = address;
+        this.pointSelected = address;
       },
       balloonHeader(name) {
         return `
@@ -130,6 +142,33 @@
   height: 600px;
 }
 
+.map-modal {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  overflow-y: scroll;
+  z-index: 99;
+  width: 100%;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.2);
+
+  &__wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  &__inner {
+    width: 80%;
+    margin: 40px 20px;
+    background: #fff;
+    border-radius: 8px;
+    padding: 20px;
+  }
+}
+
 .map {
   &__baloon-btns-hidden {
     display: none;
@@ -140,6 +179,10 @@
     color: #fff;
     padding: 10px;
     display: block;
+  }
+
+  &__selected {
+    padding: 20px 0;
   }
 }
 </style>

@@ -28,9 +28,10 @@
       v-if="isOpenModal && points"
       :points="points"
     >
-      <button @click="togglePoints">
-        Close
-      </button>
+      <button
+        class="map-modal__close-btn"
+        @click="togglePoints"
+      />
     </select-point>
   </div>
 </template>
@@ -114,12 +115,6 @@
     padding: 10px 0;
   }
 
-  button {
-    color: #4dba87;
-    font-size: 14px;
-    font-style: italic;
-  }
-
   .delivery {
     padding: 40px 0;
 
@@ -131,5 +126,21 @@
     &__item {
       margin-bottom: 10px;
     }
+
+    &__select {
+      color: #4dba87;
+      font-size: 14px;
+      font-style: italic;
+    }
+  }
+
+  .map-modal__close-btn {
+    display: block;
+    width: 20px;
+    height: 20px;
+    background: url(/img/icons/close.svg) no-repeat center;
+    background-size: contain;
+    margin-left: auto;
+    margin-bottom: 20px;
   }
 </style>
