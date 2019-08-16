@@ -15,7 +15,7 @@
         @input="changeItem($event.target.value)"
       >
       <span class="size">
-        {{ size.alias.substring(0, size.alias.indexOf('_')) }}
+        {{ size.name }}
       </span>
     </label>
     <router-link
@@ -63,17 +63,13 @@
   label {
     display: inline-block;
     margin-right: 10px;
-    margin-bottom: 10px;
+    padding-top: 0;
   }
 
   .current-size {
     display: block;
     color: #4f4f4f;
     margin-bottom: 15px;
-
-    b {
-      text-transform: uppercase;
-    }
   }
 
   input {
@@ -84,11 +80,11 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: 40px;
     height: 40px;
     border: 1px solid #bdbdbd;
     color: #bdbdbd;
-    text-transform: uppercase;
+    padding: 0 5px;
+    font-size: 13px;
 
     &:hover,
     &:focus {
