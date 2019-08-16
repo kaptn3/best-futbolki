@@ -16,11 +16,18 @@
         <input
           v-model="type"
           type="radio"
-          name="delivery-type"
+          name="delivery"
           :value="delivery.alias"
+          required
         >
         <span class="delivery__name">{{ delivery.title }}</span>
       </label>
+      <input
+        v-model="$store.state.pointIdDelivery"
+        name="pickup_point_id"
+        type="text"
+        hidden
+      >
       <button
         v-if="delivery.alias === 'merge_postamat_delivery'"
         class="delivery__select"
@@ -76,9 +83,6 @@
       city() {
         this.getData();
       }
-    },
-    mounted() {
-      this.getData();
     },
     methods: {
       togglePoints() {

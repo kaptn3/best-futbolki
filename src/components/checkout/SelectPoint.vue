@@ -22,12 +22,12 @@
             :marker-id="point.id"
             :coords="[point.latitude, point.longitude]"
             :balloon="{
-              header: balloonHeader(point.name),
+              header: balloonHeader(point.delivery_brand_name, point.name),
               body: balloonBody(index),
               footer: balloonFooter(point)
             }"
             :cluster-name="point.delivery_brand_alias"
-            :icon="{ color: point.delivery_brand_color }"
+            :icon="{ color: 'red' }"
           />
         </yandex-map>
         <div class="map__baloon-btns-hidden">
@@ -35,6 +35,7 @@
             v-for="point in points"
             :key="point.id"
             class="map__baloon-btn"
+            type="button"
             @click="onClick(point.id, point.address)"
           />
         </div>
@@ -77,15 +78,15 @@
         this.$store.state.address = address;
         this.pointSelected = address;
       },
-      balloonHeader(name) {
+      balloonHeader(type, name) {
         return `
-          Пункт выдачи ${name}
+          Пункт выдачи ${type}: ${name}
         `;
       },
       balloonBody(index) {
         return `
           <div class="map__baloon">
-            <button onclick="javascript: document.querySelectorAll('.map__baloon-btn')[${index}]
+            <button type="button" onclick="javascript: document.querySelectorAll('.map__baloon-btn')[${index}]
               .click();" class="map__baloon-choice">Выбрать</button>
           </div>
         `;
@@ -143,7 +144,7 @@
 }
 
 .map-modal {
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   right: 0;
