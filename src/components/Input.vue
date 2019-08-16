@@ -7,6 +7,7 @@
       :name="name"
       :autocomplete="autocomplete"
       :required="required"
+      @blur="$emit('blur')"
     >
     <label
       :for="id"

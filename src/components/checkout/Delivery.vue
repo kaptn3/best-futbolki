@@ -1,5 +1,11 @@
 <template>
-  <div class="delivery">
+  <div
+    v-if="city"
+    class="delivery"
+  >
+    <loading
+      v-if="isLoading"
+    />
     <h3>Способ доставки</h3>
     <div
       v-for="(delivery, index) in deliveries"
@@ -8,10 +14,9 @@
     >
       <label>
         <input
-          v-if="city"
           v-model="type"
           type="radio"
-          name="type"
+          name="delivery-type"
           :value="delivery.alias"
         >
         <span class="delivery__name">{{ delivery.title }}</span>
@@ -19,6 +24,7 @@
       <button
         v-if="delivery.alias === 'merge_postamat_delivery'"
         class="delivery__select"
+        type="button"
         @click="togglePoints"
       >
         Выбрать пункт выдачи
@@ -33,23 +39,32 @@
         @click="togglePoints"
       />
     </select-point>
+    <payments :payments="payments"/>
   </div>
 </template>
 
 <script>
   import axios from 'axios';
   import SelectPoint from './SelectPoint';
+  import Payments from './Payments';
+  import Loading from '../Loading';
 
   export default {
     name: 'Delivery',
-    components: { SelectPoint },
+    components: {
+      SelectPoint,
+      Payments,
+      Loading
+    },
     data() {
       return {
         deliveries: [],
         points: [],
         type: 0,
         group: [],
-        isOpenModal: false
+        isOpenModal: false,
+        payments: [],
+        isLoading: true
       };
     },
     computed: {
@@ -63,15 +78,14 @@
       }
     },
     mounted() {
-      if (this.city) {
-        this.getData();
-      }
+      this.getData();
     },
     methods: {
       togglePoints() {
         this.isOpenModal = !this.isOpenModal;
       },
       getData() {
+        this.isLoading = true;
         const body = {
           user_id: 0,
           cart: [],
@@ -99,9 +113,12 @@
 
         axios(options)
           .then((res) => {
+            console.log(res);
             this.deliveries = res.data.deliveries;
             this.points = res.data.deliveries[0].pickup_points;
             this.group = res.data.groups;
+            this.payments = res.data.payments;
+            this.isLoading = false;
           });
       }
     }
@@ -117,6 +134,7 @@
 
   .delivery {
     padding: 40px 0;
+    position: relative;
 
     &__name {
       vertical-align: middle;

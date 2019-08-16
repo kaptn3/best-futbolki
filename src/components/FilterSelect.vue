@@ -6,6 +6,7 @@
       name="city"
       placeholder="Город"
       autocomplete="off"
+      @blur="inputBlur"
     />
     <ul
       id="city-select"
@@ -48,10 +49,9 @@
     watch: {
       searchText() {
         if (this.selected) {
-          this.isOpen = false;
           this.selected = false;
+          this.isOpen = false;
         } else {
-          this.isOpen = this.searchText.length > 0;
           this.filterCities();
         }
       }
@@ -68,12 +68,18 @@
       filterCities() {
         this.cities = this.data.filter(item => item.city.toLowerCase()
           .indexOf(this.searchText.toLowerCase()) === 0);
+        this.isOpen = this.cities.length > 0;
       },
       selectItem(value) {
         this.isOpen = false;
         this.selected = true;
-        this.$store.commit('updateDelivery', value);
         this.searchText = value;
+        this.$store.state.cityDelivery = this.searchText;
+      },
+      inputBlur() {
+        if (!this.isOpen) {
+          this.$store.state.cityDelivery = this.searchText;
+        }
       }
     }
   };
@@ -91,6 +97,7 @@
     background: #fff;
     z-index: 2;
     width: 100%;
+    box-shadow: 0 1px 6px 0 rgba(32, 33, 36, .28);
   }
 
   li {
