@@ -1,6 +1,11 @@
 <template>
   <div>
     <span class="current-color">Color: <b>{{ item }}</b></span>
+    <input
+      class="current-color-alias"
+      :value="alias"
+      hidden
+    >
     <label
       v-for="(color, index) in itemData"
       :key="index"

@@ -36,7 +36,7 @@
         const data = this.$store.state.cart;
         let price = 0;
         for (let i = 0; i < data.length; i++) {
-          price += data[i][name] * Number(data[i].quantity);
+          price += data[i][name] * Number(data[i].count);
         }
         return price;
       },

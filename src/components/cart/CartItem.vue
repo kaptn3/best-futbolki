@@ -23,18 +23,18 @@
       </span>
       <span
         v-if="!checkout"
-        :class="{ 'green': cart.available, 'red': !cart.available }"
+        :class="{ 'green': cart.in_stock, 'red': !cart.in_stock }"
         class="cart-item__stock"
       >
         In stock!
       </span>
       <span v-if="checkout">
-        Количество: {{ cart.quantity }}
+        Количество: {{ cart.count }}
       </span>
       <quantity
         v-if="!checkout"
         class="cart-item__quantity"
-        :value="Number(cart.quantity)"
+        :value="Number(cart.count)"
         @input="changeCount(cart, $event)"
       />
     </div>
@@ -77,7 +77,7 @@
       changeCount(cart, value) {
         if (value > 0) {
           const index = this.$store.state.cart.indexOf(cart);
-          this.$store.state.cart[index].quantity = value;
+          this.$store.state.cart[index].count = value;
           this.$store.commit('saveCart');
         }
       },

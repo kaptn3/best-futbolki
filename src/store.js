@@ -5,13 +5,13 @@ import overlay from '@/assets/js/overlay';
 
 Vue.use(Vuex);
 
-// get local storage, quantity
+// get local storage, count
 let cart = JSON.parse(window.localStorage.getItem('cart'));
 let cartCount = 0;
 if (cart) {
   const product = cart;
   for (let i = 0; i < cart.length; i++) {
-    cartCount += Number(product[i].quantity);
+    cartCount += Number(product[i].count);
   }
 } else {
   cart = [];
@@ -36,7 +36,7 @@ export default new Vuex.Store({
     addToCart(state, item) {
       let found = {};
       if (state.cart) {
-        // find dublicate product in cart for update quantity
+        // find dublicate product in cart for update count
         found = state.cart.find((product) => {
           let dublicate = 0;
           const attr = ['model', 'id', 'sizeName', 'colorName'];
@@ -47,7 +47,7 @@ export default new Vuex.Store({
         });
       }
       if (found) {
-        found.quantity += item.quantity;
+        found.count += item.count;
       } else {
         state.cart.push(item);
       }
@@ -58,7 +58,7 @@ export default new Vuex.Store({
 
       if (index > -1) {
         const product = state.cart[index];
-        state.cartCount -= Number(product.quantity);
+        state.cartCount -= Number(product.count);
         state.cart.splice(index, 1);
       }
       this.commit('saveCart');
@@ -67,7 +67,7 @@ export default new Vuex.Store({
       // counting
       state.cartCount = 0;
       for (let i = 0; i < state.cart.length; i++) {
-        state.cartCount += Number(state.cart[i].quantity);
+        state.cartCount += Number(state.cart[i].count);
       }
     },
     saveCart(state) {

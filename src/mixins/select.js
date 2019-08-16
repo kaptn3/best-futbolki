@@ -3,11 +3,14 @@ export default {
     return {
       item: '',
       itemData: [],
+      alias: ''
     };
   },
   methods: {
     changeItem(value) {
-      this.item = (this.itemData.filter(item => item.id === value))[0].name;
+      const filter = (this.itemData.filter(item => item.id === value))[0];
+      this.item = filter.name;
+      this.alias = filter.alias;
       this.$emit('model', value);
     },
   },
@@ -22,6 +25,7 @@ export default {
         return false;
       });
       this.item = this.itemData[0].name;
+      this.alias = this.itemData[0].alias;
     }
   }
 };

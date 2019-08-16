@@ -1,6 +1,11 @@
 <template>
   <div>
     <span class="current-size">Size: <b>{{ item }}</b></span>
+    <input
+      class="current-size-alias"
+      :value="alias"
+      hidden
+    >
     <label
       v-for="(size, index) in itemData"
       :key="index"
@@ -15,7 +20,7 @@
         @input="changeItem($event.target.value)"
       >
       <span class="size">
-        {{ size.name }}
+        {{ size.alias }}
       </span>
     </label>
     <router-link
