@@ -4,7 +4,7 @@
     <div class="summary__item">
       <h4>Count</h4>
       <span>
-        {{ $store.state.cartCount }}
+        {{ $store.state.cart.cartCount }}
       </span>
     </div>
     <div class="summary__item">
@@ -33,7 +33,7 @@
     name: 'CartSummary',
     methods: {
       price(name) {
-        const data = this.$store.state.cart;
+        const data = this.$store.state.cart.cart;
         let price = 0;
         for (let i = 0; i < data.length; i++) {
           price += data[i][name] * Number(data[i].count);

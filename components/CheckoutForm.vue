@@ -37,7 +37,7 @@
     <div class="checkout__input-group">
       <a-input
         id="address"
-        v-model="$store.state.address"
+        v-model="$store.state.cart.address"
         :required="false"
         name="address"
         placeholder="Адрес"

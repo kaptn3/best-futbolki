@@ -7,11 +7,11 @@
       >
         <i class="cart__close-icon"/>
       </button>
-      <div v-if="$store.state.cartCount !== 0">
+      <div v-if="$store.state.cart.cartCount !== 0">
         <div class="cart__box">
           <h3>Shopping cart</h3>
           <cart-item
-            v-for="(item, index) in $store.state.cart"
+            v-for="(item, index) in $store.state.cart.cart"
             :key="index"
             :cart="item"
             class="cart__product"

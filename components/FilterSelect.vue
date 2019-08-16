@@ -74,11 +74,11 @@
         this.isOpen = false;
         this.selected = true;
         this.searchText = value;
-        this.$store.state.cityDelivery = this.searchText;
+        this.$store.state.cart.cityDelivery = this.searchText;
       },
       inputBlur() {
         if (!this.isOpen) {
-          this.$store.state.cityDelivery = this.searchText;
+          this.$store.state.cart.cityDelivery = this.searchText;
         }
       }
     }

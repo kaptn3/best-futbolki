@@ -23,7 +23,7 @@
         <span class="delivery__name">{{ delivery.title }}</span>
       </label>
       <input
-        v-model="$store.state.pointIdDelivery"
+        v-model="$store.state.cart.pointIdDelivery"
         name="pickup_point_id"
         type="text"
         hidden
@@ -76,7 +76,7 @@
     },
     computed: {
       city() {
-        return this.$store.state.cityDelivery;
+        return this.$store.state.cart.cityDelivery;
       }
     },
     watch: {
@@ -90,7 +90,7 @@
       },
       alias(alias) {
         if (alias === 'merge_postamat_delivery') {
-          return this.$store.state.deliveryAlias;
+          return this.$store.state.cart.deliveryAlias;
         }
         
         return alias;

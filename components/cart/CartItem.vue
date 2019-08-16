@@ -49,7 +49,7 @@
       <button
         v-if="!checkout"
         class="cart-item__remove"
-        @click="$store.commit('removeFromCart', cart)"
+        @click="$store.commit('cart/removeFromCart', cart)"
       >
         Remove
       </button>
@@ -76,9 +76,9 @@
     methods: {
       changeCount(cart, value) {
         if (value > 0) {
-          const index = this.$store.state.cart.indexOf(cart);
-          this.$store.state.cart[index].count = value;
-          this.$store.commit('saveCart');
+          const index = this.$store.state.cart.cart.indexOf(cart);
+          this.$store.state.cart.cart[index].count = value;
+          this.$store.commit('cart/saveCart');
         }
       },
     },

@@ -12,7 +12,7 @@
         <div class="checkout__right">
           <div class="checkout__items">
             <cart-item
-              v-for="(item, index) in $store.state.cart"
+              v-for="(item, index) in $store.state.cart.cart"
               :key="index"
               :cart="item"
               :checkout="true"
@@ -87,15 +87,15 @@
         });
         Object.assign(data, { 'receiver': receiver });
         Object.assign(receiver, { 'address': address });
-        Object.assign(data, { 'cart': this.$store.state.cart });
+        Object.assign(data, { 'cart': this.$store.state.cart.cart });
         const url = this.$store.state.api.order;
         axios.post(url, data)
           .then((res) => {
             console.log(res);
             this.status = 'ok';
             this.id = res.data.id;
-            this.$store.state.cart = [];
-            this.$store.state.cartCount = 0;
+            this.$store.state.cart.cart = [];
+            this.$store.state.cart.cartCount = 0;
             window.localStorage.removeItem('cart');
             window.localStorage.removeItem('cartCount');
           });

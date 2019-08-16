@@ -160,7 +160,7 @@
           'product_type': this.data.categories[0].id,
           'type': 'catalog'
         };
-        this.$store.commit('addToCart', selected);
+        this.$store.commit('cart/addToCart', selected);
       }
     },
   };

@@ -74,10 +74,10 @@
     },
     methods: {
       onClick(id, address, alias) {
-        this.$store.state.pointIdDelivery = id;
-        this.$store.state.address = address;
+        this.$store.state.cart.pointIdDelivery = id;
+        this.$store.state.cart.address = address;
         this.pointSelected = address;
-        this.$store.state.deliveryAlias = alias;
+        this.$store.state.cart.deliveryAlias = alias;
       },
       balloonHeader(type, name) {
         return `

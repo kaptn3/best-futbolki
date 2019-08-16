@@ -17,7 +17,7 @@
           @click="open(nav[2].name)"
         >
           <span class="cart-count">
-            {{ $store.state.cartCount }}
+            {{ $store.state.cart.cartCount }}
           </span>
         </button>
         <transition name="slide-left">
