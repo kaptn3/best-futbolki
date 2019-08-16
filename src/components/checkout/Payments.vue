@@ -9,8 +9,9 @@
       <label>
         <input
           type="radio"
-          name="payment-type"
+          name="payment_alias"
           :value="payment.alias"
+          required
         >
         <span class="payment__name">{{ payment.title }}</span>
       </label>

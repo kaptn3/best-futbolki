@@ -5,31 +5,36 @@
     @submit="submitForm"
   >
     <h1>Корзина</h1>
-    <h2>Ваши данные</h2>
-    <div class="checkout__box">
-      <checkout-form/>
-      <div class="checkout__right">
-        <div class="checkout__items">
-          <cart-item
-            v-for="(item, index) in $store.state.cart"
-            :key="index"
-            :cart="item"
-            :checkout="true"
+    <div v-if="status === 'checkout'">
+      <h2>Ваши данные</h2>
+      <div class="checkout__box">
+        <checkout-form/>
+        <div class="checkout__right">
+          <div class="checkout__items">
+            <cart-item
+              v-for="(item, index) in $store.state.cart"
+              :key="index"
+              :cart="item"
+              :checkout="true"
+            />
+          </div>
+          <a-input
+            id="comment"
+            :required="false"
+            name="comment"
+            placeholder="Комментарий"
           />
         </div>
-        <a-input
-          id="comment"
-          :required="false"
-          name="comment"
-          placeholder="Комментарий"
-        />
       </div>
+      <a-button
+        class="checkout__btn"
+        text="Оформить заказ"
+        type="submit"
+      />
     </div>
-    <a-button
-      class="checkout__btn"
-      text="Оформить заказ"
-      type="submit"
-    />
+    <div v-else>
+      Заказ номер {{ id }} принят.
+    </div>
   </form>
 </template>
 
@@ -47,6 +52,12 @@
       CartItem,
       AButton,
       AInput
+    },
+    data() {
+      return {
+        id: 0,
+        status: 'checkout'
+      }
     },
     methods: {
       submitForm(e) {
@@ -75,13 +86,18 @@
             ${receiver['middle-name']}`
         });
         Object.assign(data, { 'receiver': receiver });
+        Object.assign(receiver, { 'address': address });
         Object.assign(data, { 'cart': this.$store.state.cart });
-        Object.assign(data, { 'address': address });
-        console.log(data);
         const url = 'http://api.best-futbolki.ru/API/order.php';
         axios.post(url, data)
           .then((res) => {
             console.log(res);
+            this.status = 'ok';
+            this.id = res.data.id;
+            this.$store.state.cart = [];
+            this.$store.state.cartCount = 0;
+            window.localStorage.removeItem('cart');
+            window.localStorage.removeItem('cartCount');
           });
       }
     }

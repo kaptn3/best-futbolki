@@ -17,7 +17,7 @@
           v-model="type"
           type="radio"
           name="delivery"
-          :value="delivery.alias"
+          :value="alias(delivery.alias)"
           required
         >
         <span class="delivery__name">{{ delivery.title }}</span>
@@ -87,6 +87,13 @@
     methods: {
       togglePoints() {
         this.isOpenModal = !this.isOpenModal;
+      },
+      alias(alias) {
+        if (alias === 'merge_postamat_delivery') {
+          return this.$store.state.deliveryAlias;
+        }
+        
+        return alias;
       },
       getData() {
         this.isLoading = true;

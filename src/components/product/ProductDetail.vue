@@ -37,7 +37,7 @@
     props: {
       details: {
         type: Array,
-        required: true
+        default: () => []
       }
     },
     computed: {

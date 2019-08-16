@@ -42,32 +42,22 @@
         name="address"
         placeholder="Адрес"
       />
-      <input
-        v-model="$store.state.pointIdDelivery"
-        type="text"
-        name="point-id"
-        hidden
-      >
     </div>
-    <a-button
-      class="checkout__btn"
-      text="Оформить заказ"
-      disabled
-    />
+    <delivery/>
   </div>
 </template>
 
 <script>
   import AInput from '@/components/Input';
-  import AButton from '@/components/Button';
   import FilterSelect from '@/components/FilterSelect';
+  import Delivery from '@/components/checkout/Delivery';
 
   export default {
     name: 'CheckoutForm',
     components: {
       AInput,
-      AButton,
-      FilterSelect
+      FilterSelect,
+      Delivery
     }
   };
 </script>

@@ -28,7 +28,7 @@
           class="product-top__size"
           @model="changeSize($event)"
         />
-        <quantity v-model="quantity"/>
+        <quantity v-model="count"/>
         <a-button
           class="product-top__btn"
           text="Add to cart"
@@ -91,7 +91,7 @@
         slides: [],
         product: [],
         variants: [],
-        quantity: 1
+        count: 1
       };
     },
     watch: {
@@ -138,18 +138,27 @@
       addToCart() {
         const color = document.querySelector('.current-color b').innerHTML;
         const size = document.querySelector('.current-size b').innerHTML;
+
+        const colorAlias = document.querySelector('.current-color-alias').value;
+        const sizeAlias = document.querySelector('.current-size-alias').value;
+
         const selected = {
-          'id': this.id,
+          'design': Number(this.id),
           'sizeName': size,
           'colorName': color,
-          'quantity': this.quantity,
+          'size': sizeAlias,
+          'color': colorAlias,
+          'count': this.count,
           'title': this.name,
           'model': this.model,
-          'available': this.product.available,
+          'in_stock': this.product.available,
           'photo': this.product.sides[0].small,
           'old_price': this.product.old_price,
           'price': this.product.price,
-          'print_type_name': this.product.print_type_name
+          'print_type_name': this.product.print_type_name,
+          'main_side_position': 0,
+          'product_type': this.data.categories[0].id,
+          'type': 'catalog'
         };
         this.$store.commit('addToCart', selected);
       }

@@ -25,7 +25,8 @@ export default new Vuex.Store({
     cartCount: Number(cartCount),
     cityDelivery: '',
     pointIdDelivery: 0,
-    address: ''
+    address: '',
+    deliveryAlias: ''
   },
   mutations: {
     toggleModal(state, componentName) {
