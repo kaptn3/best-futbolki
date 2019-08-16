@@ -30,13 +30,6 @@ export default {
   plugins: [
   ],
   /*
-  ** Nuxt.js dev-modules
-  */
-  devModules: [
-    // Doc: https://github.com/nuxt-community/eslint-module
-    '@nuxtjs/eslint-module'
-  ],
-  /*
   ** Nuxt.js modules
   */
   modules: [
