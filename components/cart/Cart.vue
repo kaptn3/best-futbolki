@@ -3,7 +3,7 @@
     <div>
       <button
         class="cart__close"
-        @click="$store.commit('toggleModal', null)"
+        @click="$store.commit('modal/toggleModal', null)"
       >
         <i class="cart__close-icon"/>
       </button>

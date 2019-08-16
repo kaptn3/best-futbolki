@@ -1,6 +1,6 @@
 <template>
   <div
-    v-if="$store.state.modalVisible"
+    v-if="$store.state.modal.modalVisible"
     @click.self="hide"
   />
 </template>
@@ -10,7 +10,7 @@
     name: 'Overlay',
     methods: {
       hide() {
-        this.$store.commit('toggleModal', null);
+        this.$store.commit('modal/toggleModal', null);
       }
     }
   };

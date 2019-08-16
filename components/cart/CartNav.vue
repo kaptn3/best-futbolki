@@ -2,7 +2,7 @@
   <div class="cart-nav">
     <button
       class="cart-nav__return"
-      @click="$store.commit('toggleModal', null)"
+      @click="$store.commit('modal/toggleModal', null)"
     >
       Return to shopping
     </button>
@@ -11,7 +11,7 @@
         text="Go to checkout"
         el="router-link"
         to="/checkout"
-        @click.native="$store.commit('toggleModal', null)"
+        @click.native="$store.commit('modal/toggleModal', null)"
       />
     </div>
   </div>

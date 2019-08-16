@@ -5,7 +5,7 @@
       @click="openMenu"
     />
     <div
-      :class="{ 'menu_open': $store.state.modalComponent === 'menu' }"
+      :class="{ 'menu_open': $store.state.modal.modalComponent === 'menu' }"
       class="menu__modal"
     >
       <button
@@ -55,10 +55,10 @@
     },
     methods: {
       openMenu() {
-        this.$store.commit('toggleModal', 'menu');
+        this.$store.commit('modal/toggleModal', 'menu');
       },
       closeMenu() {
-        this.$store.commit('toggleModal', null);
+        this.$store.commit('modal/toggleModal', null);
       }
     }
   };

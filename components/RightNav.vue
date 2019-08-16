@@ -22,7 +22,7 @@
         </button>
         <transition name="slide-left">
           <div
-            v-if="$store.state.modalComponent === nav[2].name"
+            v-if="$store.state.modal.modalComponent === nav[2].name"
             class="right-nav__modal"
           >
             <cart/>
@@ -71,7 +71,7 @@
     },
     methods: {
       open(box) {
-        this.$store.commit('toggleModal', box);
+        this.$store.commit('modal/toggleModal', box);
       }
     }
   };
