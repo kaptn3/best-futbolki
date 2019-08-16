@@ -111,7 +111,7 @@
           },
           is_merge_pickup_points: true
         };
-        const url = `${process.env.VUE_APP_API}/delivery.php`;
+        const url = this.$store.state.api.delivery;
         const options = {
           method: 'POST',
           url,

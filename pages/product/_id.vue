@@ -45,7 +45,7 @@
     mounted() {
       const productId = this.$route.params.id; // product id for get API
       const url = `${this.$store.state.api.url}/test_api.php/?i=${productId}`;
-      const urlRef = `${this.$store.state.api.url}/catalog_references.php`;
+      const urlRef = this.$store.state.api.ref;
 
       axios.get(url)
         .then((res) => {

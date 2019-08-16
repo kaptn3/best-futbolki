@@ -57,7 +57,7 @@
       }
     },
     mounted() {
-      const url = `${process.env.VUE_APP_API}/delivery_suggest.php?text=`;
+      const url = this.$store.state.api.cities;
       axios.get(url)
         .then((res) => {
           this.cities = res.data;

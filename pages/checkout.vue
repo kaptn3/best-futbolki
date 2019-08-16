@@ -88,7 +88,7 @@
         Object.assign(data, { 'receiver': receiver });
         Object.assign(receiver, { 'address': address });
         Object.assign(data, { 'cart': this.$store.state.cart });
-        const url = 'http://api.best-futbolki.ru/API/order.php';
+        const url = this.$store.state.api.order;
         axios.post(url, data)
           .then((res) => {
             console.log(res);
