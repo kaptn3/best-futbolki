@@ -82,8 +82,8 @@
           }
         }
         Object.assign(receiver, {
-          'name': `${receiver['last-name']} ${receiver['first-name']}
-            ${receiver['middle-name']}`
+          // eslint-disable-next-line
+          'name': `${receiver['last-name']} ${receiver['first-name']} ${receiver['middle-name']}`
         });
         Object.assign(data, { 'receiver': receiver });
         Object.assign(receiver, { 'address': address });
