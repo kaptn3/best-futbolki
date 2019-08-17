@@ -19,7 +19,8 @@
         :value="index"
         @click="selectItem(cities[index].city)"
       >
-        {{ city.city }}
+        <span class="filter-select__region">{{ city.region }}</span>
+        <span class="filter-select__city">{{ city.city }}</span>
       </li>
     </ul>
     <input
@@ -52,7 +53,9 @@
           this.selected = false;
           this.isOpen = false;
         } else {
-          this.filterCities();
+          if (this.searchText.length > 2) {
+            this.filterCities();
+          }
         }
       }
     },
@@ -66,8 +69,11 @@
     },
     methods: {
       filterCities() {
-        this.cities = this.data.filter(item => item.city.toLowerCase()
-          .indexOf(this.searchText.toLowerCase()) === 0);
+        const url = `${process.env.VUE_APP_API}/delivery_suggest.php?text=${this.searchText}`;
+        axios.get(url)
+          .then((res) => {
+            this.cities = res.data;
+          });
         this.isOpen = this.cities.length > 0;
       },
       selectItem(value) {
@@ -119,6 +125,14 @@
 
     &_open {
       display: block;
+    }
+
+    &__region {
+      color: #333;
+    }
+
+    &__city {
+      font-size: 14px;
     }
   }
 </style>
