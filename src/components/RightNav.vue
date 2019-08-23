@@ -3,16 +3,6 @@
     <ul>
       <li>
         <button
-          :style="{ 'background-image': 'url(' + nav[0].icon + ')' }"
-        />
-      </li>
-      <li>
-        <button
-          :style="{ 'background-image': 'url(' + nav[1].icon + ')' }"
-        />
-      </li>
-      <li>
-        <button
           :style="{ 'background-image': 'url(' + nav[2].icon + ')' }"
           @click="open(nav[2].name)"
         >
@@ -28,11 +18,6 @@
             <cart/>
           </div>
         </transition>
-      </li>
-      <li>
-        <button
-          :style="{ 'background-image': 'url(' + nav[3].icon + ')' }"
-        />
       </li>
     </ul>
   </nav>

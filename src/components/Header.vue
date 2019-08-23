@@ -1,7 +1,6 @@
 <template>
   <header class="header">
     <div class="container header__container">
-      <a-menu/>
       <logotype/>
       <right-nav/>
     </div>
@@ -9,14 +8,12 @@
 </template>
 
 <script>
-  import AMenu from './Menu';
   import Logotype from './Logotype';
   import RightNav from './RightNav';
 
   export default {
     name: 'Header',
     components: {
-      AMenu,
       Logotype,
       RightNav
     }
