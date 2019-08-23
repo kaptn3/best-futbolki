@@ -13,8 +13,9 @@
           v-if="points"
           :coords="coords"
           :use-object-manager="true"
-          zoom="10"
           :init-without-markers="true"
+          :cluster-options="clusterOptions"
+          zoom="10"
         >
           <ymap-marker
             v-for="(point, index) in points"
@@ -27,7 +28,7 @@
               footer: balloonFooter(point)
             }"
             :cluster-name="point.delivery_brand_alias"
-            :icon="{ color: 'red' }"
+            :icon="{ color: colorIcon(point.delivery_brand_alias) }"
           />
         </yandex-map>
         <div class="map__baloon-btns-hidden">
@@ -46,6 +47,14 @@
 
 <script>
   import { yandexMap, ymapMarker } from 'vue-yandex-maps';
+
+  const colors = {
+    'VSEMAYKI': 'pink',
+    'CDEK': 'darkGreen',
+    'BOXBERRY': 'red',
+    'DPD': 'blue',
+    'PICK_POINT': 'orange'
+  };
 
   export default {
     name: 'SelectPoint',
@@ -70,6 +79,18 @@
     computed: {
       coords() {
         return this.points.length > 0 ? [this.points[0].latitude, this.points[0].longitude] : [];
+      },
+      clusterOptions() {
+        const options = {};
+        // eslint-disable-next-line
+        for (const key in colors) {
+          const preset = {
+            preset: `islands#${colors[key]}ClusterIcons`
+          };
+          options[key] = preset;
+        }
+        console.log(options);
+        return options;
       }
     },
     methods: {
@@ -78,6 +99,12 @@
         this.$store.state.address = address;
         this.pointSelected = address;
         this.$store.state.deliveryAlias = alias;
+      },
+      colorIcon(alias) {
+        if (alias) {
+          return colors[alias];
+        }
+        return 'blue';
       },
       balloonHeader(type, name) {
         return `

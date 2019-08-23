@@ -87,12 +87,12 @@
     methods: {
       togglePoints() {
         this.isOpenModal = !this.isOpenModal;
+        console.log('eee');
       },
       alias(alias) {
         if (alias === 'merge_postamat_delivery') {
           return this.$store.state.deliveryAlias;
         }
-        
         return alias;
       },
       getData() {
@@ -124,9 +124,14 @@
 
         axios(options)
           .then((res) => {
-            console.log(res);
             this.deliveries = res.data.deliveries;
-            this.points = res.data.deliveries[0].pickup_points;
+            const { deliveries } = res.data;
+            for (let i = 0; i < deliveries.length; i++) {
+              if (deliveries[i].alias === 'merge_postamat_delivery') {
+                this.points = deliveries[i].pickup_points;
+              }
+            }
+            console.log(this.points);
             this.group = res.data.groups;
             this.payments = res.data.payments;
             this.isLoading = false;
