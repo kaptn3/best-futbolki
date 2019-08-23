@@ -31,7 +31,7 @@
   };
 </script>
 
-<style lang="scss" scope>
+<style lang="scss" scoped>
   label {
     display: block;
     font-size: 1rem;
