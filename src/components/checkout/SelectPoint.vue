@@ -3,6 +3,24 @@
     <div class="map-modal__wrapper">
       <div class="map-modal__inner">
         <slot/>
+        <div class="map-modal__menu">
+          <h4 class="map-modal__h4">
+            Пункты выдачи
+          </h4>
+          <label
+            v-for="item in checkboxes"
+            :key="item"
+            class="map-modal__label"
+          >
+            <input
+              v-model="brandSelected"
+              :value="item"
+              type="checkbox"
+              name="type"
+            >
+            {{ item }}
+          </label>
+        </div>
         <div
           v-if="pointSelected"
           class="map__selected"
@@ -10,7 +28,7 @@
           Выбран: {{ pointSelected }}
         </div>
         <yandex-map
-          v-if="points"
+          v-if="filterBrands"
           :coords="coords"
           :use-object-manager="true"
           :init-without-markers="true"
@@ -18,7 +36,7 @@
           zoom="10"
         >
           <ymap-marker
-            v-for="(point, index) in points"
+            v-for="(point, index) in filterBrands"
             :key="point.id"
             :marker-id="point.id"
             :coords="[point.latitude, point.longitude]"
@@ -33,7 +51,7 @@
         </yandex-map>
         <div class="map__baloon-btns-hidden">
           <button
-            v-for="point in points"
+            v-for="point in filterBrands"
             :key="point.id"
             class="map__baloon-btn"
             type="button"
@@ -70,10 +88,8 @@
     },
     data() {
       return {
-        markerIcon: {
-          color: 'red'
-        },
-        pointSelected: ''
+        pointSelected: '',
+        brandSelected: []
       };
     },
     computed: {
@@ -89,8 +105,24 @@
           };
           options[key] = preset;
         }
-        console.log(options);
         return options;
+      },
+      checkboxes() {
+        const brands = [];
+        for (let i = 0; i < this.points.length; i++) {
+          brands.push(this.points[i].delivery_brand_name);
+        }
+        const unique = [...new Set(brands)];
+        return unique;
+      },
+      filterBrands() {
+        const points = this.points.filter((item) => {
+          if (this.brandSelected.length > 0) {
+            return (this.brandSelected.indexOf(item.delivery_brand_name) !== -1);
+          }
+          return item;
+        });
+        return points;
       }
     },
     methods: {
@@ -194,7 +226,28 @@
     margin: 40px 20px;
     background: #fff;
     border-radius: 8px;
-    padding: 20px;
+    padding-top: 20px;
+    position: relative;
+  }
+
+  &__menu {
+    position: absolute;
+    top: 60px;
+    right: 0;
+    background-color: rgba(255, 255, 255, .9);
+    width: 350px;
+    max-height: 100%;
+    z-index: 10;
+    padding: 15px;
+  }
+
+  &__h4 {
+    margin-bottom: 15px;
+  }
+
+  &__label {
+    display: block;
+    padding: 10px 0;
   }
 }
 

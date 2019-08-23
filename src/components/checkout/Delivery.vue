@@ -87,7 +87,6 @@
     methods: {
       togglePoints() {
         this.isOpenModal = !this.isOpenModal;
-        console.log('eee');
       },
       alias(alias) {
         if (alias === 'merge_postamat_delivery') {
@@ -131,7 +130,6 @@
                 this.points = deliveries[i].pickup_points;
               }
             }
-            console.log(this.points);
             this.group = res.data.groups;
             this.payments = res.data.payments;
             this.isLoading = false;
@@ -174,7 +172,6 @@
     height: 20px;
     background: url(/img/icons/close.svg) no-repeat center;
     background-size: contain;
-    margin-left: auto;
-    margin-bottom: 20px;
+    margin: 0 20px 20px auto;
   }
 </style>
