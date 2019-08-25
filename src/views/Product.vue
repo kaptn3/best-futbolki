@@ -42,28 +42,39 @@
         error: ''
       };
     },
+    watch: {
+      // eslint-disable-next-line
+      '$route.params'() {
+        this.handleGet();
+      }
+    },
     mounted() {
-      const productId = this.$route.params.id; // product id for get API
-      const url = `${process.env.VUE_APP_API}/test_api.php/?i=${productId}`;
-      const urlRef = `${process.env.VUE_APP_API}/catalog_references.php`;
+      this.handleGet();
+    },
+    methods: {
+      handleGet() {
+        const productId = this.$route.params.id; // product id for get API
+        const url = `${process.env.VUE_APP_API}/test_api.php/?i=${productId}`;
+        const urlRef = `${process.env.VUE_APP_API}/catalog_references.php`;
 
-      axios.get(url)
-        .then((res) => {
-          this.data = res.data;
-          this.id = this.data.design.id;
-          this.name = this.data.design.alias;
-          this.model = this.data.categories[0].title;
-          this.details = this.data.external_attributes;
+        axios.get(url)
+          .then((res) => {
+            this.data = res.data;
+            this.id = this.data.design.id;
+            this.name = this.data.design.alias;
+            this.model = this.data.categories[0].title;
+            this.details = this.data.external_attributes;
 
-          return axios.get(urlRef);
-        })
-        .then((res) => {
-          this.relations = res.data;
-        })
-        .catch(() => {
-          this.error = 'Товар не найден!';
-        });
-    }
+            return axios.get(urlRef);
+          })
+          .then((res) => {
+            this.relations = res.data;
+          })
+          .catch(() => {
+            this.error = 'Товар не найден!';
+          });
+      }
+    },
   };
 </script>
 

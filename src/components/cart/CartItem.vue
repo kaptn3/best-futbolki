@@ -7,7 +7,9 @@
     >
     <div class="cart-item__data">
       <span class="cart-item__title">
-        {{ cart.title }}
+        <router-link :to="'/product/' + cart.id">
+          {{ cart.title }}
+        </router-link>
       </span>
       <span class="cart-item__model">
         {{ cart.model }}

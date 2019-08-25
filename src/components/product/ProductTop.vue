@@ -143,6 +143,7 @@
         const sizeAlias = document.querySelector('.current-size-alias').value;
 
         const selected = {
+          'id': this.data.id,
           'design': Number(this.id),
           'sizeName': size,
           'colorName': color,
