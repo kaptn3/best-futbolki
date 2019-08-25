@@ -8,18 +8,8 @@
       <div class="details__row">
         <div>
           <div
-            v-for="(detail, index) in row1"
+            v-for="(detail, index) in details"
             :key="'row-1' + index"
-            class="details__item"
-          >
-            <h3>{{ detail.title }}:</h3>
-            <span>{{ detail.value }}</span>
-          </div>
-        </div>
-        <div>
-          <div
-            v-for="(detail, index) in row2"
-            :key="'row2-' + index"
             class="details__item"
           >
             <h3>{{ detail.title }}:</h3>
@@ -41,12 +31,6 @@
       }
     },
     computed: {
-      row1() {
-        return [this.details[2], this.details[3]];
-      },
-      row2() {
-        return [this.details[0], this.details[1], this.details[4]];
-      },
       isLoaded() {
         return this.details.length > 0;
       }
