@@ -80,6 +80,7 @@
             this.loading = false;
           })
           .catch(() => {
+            this.loading = false;
             this.error = 'Товар не найден!';
           });
       }
