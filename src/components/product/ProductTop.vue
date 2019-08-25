@@ -137,7 +137,6 @@
         this.product = [];
         // init selected product
         [this.product] = this.variants.filter((variant) => {
-          console.log(this.color, this.size);
           if (variant.relations[0].id === this.color && variant.relations[1].id === this.size) {
             return variant;
           }
