@@ -22,7 +22,7 @@
         id="phone"
         name="phone"
         placeholder="Телефон"
-        type="phone"
+        type="tel"
       />
       <a-input
         id="email"

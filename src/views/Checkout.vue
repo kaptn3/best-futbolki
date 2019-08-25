@@ -72,6 +72,7 @@
           'region_type': '',
           'postcode': '0'
         };
+        // eslint-disable-next-line
         for (const [key, val] of formData.entries()) {
           if (key === 'delivery' || key === 'pickup_point_id' || key === 'payment_alias') {
             Object.assign(data, { [key]: val });
@@ -82,13 +83,13 @@
           }
         }
         Object.assign(receiver, {
-          // eslint-disable-next-line
           'name': `${receiver['last-name']} ${receiver['first-name']} ${receiver['middle-name']}`
         });
         Object.assign(data, { 'receiver': receiver });
         Object.assign(receiver, { 'address': address });
         Object.assign(data, { 'cart': this.$store.state.cart });
-        const url = 'http://api.best-futbolki.ru/API/order.php';
+        console.log(data);
+        // const url = 'http://api.best-futbolki.ru/API/order.php';
         axios.post(url, data)
           .then((res) => {
             console.log(res);

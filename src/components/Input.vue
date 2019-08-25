@@ -3,15 +3,19 @@
     <input
       :id="id"
       v-model="input"
+      v-imask="imask"
       :type="type"
       :name="name"
+      :pattern="pattern"
       :autocomplete="autocomplete"
       :required="required"
       @blur="$emit('blur')"
+      @accept="onAccept"
+      @complete="onComplete"
     >
     <label
       :for="id"
-      :class="{ 'filled': input.length > 0 }"
+      :class="{ 'filled': filled }"
     >
       {{ placeholder }}{{ required ? ' *' : '' }}
     </label>
@@ -19,6 +23,8 @@
 </template>
 
 <script>
+  import {IMaskDirective} from 'vue-imask';
+
   export default {
     name: 'Input',
     props: {
@@ -49,12 +55,39 @@
       value: {
         type: String,
         default: ''
+      },
+      min: {
+        type: Number,
+        default: 0
       }
     },
     data() {
       return {
-        input: this.value
+        input: this.value,
+        lazy: true,
+        complete: false
       };
+    },
+    computed: {
+      imask() {
+        if (this.type === 'tel') {
+          return {
+            mask: '+7 (000) 000-00-00', 
+            lazy: this.lazy
+          }
+        }
+        return null;
+      },
+      filled() {
+        if (this.type === 'tel') {
+          return this.input.length > 0 && this.complete;
+        }
+        return this.input.length > 0;
+      },
+      pattern() {
+        const pattern = "^(\\+7)[\\s]\\([0-9]{3}\\)[\\s\\-][0-9]{3}[\\s\\-][0-9]{2}[\\s\\-][0-9]{2}$";
+        return this.type === 'tel' ? pattern : null;
+      }
     },
     watch: {
       value(value) {
@@ -62,6 +95,20 @@
       },
       input(value) {
         this.$emit('input', value);
+      }
+    },
+    directives: {
+      imask: IMaskDirective
+    },
+    methods: {
+      onAccept(e) {
+        this.lazy = false;
+        const maskRef = e.detail;
+        this.complete = false;
+      },
+      onComplete(e) {
+        const maskRef = e.detail;
+        this.complete = true;
       }
     }
   };
@@ -98,6 +145,9 @@
   .filled {
     top: -10px;
     font-size: 14px;
+  }
+
+  .filled {
     color: #4dba87;
   }
 </style>
