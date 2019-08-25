@@ -99,11 +99,18 @@
     },
     watch: {
       data() {
+        this.initData();
+      }
+    },
+    methods: {
+      initData() {
         if (this.data) {
           // init all variants for this model
           this.variants = this.data.variants;
 
           // init all colors and sizes
+          this.sizes = [];
+          this.colors = [];
           for (let i = 0; i < this.variants.length; i++) {
             const { relations } = this.variants[i];
             const types = ['colors', 'sizes'];
@@ -117,9 +124,7 @@
           [this.size] = this.sizes;
           this.currentProduct();
         }
-      }
-    },
-    methods: {
+      },
       changeColor(value) {
         this.color = value;
         this.currentProduct();
@@ -129,8 +134,10 @@
         this.currentProduct();
       },
       currentProduct() {
+        this.product = [];
         // init selected product
         [this.product] = this.variants.filter((variant) => {
+          console.log(this.color, this.size);
           if (variant.relations[0].id === this.color && variant.relations[1].id === this.size) {
             return variant;
           }

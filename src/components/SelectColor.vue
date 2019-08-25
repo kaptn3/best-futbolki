@@ -52,7 +52,6 @@
     },
     methods: {
       getBackground(color) {
-        console.log(color.length);
         if (color.length === 1) {
           return `background-color: ${color[0]}`;
         }
