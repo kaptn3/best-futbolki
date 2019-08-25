@@ -21,7 +21,7 @@
       >
       <span class="color">
         <span
-          :style="{ 'background-color': color.alias }"
+          :style="getBackground(color.rgb)"
           class="color-inside"
         />
       </span>
@@ -49,6 +49,15 @@
       return {
         object: 'color'
       };
+    },
+    methods: {
+      getBackground(color) {
+        console.log(color.length);
+        if (color.length === 1) {
+          return `background-color: ${color[0]}`;
+        }
+        return `background-image: linear-gradient(135deg, ${color[0]} 50%, ${color[1]} 50%)`;
+      }
     }
   };
 </script>
