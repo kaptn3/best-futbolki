@@ -18,6 +18,10 @@
               type="checkbox"
               name="type"
             >
+            <img
+              :src="`/img/icons/${colors[item]}`"
+              class="map-modal__icon"
+            >
             {{ item }}
           </label>
         </div>
@@ -89,7 +93,14 @@
     data() {
       return {
         pointSelected: '',
-        brandSelected: []
+        brandSelected: [],
+        colors: {
+          'Vsemayki.ru': 'pink.png',
+          'СДЭК': 'darkGreen.png',
+          'Boxberry': 'red.png',
+          'DPD': 'blue.png',
+          'PickPoint': 'orange.png'
+        }
       };
     },
     computed: {
@@ -248,6 +259,11 @@
   &__label {
     display: block;
     padding: 10px 0;
+  }
+
+  &__icon {
+    margin-left: 8px;
+    width: 22px;
   }
 }
 
