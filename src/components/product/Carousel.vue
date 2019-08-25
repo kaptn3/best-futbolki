@@ -21,14 +21,19 @@
       </div>
     </transition-group>
     <button
+      v-if="slides.length > 1"
       class="carousel__nav-btn carousel__btn-prev"
       @click="slide(-1)"
     />
     <button
+      v-if="slides.length > 1"
       class="carousel__nav-btn carousel__btn-next"
       @click="slide(1)"
     />
-    <div class="carousel__dots">
+    <div
+      v-if="slides.length > 1"
+      class="carousel__dots"
+    >
       <button
         v-for="n in slides.length"
         :key="n"
