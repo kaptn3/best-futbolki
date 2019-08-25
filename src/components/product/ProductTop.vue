@@ -12,7 +12,10 @@
         </span>
         <span class="product-top__price">
           {{ product.price }} руб
-          <span class="product-top__old-price">
+          <span
+            v-if="product.old_price > 0"
+            class="product-top__old-price"
+          >
             {{ product.old_price }} руб
           </span>
         </span>
