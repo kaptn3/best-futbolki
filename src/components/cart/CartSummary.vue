@@ -36,7 +36,11 @@
         const data = this.$store.state.cart;
         let price = 0;
         for (let i = 0; i < data.length; i++) {
-          price += data[i][name] * Number(data[i].count);
+          if (data[i].old_price === 0) {
+            price += data[i].price * Number(data[i].count);
+          } else {
+            price += data[i][name] * Number(data[i].count);
+          }
         }
         return price;
       },
