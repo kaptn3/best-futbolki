@@ -17,7 +17,9 @@
             class="cart__product"
           />
         </div>
-        <cart-summary/>
+        <cart-summary>
+          <h3>Shopping summary</h3>
+        </cart-summary>
         <cart-nav/>
       </div>
       <div

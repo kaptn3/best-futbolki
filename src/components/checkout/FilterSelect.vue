@@ -52,20 +52,10 @@
         if (this.selected) {
           this.selected = false;
           this.isOpen = false;
-        } else {
-          if (this.searchText.length > 2) {
-            this.filterCities();
-          }
+        } else if (this.searchText.length > 2) {
+          this.filterCities();
         }
       }
-    },
-    mounted() {
-      const url = `${process.env.VUE_APP_API}/delivery_suggest.php?text=`;
-      axios.get(url)
-        .then((res) => {
-          this.cities = res.data;
-          this.data = res.data;
-        });
     },
     methods: {
       filterCities() {
@@ -81,6 +71,9 @@
         this.selected = true;
         this.searchText = value;
         this.$store.state.cityDelivery = this.searchText;
+        const obj = JSON.parse(window.localStorage.getItem('form'));
+        obj.city = this.searchText;
+        window.localStorage.setItem('form', JSON.stringify(obj));
       },
       inputBlur() {
         if (!this.isOpen) {
@@ -133,6 +126,7 @@
 
     &__city {
       font-size: 14px;
+      padding-left: 16px;
     }
   }
 </style>

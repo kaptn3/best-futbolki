@@ -23,10 +23,13 @@
 </template>
 
 <script>
-  import {IMaskDirective} from 'vue-imask';
+  import { IMaskDirective } from 'vue-imask';
 
   export default {
     name: 'Input',
+    directives: {
+      imask: IMaskDirective
+    },
     props: {
       type: {
         type: String,
@@ -72,9 +75,9 @@
       imask() {
         if (this.type === 'tel') {
           return {
-            mask: '+7 (000) 000-00-00', 
+            mask: '+7 (000) 000-00-00',
             lazy: this.lazy
-          }
+          };
         }
         return null;
       },
@@ -85,7 +88,7 @@
         return this.input.length > 0;
       },
       pattern() {
-        const pattern = "^(\\+7)[\\s]\\([0-9]{3}\\)[\\s\\-][0-9]{3}[\\s\\-][0-9]{2}[\\s\\-][0-9]{2}$";
+        const pattern = '^(\\+7)[\\s]\\([0-9]{3}\\)[\\s\\-][0-9]{3}[\\s\\-][0-9]{2}[\\s\\-][0-9]{2}$';
         return this.type === 'tel' ? pattern : null;
       }
     },
@@ -97,17 +100,18 @@
         this.$emit('input', value);
       }
     },
-    directives: {
-      imask: IMaskDirective
+    mounted() {
+      const obj = JSON.parse(window.localStorage.getItem('form'));
+      if (obj && obj[this.name]) {
+        this.input = obj[this.name];
+      }
     },
     methods: {
-      onAccept(e) {
+      onAccept() {
         this.lazy = false;
-        const maskRef = e.detail;
         this.complete = false;
       },
-      onComplete(e) {
-        const maskRef = e.detail;
+      onComplete() {
         this.complete = true;
       }
     }

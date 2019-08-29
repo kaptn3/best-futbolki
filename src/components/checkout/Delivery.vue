@@ -84,6 +84,12 @@
         this.getData();
       }
     },
+    mounted() {
+      const obj = JSON.parse(window.localStorage.getItem('form'));
+      if (obj && obj.city) {
+        this.$store.state.cityDelivery = obj.city;
+      }
+    },
     methods: {
       togglePoints() {
         this.isOpenModal = !this.isOpenModal;

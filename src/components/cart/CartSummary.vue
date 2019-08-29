@@ -1,26 +1,26 @@
 <template>
   <div class="summary">
-    <h3>Shopping summary</h3>
+    <slot/>
     <div class="summary__item">
-      <h4>Count</h4>
+      <h4>Количество</h4>
       <span>
         {{ $store.state.cartCount }}
       </span>
     </div>
     <div class="summary__item">
-      <h4>Price without discount</h4>
+      <h4>Цена без скидки</h4>
       <span>
         {{ price('old_price') }} руб
       </span>
     </div>
     <div class="summary__item">
-      <h4>Discount</h4>
+      <h4>Скидка</h4>
       <span>
         {{ discount() }} руб
       </span>
     </div>
     <div class="summary__item">
-      <h4>Total</h4>
+      <h4>Итого</h4>
       <span>
         {{ price('price') }} руб
       </span>

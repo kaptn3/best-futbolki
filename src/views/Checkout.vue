@@ -4,7 +4,6 @@
     class="container checkout"
     @submit="submitForm"
   >
-    <h1>Корзина</h1>
     <div v-if="status === 'checkout'">
       <h2>Ваши данные</h2>
       <div class="checkout__box">
@@ -18,6 +17,13 @@
               :checkout="true"
             />
           </div>
+          <cart-summary class="checkout__sum"/>
+          <a-input
+            id="promocode"
+            :required="false"
+            name="promo_code"
+            placeholder="Промокод"
+          />
           <a-input
             id="comment"
             :required="false"
@@ -40,10 +46,11 @@
 
 <script>
   import axios from 'axios';
-  import CheckoutForm from '@/components/CheckoutForm';
+  import CheckoutForm from '@/components/checkout/Form';
   import AButton from '@/components/Button';
   import CartItem from '@/components/cart/CartItem';
   import AInput from '@/components/Input';
+  import CartSummary from '@/components/cart/CartSummary';
 
   export default {
     name: 'Checkout',
@@ -51,13 +58,14 @@
       CheckoutForm,
       CartItem,
       AButton,
-      AInput
+      AInput,
+      CartSummary
     },
     data() {
       return {
         id: 0,
         status: 'checkout'
-      }
+      };
     },
     methods: {
       submitForm(e) {
@@ -89,7 +97,7 @@
         Object.assign(receiver, { 'address': address });
         Object.assign(data, { 'cart': this.$store.state.cart });
         console.log(data);
-        // const url = 'http://api.best-futbolki.ru/API/order.php';
+        const url = 'http://api.best-futbolki.ru/API/order.php';
         axios.post(url, data)
           .then((res) => {
             console.log(res);
@@ -121,9 +129,14 @@
     }
 
     &__items {
-      border: 2px solid #bdbdbd;
-      border-radius: 8px;
+      border: 2px solid #f2f2f2;
+      border-bottom: none;
+      border-radius: 8px 8px 0 0;
       padding: 15px 10px;
+    }
+
+    &__sum {
+      padding: 0 40px;
     }
   }
 

@@ -1,20 +1,23 @@
 <template>
-  <div>
+  <div class="checkout__form-info">
     <div class="checkout__input-group">
       <a-input
         id="last-name"
         name="last-name"
         placeholder="Фамилия"
+        @blur="setInfo"
       />
       <a-input
         id="first-name"
         name="first-name"
         placeholder="Имя"
+        @blur="setInfo"
       />
       <a-input
         id="middle-name"
         name="middle-name"
         placeholder="Отчество"
+        @blur="setInfo"
       />
     </div>
     <div class="checkout__input-group">
@@ -23,12 +26,14 @@
         name="phone"
         placeholder="Телефон"
         type="tel"
+        @blur="setInfo"
       />
       <a-input
         id="email"
         name="email"
         placeholder="Email"
         type="email"
+        @blur="setInfo"
       />
     </div>
     <div class="checkout__input-group">
@@ -48,9 +53,9 @@
 </template>
 
 <script>
-  import AInput from '@/components/Input';
-  import FilterSelect from '@/components/FilterSelect';
-  import Delivery from '@/components/checkout/Delivery';
+  import AInput from '../Input';
+  import FilterSelect from './FilterSelect';
+  import Delivery from '../checkout/Delivery';
 
   export default {
     name: 'CheckoutForm',
@@ -58,6 +63,17 @@
       AInput,
       FilterSelect,
       Delivery
+    },
+    methods: {
+      setInfo() {
+        const form = document.querySelector('.checkout__form-info');
+        const inputs = form.querySelectorAll('input');
+        const obj = {};
+        for (let i = 0; i < inputs.length; i++) {
+          obj[inputs[i].name] = inputs[i].value;
+        }
+        window.localStorage.setItem('form', JSON.stringify(obj));
+      }
     }
   };
 </script>
