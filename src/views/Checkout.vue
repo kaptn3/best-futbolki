@@ -17,13 +17,7 @@
               :checkout="true"
             />
           </div>
-          <cart-summary class="checkout__sum"/>
-          <a-input
-            id="promocode"
-            :required="false"
-            name="promo_code"
-            placeholder="Промокод"
-          />
+          <a-summary/>
           <a-input
             id="comment"
             :required="false"
@@ -50,7 +44,7 @@
   import AButton from '@/components/Button';
   import CartItem from '@/components/cart/CartItem';
   import AInput from '@/components/Input';
-  import CartSummary from '@/components/cart/CartSummary';
+  import ASummary from '@/components/checkout/Summary';
 
   export default {
     name: 'Checkout',
@@ -59,7 +53,7 @@
       CartItem,
       AButton,
       AInput,
-      CartSummary
+      ASummary
     },
     data() {
       return {
@@ -133,10 +127,6 @@
       border-bottom: none;
       border-radius: 8px 8px 0 0;
       padding: 15px 10px;
-    }
-
-    &__sum {
-      padding: 0 40px;
     }
   }
 
