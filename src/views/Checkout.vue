@@ -120,6 +120,7 @@
 
     &__right {
       margin-left: 20px;
+      width: 45%;
     }
 
     &__items {

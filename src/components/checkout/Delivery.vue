@@ -12,15 +12,27 @@
       :key="index"
       class="delivery__item"
     >
-      <label>
-        <input
-          v-model="type"
-          type="radio"
-          name="delivery"
-          :value="alias(delivery.alias)"
-          required
-        >
-        <span class="delivery__name">{{ delivery.title }}</span>
+      <label
+        :class="alias(delivery.alias)"
+        class="delivery__label"
+      >
+        <div>
+          <input
+            v-model="type"
+            type="radio"
+            name="delivery"
+            :value="alias(delivery.alias)"
+            required
+          >
+          <span class="delivery__name">{{ delivery.title }}</span>
+          <span class="delivery__duration">{{ durationHandle(delivery.duration.max) }}</span>
+        </div>
+        <span>
+          <span class="delivery__cost">
+            {{ deliveryCostHandle(delivery.cost, delivery.alias) }}
+          </span>
+          руб.
+        </span>
       </label>
       <input
         v-model="$store.state.pointIdDelivery"
@@ -71,7 +83,8 @@
         group: [],
         isOpenModal: false,
         payments: [],
-        isLoading: true
+        isLoading: true,
+        cost: 0
       };
     },
     computed: {
@@ -82,6 +95,11 @@
     watch: {
       city() {
         this.getData();
+      },
+      type() {
+        if (this.type) {
+          this.$store.state.deliveryCost = document.querySelector(`.${this.type}`).querySelector('.delivery__cost').innerHTML;
+        }
       }
     },
     mounted() {
@@ -93,6 +111,24 @@
     methods: {
       togglePoints() {
         this.isOpenModal = !this.isOpenModal;
+      },
+      deliveryCostHandle(cost, alias) {
+        if (alias === 'merge_postamat_delivery') {
+          if (this.$store.state.pointCost > 0) {
+            return this.$store.state.pointCost;
+          }
+          return `от ${cost}`;
+        }
+        return cost;
+      },
+      durationHandle(duration) {
+        let res = `от ${duration} `;
+        if (duration === 0 || duration > 1) {
+          res += 'дней';
+        } else {
+          res += 'дня';
+        }
+        return res;
       },
       alias(alias) {
         if (alias === 'merge_postamat_delivery') {
@@ -169,6 +205,17 @@
       color: #4dba87;
       font-size: 14px;
       font-style: italic;
+    }
+
+    &__label {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    &__duration {
+      color: #aaa;
+      padding-left: 10px;
     }
   }
 

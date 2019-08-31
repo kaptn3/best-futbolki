@@ -59,7 +59,7 @@
             :key="point.id"
             class="map__baloon-btn"
             type="button"
-            @click="onClick(point.id, point.address, point.delivery_alias)"
+            @click="onClick(point.id, point.address, point.delivery_alias, point.cost)"
           />
         </div>
       </div>
@@ -137,9 +137,11 @@
       }
     },
     methods: {
-      onClick(id, address, alias) {
+      onClick(id, address, alias, cost) {
         this.$store.state.pointIdDelivery = id;
         this.$store.state.address = address;
+        this.$store.state.deliveryCost = cost;
+        this.$store.state.pointCost = cost;
         this.pointSelected = address;
         this.$store.state.deliveryAlias = alias;
       },
