@@ -15,7 +15,7 @@
     >
     <label
       :for="id"
-      :class="{ 'filled': filled }"
+      :class="{ 'typing': typing, 'filled': filled }"
     >
       {{ placeholder }}{{ required ? ' *' : '' }}
     </label>
@@ -83,14 +83,17 @@
       },
       filled() {
         if (this.type === 'tel') {
-          return this.input.length > 0 && this.complete;
+          return this.complete || this.input.length === 18;
         }
         return this.input.length > 0;
       },
       pattern() {
         const pattern = '^(\\+7)[\\s]\\([0-9]{3}\\)[\\s\\-][0-9]{3}[\\s\\-][0-9]{2}[\\s\\-][0-9]{2}$';
         return this.type === 'tel' ? pattern : null;
-      }
+      },
+      typing() {
+        return this.input.length > 0;
+      },
     },
     watch: {
       value(value) {
@@ -146,7 +149,7 @@
   }
 
   input:focus ~ label,
-  .filled {
+  .typing {
     top: -10px;
     font-size: 14px;
   }
