@@ -29,7 +29,8 @@ export default new Vuex.Store({
     deliveryAlias: '',
     deliveryCost: 0,
     pointCost: 0,
-    deliveryType: ''
+    deliveryType: '',
+    pointAddress: ''
   },
   mutations: {
     toggleModal(state, componentName) {

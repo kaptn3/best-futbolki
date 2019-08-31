@@ -140,6 +140,7 @@
       onClick(id, address, alias, cost) {
         this.$store.state.pointIdDelivery = id;
         this.$store.state.address = address;
+        this.$store.state.pointAddress = address;
         this.$store.state.deliveryCost = cost;
         this.$store.state.pointCost = cost;
         this.pointSelected = address;

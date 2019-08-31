@@ -40,13 +40,14 @@
         type="text"
         hidden
       >
+      <span class="delivery__point-address">{{ pointAddress }}</span>
       <button
         v-if="delivery.alias === 'merge_postamat_delivery'"
         class="delivery__select"
         type="button"
         @click="togglePoints"
       >
-        Выбрать пункт выдачи
+        {{ pointMessage }}
       </button>
     </div>
     <select-point
@@ -84,12 +85,16 @@
         isOpenModal: false,
         payments: [],
         isLoading: true,
-        cost: 0
+        cost: 0,
+        pointMessage: 'Выбрать пункт выдачи'
       };
     },
     computed: {
       city() {
         return this.$store.state.cityDelivery;
+      },
+      pointAddress() {
+        return this.$store.state.pointAddress;
       }
     },
     watch: {
@@ -101,6 +106,9 @@
           this.$store.state.deliveryCost = document.querySelector(`.${this.type}`).querySelector('.delivery__cost').innerHTML;
         }
         this.$store.state.deliveryType = this.type;
+      },
+      pointAddress() {
+        this.pointMessage = 'Изменить пункт выдачи';
       }
     },
     mounted() {
@@ -206,6 +214,12 @@
       color: #4dba87;
       font-size: 14px;
       font-style: italic;
+    }
+
+    &__point-address {
+      display: block;
+      font-size: 12px;
+      color: #aaa;
     }
 
     &__label {
