@@ -2,16 +2,16 @@
   <div>
     <div class="checkout__summary">
       <div class="checkout__summary-item">
-        Товары: {{ orderSum }}
+        Товары: {{ orderSum }} руб.
       </div>
       <div class="checkout__summary-item">
         Доставка: {{ deliveryCost }}
       </div>
       <div class="checkout__summary-item">
-        Скидка по промокоду: {{ promoSum }}
+        Скидка по промокоду: {{ promoSum }} руб.
       </div>
       <div class="checkout__summary-item">
-        Итого: {{ sum }}
+        Итого: {{ sum }} руб.
       </div>
     </div>
     <div class="promocode">
@@ -65,7 +65,7 @@
       },
       deliveryCost() {
         if (this.$store.state.deliveryType) {
-          return this.$store.state.deliveryCost;
+          return `${this.$store.state.deliveryCost} руб.`;
         }
         return 'Выберите способ доставки';
       }
