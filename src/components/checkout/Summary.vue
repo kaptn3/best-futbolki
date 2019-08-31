@@ -71,6 +71,13 @@
         return 'Выберите способ доставки';
       }
     },
+    watch: {
+      code() {
+        if (this.code.length === 0) {
+          this.error = '';
+        }
+      }
+    },
     mounted() {
       this.applyPromo(true);
     },
