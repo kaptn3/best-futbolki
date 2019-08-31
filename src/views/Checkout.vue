@@ -140,6 +140,7 @@
       &__right {
         margin-left: 0;
         margin-bottom: 20px;
+        width: 100%;
       }
     }
   }
