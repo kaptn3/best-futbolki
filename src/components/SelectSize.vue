@@ -68,6 +68,7 @@
   label {
     display: inline-block;
     margin-right: 10px;
+    margin-bottom: 10px;
     padding-top: 0;
   }
 
