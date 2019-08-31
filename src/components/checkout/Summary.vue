@@ -2,13 +2,13 @@
   <div>
     <div class="checkout__summary">
       <div class="checkout__summary-item">
-        Товары: {{ orderSum }} руб.
+        Товары: {{ oldSum }} руб.
       </div>
       <div class="checkout__summary-item">
         Доставка: {{ deliveryCost }}
       </div>
       <div class="checkout__summary-item">
-        Скидка по промокоду: {{ promoSum }} руб.
+        Скидка: {{ promoSum }} руб.
       </div>
       <div class="checkout__summary-item">
         Итого: {{ sum }} руб.
@@ -53,12 +53,13 @@
         orderSum: 0,
         code: '',
         promoSum: 0,
-        error: ''
+        error: '',
+        oldSum: 0
       };
     },
     computed: {
       sum() {
-        return this.orderSum - this.promoSum + Number(this.$store.state.deliveryCost);
+        return this.orderSum + Number(this.$store.state.deliveryCost);
       },
       deliveryAlias() {
         return this.$store.state.deliveryAlias;
@@ -71,10 +72,10 @@
       }
     },
     mounted() {
-      this.applyPromo();
+      this.applyPromo(true);
     },
     methods: {
-      applyPromo() {
+      applyPromo(isMounted) {
         const { cart } = this.$store.state;
         this.cart = [];
         for (let i = 0; i < cart.length; i++) {
@@ -96,10 +97,15 @@
         axios.post(url, data)
           .then((res) => {
             this.orderSum = res.data.order_sum;
+            if (isMounted) {
+              this.oldSum = this.orderSum;
+            }
             if (res.data.promocodes) {
               this.error = '';
+              this.promoSum = this.oldSum - this.orderSum;
             } else {
               this.error = res.data.discountRejectReasons.promocode[0].message;
+              this.promoSum = 0;
             }
           });
       }
