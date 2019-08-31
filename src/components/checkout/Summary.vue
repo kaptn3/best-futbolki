@@ -5,7 +5,7 @@
         Товары: {{ orderSum }}
       </div>
       <div class="checkout__summary-item">
-        Доставка: {{ delivery }}
+        Доставка: {{ deliveryCost }}
       </div>
       <div class="checkout__summary-item">
         Скидка по промокоду: {{ promoSum }}
@@ -60,8 +60,14 @@
       sum() {
         return this.orderSum - this.promoSum + Number(this.$store.state.deliveryCost);
       },
-      delivery() {
-        return this.$store.state.deliveryCost;
+      deliveryAlias() {
+        return this.$store.state.deliveryAlias;
+      },
+      deliveryCost() {
+        if (this.$store.state.deliveryType) {
+          return this.$store.state.deliveryCost;
+        }
+        return 'Выберите способ доставки';
       }
     },
     mounted() {

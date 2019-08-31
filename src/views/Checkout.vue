@@ -76,7 +76,7 @@
         };
         // eslint-disable-next-line
         for (const [key, val] of formData.entries()) {
-          if (key === 'delivery' || key === 'pickup_point_id' || key === 'payment_alias') {
+          if (key === 'delivery' || key === 'pickup_point_id' || key === 'payment_alias' || key === 'promo_code') {
             Object.assign(data, { [key]: val });
           } else if (key === 'city' || key === 'address') {
             Object.assign(address, { [key]: val });

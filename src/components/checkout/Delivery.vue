@@ -100,6 +100,7 @@
         if (this.type) {
           this.$store.state.deliveryCost = document.querySelector(`.${this.type}`).querySelector('.delivery__cost').innerHTML;
         }
+        this.$store.state.deliveryType = this.type;
       }
     },
     mounted() {
