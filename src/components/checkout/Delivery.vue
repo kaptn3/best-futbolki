@@ -40,7 +40,12 @@
         type="text"
         hidden
       >
-      <span class="delivery__point-address">{{ pointAddress }}</span>
+      <span
+        v-if="delivery.alias === 'merge_postamat_delivery'"
+        class="delivery__point-address"
+      >
+        {{ pointAddress }}
+      </span>
       <button
         v-if="delivery.alias === 'merge_postamat_delivery'"
         class="delivery__select"
