@@ -13,5 +13,9 @@ export default [
   {
     name: 'theme-color',
     content: '#ffffff'
+  },
+  {
+    'http-equiv': 'Content-Security-Policy',
+    content: 'upgrade-insecure-requests'
   }
 ];
