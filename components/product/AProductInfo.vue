@@ -44,6 +44,9 @@
           solo
         />
       </div>
+      <div class="my-2">
+        <v-btn depressed small color="primary">Добавить в корзину</v-btn>
+      </div>
     </v-col>
   </v-row>
 </template>
