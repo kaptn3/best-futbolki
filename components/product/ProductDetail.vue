@@ -36,7 +36,6 @@ export default {
 .details {
   background-color: #f2f2f2;
   color: #4f4f4f;
-  padding: 30px 0;
 
   &__row {
     display: flex;
