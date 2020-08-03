@@ -17,7 +17,6 @@ export const actions = {
     return this.$axios
       .get(`/test_api.php/?i=${productId}`)
       .then((res) => {
-        console.log(res.data);
         commit('setProduct', res.data);
 
         return this.$axios.get('catalog_references.php');

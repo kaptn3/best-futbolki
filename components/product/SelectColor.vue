@@ -18,7 +18,7 @@
         @input="changeItem($event.target.value)"
       />
       <span class="color">
-        <span :style="getBackground(color.rgb)" class="color-inside" />
+        <span :style="getBackground(color.rgb)" class="color-inside"></span>
       </span>
     </label>
   </div>

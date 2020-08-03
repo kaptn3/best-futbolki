@@ -1,6 +1,6 @@
 <template>
-  <v-row>
-    <v-col cols="12" md="5">
+  <v-row justify="center">
+    <v-col cols="12" sm="10" md="5">
       <v-carousel>
         <v-carousel-item
           v-for="(item, i) in slides"
@@ -22,14 +22,14 @@
           {{ product.old_price }} руб
         </span>
       </span>
-      <select-color
+      <SelectColor
         v-if="colors.length > 0"
         :data="colors"
         :res="relations"
         class="product-top__color"
         @model="changeColor($event)"
       />
-      <select-size
+      <SelectSize
         v-if="sizes.length > 0"
         :data="sizes"
         :res="relations"

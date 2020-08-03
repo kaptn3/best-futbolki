@@ -2,12 +2,12 @@
   <v-main v-if="product">
     <v-container fluid>
       <v-row justify="center">
-        <v-col cols="10">
-          <a-product-info :data="product" :relations="relations" />
+        <v-col cols="12" sm="10">
+          <AProductInfo :data="product" :relations="relations" />
         </v-col>
       </v-row>
     </v-container>
-    <product-detail :details="product.external_attributes" />
+    <ProductDetail :details="product.external_attributes" />
   </v-main>
 </template>
 
