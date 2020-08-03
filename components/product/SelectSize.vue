@@ -21,14 +21,19 @@
         {{ size.alias }}
       </span>
     </label>
-    <router-link to="#" class="size__guide my-5">
-      <img src="/img/icons/size.svg" alt="" />
-      Size guide
-    </router-link>
+    <v-btn to="#" class="size__guide my-3" large @click="openSizeTable">
+      Таблица размеров
+    </v-btn>
+    <v-dialog v-model="isOpenSizeTable" max-width="290">
+      <v-card>
+        fff
+      </v-card>
+    </v-dialog>
   </div>
 </template>
 
 <script>
+import { mapActions } from 'vuex';
 import select from '@/mixins/select';
 
 export default {
@@ -42,12 +47,26 @@ export default {
     res: {
       type: Object,
       required: true
+    },
+    productType: {
+      type: String,
+      required: true
     }
   },
   data() {
     return {
-      object: 'size'
+      object: 'size',
+      isOpenSizeTable: false
     };
+  },
+  methods: {
+    ...mapActions({
+      getSizeTable: 'product/getSizeTable'
+    }),
+    openSizeTable() {
+      this.getSizeTable(this.productType);
+      this.isOpenSizeTable = !this.isOpenSizeTable;
+    }
   }
 };
 </script>

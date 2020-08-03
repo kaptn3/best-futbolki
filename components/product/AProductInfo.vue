@@ -33,28 +33,39 @@
         v-if="sizes.length > 0"
         :data="sizes"
         :res="relations"
+        :product-type="data.categories[0].id"
         class="product-top__size"
         @model="changeSize($event)"
       />
       <div>
-        <div class="product__count">
-          <v-text-field
-            v-model="count"
-            type="number"
-            placeholder="Количество"
-            solo
-          />
-        </div>
-        <v-btn
-          class="add-to-cart"
-          depressed
-          :color="cartText === 'Добавить в корзину' ? 'grey darken-3' : 'green'"
-          dark
-          large
-          @click="addToCart"
-        >
-          {{ cartText }}
-        </v-btn>
+        <v-row>
+          <v-col cols="4">
+            <v-text-field
+              v-model="count"
+              type="number"
+              placeholder="Количество"
+              height="44px"
+              solo
+              dense
+              hide-details
+            />
+          </v-col>
+          <v-col cols="8">
+            <v-btn
+              class="add-to-cart"
+              depressed
+              :color="
+                cartText === 'Добавить в корзину' ? 'grey darken-3' : 'green'
+              "
+              dark
+              large
+              block
+              @click="addToCart"
+            >
+              {{ cartText }}
+            </v-btn>
+          </v-col>
+        </v-row>
       </div>
     </v-col>
   </v-row>
@@ -199,12 +210,6 @@ export default {
     vertical-align: bottom;
     text-decoration: line-through;
   }
-
-  &__count {
-    width: 150px;
-    display: inline-block;
-    margin-right: 20px;
-  }
 }
 
 @media screen and (max-width: 959px) {
@@ -214,7 +219,6 @@ export default {
     margin: 0 auto;
     right: 0;
     left: 0;
-    width: 100%;
     max-width: calc(83vw - 24px);
     z-index: 2;
   }

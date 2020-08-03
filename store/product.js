@@ -24,5 +24,10 @@ export const actions = {
       .then((res) => {
         commit('setCatalogReference', res.data);
       });
+  },
+  getSizeTable({ commit }, id) {
+    this.$axios.get(`/product_size.php?pt=${id}`).then((res) => {
+      console.log(res.data);
+    });
   }
 };
