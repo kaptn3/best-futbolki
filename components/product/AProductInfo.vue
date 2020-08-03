@@ -1,6 +1,6 @@
 <template>
   <v-row>
-    <v-col cols="5">
+    <v-col cols="12" md="5">
       <v-carousel>
         <v-carousel-item
           v-for="(item, i) in slides"
@@ -9,7 +9,7 @@
         />
       </v-carousel>
     </v-col>
-    <v-col cols="7">
+    <v-col cols="12" md="7">
       <h1 class="h1">
         {{ data.design.alias }}
       </h1>
@@ -46,6 +46,7 @@
           />
         </div>
         <v-btn
+          class="add-to-cart"
           depressed
           :color="cartText === 'Добавить в корзину' ? 'grey darken-3' : 'green'"
           dark
@@ -60,6 +61,7 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex';
 import SelectColor from './SelectColor';
 import SelectSize from './SelectSize';
 
@@ -93,6 +95,9 @@ export default {
     this.initData();
   },
   methods: {
+    ...mapActions({
+      addItemToCart: 'cart/addToCart'
+    }),
     initData() {
       if (this.data) {
         // init all variants for this model
@@ -140,10 +145,6 @@ export default {
     },
     addToCart() {
       if (this.cartText === 'Добавить в корзину') {
-        this.cartText = 'Перейти в корзину';
-        setTimeout(() => {
-          this.cartText = 'Добавить в корзину';
-        }, 5000);
         const color = document.querySelector('.current-color b').innerHTML;
         const size = document.querySelector('.current-size b').innerHTML;
 
@@ -169,7 +170,11 @@ export default {
           product_type: this.data.categories[0].id,
           type: 'catalog'
         };
-        this.$store.commit('addToCart', selected);
+        this.addItemToCart(selected);
+        this.cartText = 'Перейти в корзину';
+        setTimeout(() => {
+          this.cartText = 'Добавить в корзину';
+        }, 5000);
       } else {
         window.open('/checkout');
       }
@@ -199,6 +204,25 @@ export default {
     width: 150px;
     display: inline-block;
     margin-right: 20px;
+  }
+}
+
+@media screen and (max-width: 959px) {
+  .add-to-cart {
+    position: fixed;
+    bottom: 1rem;
+    margin: 0 auto;
+    right: 0;
+    left: 0;
+    width: 100%;
+    max-width: calc(83vw - 24px);
+    z-index: 2;
+  }
+}
+
+@media screen and (max-width: 599px) {
+  .add-to-cart {
+    max-width: calc(100vw - 24px);
   }
 }
 </style>
