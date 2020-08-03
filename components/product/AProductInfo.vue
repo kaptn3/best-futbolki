@@ -36,16 +36,24 @@
         class="product-top__size"
         @model="changeSize($event)"
       />
-      <div class="product__count">
-        <v-text-field
-          v-model="count"
-          type="number"
-          placeholder="Количество"
-          solo
-        />
-      </div>
-      <div class="my-2">
-        <v-btn depressed small color="primary">Добавить в корзину</v-btn>
+      <div>
+        <div class="product__count">
+          <v-text-field
+            v-model="count"
+            type="number"
+            placeholder="Количество"
+            solo
+          />
+        </div>
+        <v-btn
+          depressed
+          :color="cartText === 'Добавить в корзину' ? 'grey darken-3' : 'green'"
+          dark
+          large
+          @click="addToCart"
+        >
+          {{ cartText }}
+        </v-btn>
       </div>
     </v-col>
   </v-row>
@@ -77,7 +85,8 @@ export default {
       slides: [],
       product: [],
       variants: [],
-      count: 1
+      count: 1,
+      cartText: 'Добавить в корзину'
     };
   },
   mounted() {
@@ -130,32 +139,40 @@ export default {
       this.slides = this.product.sides; // init photos for this product
     },
     addToCart() {
-      const color = document.querySelector('.current-color b').innerHTML;
-      const size = document.querySelector('.current-size b').innerHTML;
+      if (this.cartText === 'Добавить в корзину') {
+        this.cartText = 'Перейти в корзину';
+        setTimeout(() => {
+          this.cartText = 'Добавить в корзину';
+        }, 5000);
+        const color = document.querySelector('.current-color b').innerHTML;
+        const size = document.querySelector('.current-size b').innerHTML;
 
-      const colorAlias = document.querySelector('.current-color-alias').value;
-      const sizeAlias = document.querySelector('.current-size-alias').value;
+        const colorAlias = document.querySelector('.current-color-alias').value;
+        const sizeAlias = document.querySelector('.current-size-alias').value;
 
-      const selected = {
-        id: this.data.id,
-        design: Number(this.id),
-        sizeName: size,
-        colorName: color,
-        size: sizeAlias,
-        color: colorAlias,
-        count: this.count,
-        title: this.name,
-        model: this.model,
-        in_stock: this.product.available,
-        photo: this.product.sides[0].small,
-        old_price: this.product.old_price,
-        price: this.product.price,
-        print_type_name: this.product.print_type_name,
-        main_side_position: 0,
-        product_type: this.data.categories[0].id,
-        type: 'catalog'
-      };
-      this.$store.commit('addToCart', selected);
+        const selected = {
+          id: this.data.id,
+          design: Number(this.id),
+          sizeName: size,
+          colorName: color,
+          size: sizeAlias,
+          color: colorAlias,
+          count: this.count,
+          title: this.name,
+          model: this.model,
+          in_stock: this.product.available,
+          photo: this.product.sides[0].small,
+          old_price: this.product.old_price,
+          price: this.product.price,
+          print_type_name: this.product.print_type_name,
+          main_side_position: 0,
+          product_type: this.data.categories[0].id,
+          type: 'catalog'
+        };
+        this.$store.commit('addToCart', selected);
+      } else {
+        window.open('/checkout');
+      }
     }
   }
 };
@@ -180,6 +197,8 @@ export default {
 
   &__count {
     width: 150px;
+    display: inline-block;
+    margin-right: 20px;
   }
 }
 </style>
