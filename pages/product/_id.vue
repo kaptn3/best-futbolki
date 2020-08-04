@@ -7,7 +7,10 @@
         </v-col>
       </v-row>
     </v-container>
-    <ProductDetail :details="product.external_attributes" />
+    <ProductDetail
+      :details="product.external_attributes"
+      :product-type="product.categories[0].id"
+    />
   </v-main>
 </template>
 

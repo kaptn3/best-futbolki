@@ -1,6 +1,8 @@
 export const state = () => ({
   product: {},
-  catalogReferences: {}
+  catalogReferences: {},
+  sizeTable: {},
+  moreInfo: null
 });
 
 export const mutations = {
@@ -9,6 +11,12 @@ export const mutations = {
   },
   setCatalogReference(state, data) {
     state.catalogReferences = data;
+  },
+  setSizeTable(state, data) {
+    state.sizeTable = data;
+  },
+  setMoreInfo(state, data) {
+    state.moreInfo = data;
   }
 };
 
@@ -25,9 +33,16 @@ export const actions = {
         commit('setCatalogReference', res.data);
       });
   },
-  getSizeTable({ commit }, id) {
-    this.$axios.get(`/product_size.php?pt=${id}`).then((res) => {
-      console.log(res.data);
+  getSizeTable(context, id) {
+    if (!context.state.sizeTable.text) {
+      this.$axios.get(`/product_size.php?pt=${id}`).then((res) => {
+        context.commit('setSizeTable', res.data);
+      });
+    }
+  },
+  getMoreInfo(context, id) {
+    this.$axios.get(`/product_info.php?pt=${id}`).then((res) => {
+      context.commit('setMoreInfo', res.data.text);
     });
   }
 };

@@ -6,7 +6,7 @@
         <div class="details__row">
           <div>
             <div
-              v-for="(detail, index) in details"
+              v-for="(detail, index) in items"
               :key="'row-1' + index"
               class="details__item"
             >
@@ -15,18 +15,41 @@
             </div>
           </div>
         </div>
+        <div v-html="moreInfo" />
       </v-col>
     </v-row>
   </v-container>
 </template>
 
 <script>
+import { mapActions, mapState } from 'vuex';
+
 export default {
   name: 'ProductDetail',
   props: {
     details: {
       type: Array,
       default: () => []
+    },
+    productType: {
+      type: String,
+      required: true
+    }
+  },
+  mounted() {
+    this.getMoreInfo(this.productType);
+  },
+  methods: {
+    ...mapActions({
+      getMoreInfo: 'product/getMoreInfo'
+    })
+  },
+  computed: {
+    ...mapState({
+      moreInfo: (state) => state.product.moreInfo
+    }),
+    items() {
+      return this.details.filter((item) => item.alias !== 'description');
     }
   }
 };
