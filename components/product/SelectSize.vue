@@ -132,7 +132,7 @@ input:checked ~ .size {
 
 .size-table {
   padding: 15px;
-  width: fit-content;
+  min-width: fit-content;
   height: fit-content;
 }
 </style>

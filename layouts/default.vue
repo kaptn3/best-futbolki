@@ -58,7 +58,7 @@ export default {
 };
 </script>
 
-<style>
+<style lang="scss">
 html,
 .hidden {
   overflow: auto !important;
@@ -88,7 +88,13 @@ html,
   border: 1px solid #dee2e6;
 }
 
-.size-table p {
-  text-align: center;
+.size-table {
+  p {
+    text-align: center;
+  }
+
+  img {
+    height: auto;
+  }
 }
 </style>
