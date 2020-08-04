@@ -221,6 +221,8 @@ export default {
     left: 0;
     max-width: calc(83vw - 24px);
     z-index: 2;
+    width: 100%;
+    min-width: 1% !important;
   }
 }
 

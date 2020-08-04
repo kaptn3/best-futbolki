@@ -63,4 +63,32 @@ html,
 .hidden {
   overflow: auto !important;
 }
+
+.table {
+  border-collapse: collapse;
+  width: 100%;
+  margin-bottom: 1rem;
+  color: #212529;
+}
+
+.table thead th {
+  vertical-align: bottom;
+  border-bottom: 2px solid #dee2e6;
+  text-align: inherit;
+}
+
+.table td,
+.table th {
+  padding: 0.2rem;
+  vertical-align: top;
+  border: 1px solid #dee2e6;
+}
+
+.table-bordered {
+  border: 1px solid #dee2e6;
+}
+
+.size-table p {
+  text-align: center;
+}
 </style>

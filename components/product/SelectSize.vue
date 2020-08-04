@@ -24,16 +24,14 @@
     <v-btn to="#" class="size__guide my-3" large @click="openSizeTable">
       Таблица размеров
     </v-btn>
-    <v-dialog v-model="isOpenSizeTable" max-width="290">
-      <v-card>
-        fff
-      </v-card>
+    <v-dialog v-model="isOpenSizeTable" max-width="918px" scrollable>
+      <v-card v-html="sizeTable.text" class="size-table" />
     </v-dialog>
   </div>
 </template>
 
 <script>
-import { mapActions } from 'vuex';
+import { mapActions, mapState } from 'vuex';
 import select from '@/mixins/select';
 
 export default {
@@ -58,6 +56,11 @@ export default {
       object: 'size',
       isOpenSizeTable: false
     };
+  },
+  computed: {
+    ...mapState({
+      sizeTable: (state) => state.product.sizeTable
+    })
   },
   methods: {
     ...mapActions({
@@ -125,5 +128,11 @@ input:checked ~ .size {
   border-width: 2px;
   border-color: #828282;
   color: #828282;
+}
+
+.size-table {
+  padding: 15px;
+  width: fit-content;
+  height: fit-content;
 }
 </style>
