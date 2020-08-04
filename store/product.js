@@ -2,7 +2,8 @@ export const state = () => ({
   product: {},
   catalogReferences: {},
   sizeTable: {},
-  moreInfo: null
+  moreInfo: null,
+  printType: null
 });
 
 export const mutations = {
@@ -17,6 +18,9 @@ export const mutations = {
   },
   setMoreInfo(state, data) {
     state.moreInfo = data;
+  },
+  setPrintType(state, data) {
+    state.printType = data;
   }
 };
 
@@ -41,8 +45,16 @@ export const actions = {
     }
   },
   getMoreInfo(context, id) {
-    this.$axios.get(`/product_info.php?pt=${id}`).then((res) => {
-      context.commit('setMoreInfo', res.data.text);
-    });
+    this.$axios
+      .get(`/product_info.php?pt=${id}`)
+      .then((res) => {
+        context.commit('setMoreInfo', res.data.text);
+
+        return this.$axios.get(`product_printtype.php`);
+      })
+      .then((res) => {
+        console.log(res.data);
+        context.commit('setPrintType', res.data.children);
+      });
   }
 };
