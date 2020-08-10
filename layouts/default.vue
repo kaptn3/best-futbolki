@@ -5,6 +5,9 @@
         <v-container class="d-flex align-center">
           <v-toolbar-title>Best futbolki</v-toolbar-title>
           <v-spacer />
+          <v-btn class="ma-2" text small>
+            {{ city }} <v-icon>mdi-chevron-down</v-icon>
+          </v-btn>
           <v-btn icon @click="isCart = !isCart">
             <v-badge
               :value="cartCount"
@@ -38,7 +41,7 @@
 </template>
 
 <script>
-import { mapState } from 'vuex';
+import { mapState, mapActions } from 'vuex';
 import CartWrapper from '~/components/cart/CartWrapper';
 
 export default {
@@ -52,7 +55,16 @@ export default {
   },
   computed: {
     ...mapState({
-      cartCount: (state) => state.cart.cartCount
+      cartCount: (state) => state.cart.cartCount,
+      city: (state) => state.user.city
+    })
+  },
+  mounted() {
+    this.getInfo();
+  },
+  methods: {
+    ...mapActions({
+      getInfo: 'user/getInfo'
     })
   }
 };
