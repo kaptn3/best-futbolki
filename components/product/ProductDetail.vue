@@ -2,20 +2,32 @@
   <v-container class="details" fluid>
     <v-row justify="center">
       <v-col cols="10">
-        <h2 class="h2">Описание</h2>
-        <div class="details__row">
-          <div>
-            <div
-              v-for="(detail, index) in items"
-              :key="'row-1' + index"
-              class="details__item"
-            >
-              <h3 class="h3">{{ detail.title }}:</h3>
-              <span>{{ detail.value }}</span>
+        <v-tabs v-model="tab" background-color="#f2f2f2" color="green darken-1">
+          <v-tab>
+            Описание
+          </v-tab>
+          <v-tab>
+            Метод печати
+          </v-tab>
+        </v-tabs>
+
+        <v-tabs-items v-model="tab" style="background-color: #f2f2f2;">
+          <v-tab-item key="Описание">
+            <div class="my-4">
+              <div v-for="(detail, index) in items" :key="'row-1' + index">
+                <h3 class="subtitle-1 font-weight-bold">{{ detail.title }}:</h3>
+                <span>{{ detail.value }}</span>
+              </div>
+              <div v-html="moreInfo" />
             </div>
-          </div>
-        </div>
-        <div v-html="moreInfo" />
+          </v-tab-item>
+          <v-tab-item key="Метод печати">
+            <div v-if="printType" class="my-4">
+              <p>Метод печати: {{ printType.title }}</p>
+              <div v-html="printType.text" />
+            </div>
+          </v-tab-item>
+        </v-tabs-items>
       </v-col>
     </v-row>
   </v-container>
@@ -36,6 +48,11 @@ export default {
       required: true
     }
   },
+  data() {
+    return {
+      tab: 'Описание'
+    };
+  },
   mounted() {
     this.getMoreInfo(this.productType);
   },
@@ -46,7 +63,8 @@ export default {
   },
   computed: {
     ...mapState({
-      moreInfo: (state) => state.product.moreInfo
+      moreInfo: (state) => state.product.moreInfo,
+      printType: (state) => state.product.printType
     }),
     items() {
       return this.details.filter((item) => item.alias !== 'description');
@@ -60,46 +78,8 @@ export default {
   background-color: #f2f2f2;
   color: #4f4f4f;
 
-  &__row {
-    display: flex;
-
-    & > div {
-      width: 50%;
-      flex-shrink: 1;
-    }
-
-    & > div:first-child {
-      margin-right: 20px;
-
-      div {
-        margin-bottom: 20px;
-      }
-
-      h3 {
-        margin-bottom: 10px;
-      }
-    }
-
-    & > div:last-child {
-      padding: 10px 0;
-
-      div {
-        margin-bottom: 10px;
-      }
-
-      h3 {
-        display: inline-block;
-        margin-right: 15px;
-      }
-
-      span {
-        width: 50%;
-      }
-    }
-  }
-
   h3 {
-    font-size: 1rem;
+    display: inline;
   }
 }
 </style>

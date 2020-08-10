@@ -66,15 +66,13 @@
             </v-btn>
           </v-col>
         </v-row>
-        <p>Метод печати: {{ printType.title }}</p>
-        <div v-html="printType.text" />
       </div>
     </v-col>
   </v-row>
 </template>
 
 <script>
-import { mapActions, mapState } from 'vuex';
+import { mapActions } from 'vuex';
 import SelectColor from './SelectColor';
 import SelectSize from './SelectSize';
 
@@ -106,11 +104,6 @@ export default {
   },
   mounted() {
     this.initData();
-  },
-  computed: {
-    ...mapState({
-      printType: (state) => state.product.printType
-    })
   },
   methods: {
     ...mapActions({
