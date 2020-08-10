@@ -4,7 +4,8 @@ export const state = () => ({
   sizeTable: {},
   moreInfo: null,
   printType: null,
-  printTypes: []
+  printTypes: [],
+  same: []
 });
 
 export const mutations = {
@@ -24,17 +25,21 @@ export const mutations = {
     state.printTypes = data;
   },
   setCurrentType(state, key) {
-    if (state.printType.id !== key) {
-      for (let i = 0; i < state.printTypes.length; i++) {
-        if (state.printTypes[i].tkey === key) {
-          state.printType = {};
-          state.printType = {
-            id: key,
-            title: state.printTypes[i].title,
-            text: state.printTypes[i].text
-          };
-        }
+    for (let i = 0; i < state.printTypes.length; i++) {
+      if (state.printTypes[i].tkey === key) {
+        state.printType = {};
+        state.printType = {
+          id: key,
+          title: state.printTypes[i].title,
+          text: state.printTypes[i].text
+        };
       }
+    }
+  },
+  setSame(state, data) {
+    state.same = [];
+    for (let i = 0; i < 8; i++) {
+      state.same.push(data[i]);
     }
   }
 };
@@ -73,5 +78,10 @@ export const actions = {
     } else {
       context.commit('setCurrentType', key);
     }
+  },
+  getSame(context, id) {
+    this.$axios.get(`/ean.php?i=${id}`).then((res) => {
+      context.commit('setSame', res.data.items);
+    });
   }
 };

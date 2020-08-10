@@ -16,10 +16,6 @@
           </div>
         </div>
         <div v-html="moreInfo" />
-        <div v-for="(item, index) in printType" :key="`print-type-${index}`">
-          <h4>{{ item.title }}</h4>
-          <div v-html="item.text" />
-        </div>
       </v-col>
     </v-row>
   </v-container>
@@ -50,8 +46,7 @@ export default {
   },
   computed: {
     ...mapState({
-      moreInfo: (state) => state.product.moreInfo,
-      printType: (state) => state.product.printType
+      moreInfo: (state) => state.product.moreInfo
     }),
     items() {
       return this.details.filter((item) => item.alias !== 'description');

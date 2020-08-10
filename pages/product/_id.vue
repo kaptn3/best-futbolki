@@ -11,11 +11,13 @@
       :details="product.external_attributes"
       :product-type="product.categories[0].id"
     />
+    <ProductSame :id="product.design.id" />
   </v-main>
 </template>
 
 <script>
 import { mapState } from 'vuex';
+import ProductSame from '~/components/product/ProductSame';
 import AProductInfo from '~/components/product/AProductInfo';
 import ProductDetail from '~/components/product/ProductDetail';
 
@@ -23,7 +25,7 @@ export default {
   async middleware({ params, store }) {
     await store.dispatch('product/getProduct', params.id);
   },
-  components: { AProductInfo, ProductDetail },
+  components: { AProductInfo, ProductDetail, ProductSame },
   computed: {
     ...mapState({
       product: (state) => state.product.product,
