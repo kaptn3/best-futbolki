@@ -35,7 +35,11 @@
         </div>
         <CartWrapper />
       </v-navigation-drawer>
-      <Nuxt />
+      <v-main>
+        <v-container fluid>
+          <Nuxt />
+        </v-container>
+      </v-main>
     </v-sheet>
   </v-app>
 </template>
@@ -74,6 +78,10 @@ export default {
 html,
 .hidden {
   overflow: auto !important;
+}
+
+main {
+  margin-top: 64px;
 }
 
 .table {
