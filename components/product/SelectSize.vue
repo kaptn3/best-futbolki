@@ -1,7 +1,7 @@
 <template>
   <div>
     <span class="current-size"
-      >Size: <b>{{ item }}</b></span
+      >Размер: <b>{{ item }}</b></span
     >
     <input class="current-size-alias" :value="alias" hidden />
     <label

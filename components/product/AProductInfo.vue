@@ -66,13 +66,15 @@
             </v-btn>
           </v-col>
         </v-row>
+        <p>Метод печати: {{ printType.title }}</p>
+        <div v-html="printType.text" />
       </div>
     </v-col>
   </v-row>
 </template>
 
 <script>
-import { mapActions } from 'vuex';
+import { mapActions, mapState } from 'vuex';
 import SelectColor from './SelectColor';
 import SelectSize from './SelectSize';
 
@@ -105,9 +107,15 @@ export default {
   mounted() {
     this.initData();
   },
+  computed: {
+    ...mapState({
+      printType: (state) => state.product.printType
+    })
+  },
   methods: {
     ...mapActions({
-      addItemToCart: 'cart/addToCart'
+      addItemToCart: 'cart/addToCart',
+      getPrintType: 'product/getPrintType'
     }),
     initData() {
       if (this.data) {
@@ -153,6 +161,7 @@ export default {
         return false;
       });
       this.slides = this.product.sides; // init photos for this product
+      this.getPrintType(this.product.print_type);
     },
     addToCart() {
       if (this.cartText === 'Добавить в корзину') {

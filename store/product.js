@@ -3,7 +3,8 @@ export const state = () => ({
   catalogReferences: {},
   sizeTable: {},
   moreInfo: null,
-  printType: null
+  printType: null,
+  printTypes: []
 });
 
 export const mutations = {
@@ -19,8 +20,22 @@ export const mutations = {
   setMoreInfo(state, data) {
     state.moreInfo = data;
   },
-  setPrintType(state, data) {
-    state.printType = data;
+  setPrintTypes(state, data) {
+    state.printTypes = data;
+  },
+  setCurrentType(state, key) {
+    if (state.printType.id !== key) {
+      for (let i = 0; i < state.printTypes.length; i++) {
+        if (state.printTypes[i].tkey === key) {
+          state.printType = {};
+          state.printType = {
+            id: key,
+            title: state.printTypes[i].title,
+            text: state.printTypes[i].text
+          };
+        }
+      }
+    }
   }
 };
 
@@ -45,16 +60,18 @@ export const actions = {
     }
   },
   getMoreInfo(context, id) {
-    this.$axios
-      .get(`/product_info.php?pt=${id}`)
-      .then((res) => {
-        context.commit('setMoreInfo', res.data.text);
-
-        return this.$axios.get(`product_printtype.php`);
-      })
-      .then((res) => {
-        console.log(res.data);
-        context.commit('setPrintType', res.data.children);
+    this.$axios.get(`/product_info.php?pt=${id}`).then((res) => {
+      context.commit('setMoreInfo', res.data.text);
+    });
+  },
+  getPrintType(context, key) {
+    if (!context.state.printTypes[0]) {
+      this.$axios.get('/product_printtype.php').then((res) => {
+        context.commit('setPrintTypes', res.data.children);
+        context.commit('setCurrentType', key);
       });
+    } else {
+      context.commit('setCurrentType', key);
+    }
   }
 };
