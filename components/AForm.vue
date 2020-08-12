@@ -84,9 +84,9 @@
           required
         />
       </v-col>
-      <v-col>
+      <v-col cols="12">
         <h3 class="h3">Способ доставки</h3>
-        <v-radio-group v-model="ex7" column>
+        <v-radio-group v-model="selectDeliveries" column>
           <v-radio
             v-for="item in deliveries"
             :key="item.alias"
@@ -110,18 +110,28 @@
           </v-radio>
         </v-radio-group>
       </v-col>
+      <v-col cols="12">
+        <h3 class="h3">Способ оплаты</h3>
+      </v-col>
     </v-row>
     <v-btn type="submit" depressed color="grey darken-3" dark large block>
       Оформить
     </v-btn>
+    <v-dialog v-model="isSelectPoint" max-width="600">
+      <SelectPoint />
+    </v-dialog>
   </v-form>
 </template>
 
 <script>
 import { mapState, mapActions } from 'vuex';
+import SelectPoint from './checkout/SelectPoint';
 
 export default {
   name: 'AForm',
+  components: {
+    SelectPoint
+  },
   data() {
     return {
       items: [],
@@ -136,7 +146,8 @@ export default {
         address: ''
       },
       city: null,
-      ex7: null
+      selectDeliveries: null,
+      isSelectPoint: false
     };
   },
   computed: {
@@ -161,6 +172,9 @@ export default {
     },
     city() {
       this.getDelivery(this.city);
+    },
+    selectDeliveries() {
+      this.isSelectPoint = true;
     }
   },
   methods: {
