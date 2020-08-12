@@ -78,24 +78,26 @@ export default {
   computed: {
     ...mapState({
       cartCount: (state) => state.cart.cartCount,
-      city: (state) => state.user.city,
+      city: (state) => state.order.city,
       cities: (state) => state.user.cities
     })
   },
   mounted() {
-    this.getInfo();
+    this.getCity();
     this.getCities();
   },
   methods: {
     ...mapActions({
-      getInfo: 'user/getInfo',
+      getCity: 'order/getCity',
       getCities: 'user/getCities'
     }),
     ...mapMutations({
-      setInfo: 'user/setInfo'
+      setCity: 'order/setCity',
+      setRegionInfo: 'order/setRegionInfo'
     }),
     changeCity(item) {
-      this.setInfo(item);
+      this.setCity(item.city);
+      this.setRegionInfo(item);
       this.isChangeCity = false;
     }
   }
