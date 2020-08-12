@@ -1,6 +1,7 @@
 export const state = () => ({
   ip: null,
-  city: null
+  city: null,
+  cities: []
 });
 
 export const mutations = {
@@ -9,6 +10,9 @@ export const mutations = {
   },
   setIp(state, data) {
     state.ip = data.ip;
+  },
+  setCities(state, data) {
+    state.cities = data;
   }
 };
 
@@ -27,5 +31,12 @@ export const actions = {
       .then((res) => {
         commit('setInfo', res.data);
       });
+  },
+  getCities(context) {
+    if (context.state.cities.length === 0) {
+      this.$axios.get('/delivery_suggest.php?text=').then((res) => {
+        context.commit('setCities', res.data);
+      });
+    }
   }
 };

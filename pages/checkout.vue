@@ -5,6 +5,9 @@
         <v-col cols="12" md="7">
           <AForm />
         </v-col>
+        <v-col cols="12" md="5">
+          Tovar
+        </v-col>
       </v-row>
     </v-col>
   </v-row>

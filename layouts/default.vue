@@ -5,7 +5,7 @@
         <v-container class="d-flex align-center">
           <v-toolbar-title>Best futbolki</v-toolbar-title>
           <v-spacer />
-          <v-btn class="ma-2" text small>
+          <v-btn class="ma-2" text small @click="isChangeCity = true">
             {{ city }} <v-icon>mdi-chevron-down</v-icon>
           </v-btn>
           <v-btn icon @click="isCart = !isCart">
@@ -40,12 +40,29 @@
           <Nuxt />
         </v-container>
       </v-main>
+      <v-dialog v-model="isChangeCity" max-width="400">
+        <v-card>
+          <v-card-title class="headline">
+            Поменять город
+          </v-card-title>
+          <v-card-text>
+            <v-btn
+              v-for="item in cities"
+              :key="`choice-${item.city}`"
+              text
+              @click="changeCity(item)"
+            >
+              {{ item.city }}
+            </v-btn>
+          </v-card-text>
+        </v-card>
+      </v-dialog>
     </v-sheet>
   </v-app>
 </template>
 
 <script>
-import { mapState, mapActions } from 'vuex';
+import { mapState, mapActions, mapMutations } from 'vuex';
 import CartWrapper from '~/components/cart/CartWrapper';
 
 export default {
@@ -54,22 +71,33 @@ export default {
   },
   data() {
     return {
-      isCart: false
+      isCart: false,
+      isChangeCity: false
     };
   },
   computed: {
     ...mapState({
       cartCount: (state) => state.cart.cartCount,
-      city: (state) => state.user.city
+      city: (state) => state.user.city,
+      cities: (state) => state.user.cities
     })
   },
   mounted() {
     this.getInfo();
+    this.getCities();
   },
   methods: {
     ...mapActions({
-      getInfo: 'user/getInfo'
-    })
+      getInfo: 'user/getInfo',
+      getCities: 'user/getCities'
+    }),
+    ...mapMutations({
+      setInfo: 'user/setInfo'
+    }),
+    changeCity(item) {
+      this.setInfo(item);
+      this.isChangeCity = false;
+    }
   }
 };
 </script>
