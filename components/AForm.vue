@@ -94,7 +94,18 @@
             required
           >
             <template v-slot:label>
-              {{ item.title }}
+              <div
+                class="d-flex justify-space-between align-center"
+                style="width: 100%;"
+              >
+                <div>
+                  <span class="font-weight-bold">{{ item.title }}</span>
+                  <span>{{ durationHandle(item.duration.max) }}</span>
+                </div>
+                <span class="font-weight-medium">
+                  {{ deliveryCostHandle(item.cost, item.alias) }} руб.
+                </span>
+              </div>
             </template>
           </v-radio>
         </v-radio-group>
@@ -161,6 +172,24 @@ export default {
         return 'this.$store.state.deliveryAlias';
       }
       return alias;
+    },
+    durationHandle(duration) {
+      let res = `от ${duration} `;
+      if (duration === 0 || duration > 1) {
+        res += 'дней';
+      } else {
+        res += 'дня';
+      }
+      return res;
+    },
+    deliveryCostHandle(cost, alias) {
+      if (alias === 'merge_postamat_delivery') {
+        if (this.$store.state.pointCost > 0) {
+          return this.$store.state.pointCost;
+        }
+        return `от ${cost}`;
+      }
+      return cost;
     },
     submitForm(e) {
       e.preventDefault();
