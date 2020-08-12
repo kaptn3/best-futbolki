@@ -1,56 +1,62 @@
 <template>
   <v-card>
-    <v-card-title class="headline">
-      Пункты выдачи
-    </v-card-title>
-    <div class="map-modal__menu">
-      <label v-for="item in checkboxes" :key="item" class="map-modal__label">
-        <input
-          v-model="brandSelected"
-          :value="item"
-          type="checkbox"
-          name="type"
+    <v-container>
+      <v-row>
+        <v-col cols="10">
+          <yandex-map
+            v-if="filterBrands"
+            :coords="coords"
+            :use-object-manager="true"
+            :init-without-markers="true"
+            :cluster-options="clusterOptions"
+            zoom="10"
+          >
+            <ymap-marker
+              v-for="(point, index) in filterBrands"
+              :key="point.id"
+              :marker-id="point.id"
+              :coords="[point.latitude, point.longitude]"
+              :balloon="{
+                header: balloonHeader(point.delivery_brand_name, point.name),
+                body: balloonBody(index),
+                footer: balloonFooter(point)
+              }"
+              :cluster-name="point.delivery_brand_alias"
+              :icon="{ color: colorIcon(point.delivery_brand_alias) }"
+            />
+          </yandex-map>
+        </v-col>
+        <v-col cols="2">
+          <v-checkbox
+            v-model="brandSelected"
+            v-for="item in checkboxes"
+            :key="item"
+            :value="item"
+            :color="colors[item]"
+            hide-details
+          >
+            <template v-slot:label>
+              <img
+                :src="`/img/icons/${colors[item]}.png`"
+                style="margin-right: 10px;"
+              />
+              {{ item }}
+            </template>
+          </v-checkbox>
+        </v-col>
+      </v-row>
+      <div class="map__baloon-btns-hidden">
+        <button
+          v-for="point in filterBrands"
+          :key="point.id"
+          class="map__baloon-btn"
+          type="button"
+          @click="
+            onClick(point.id, point.address, point.delivery_alias, point.cost)
+          "
         />
-        <img :src="`/img/icons/${colors[item]}`" class="map-modal__icon" />
-        {{ item }}
-      </label>
-    </div>
-    <div v-if="pointSelected" class="map__selected">
-      Выбран: {{ pointSelected }}
-    </div>
-    <yandex-map
-      v-if="filterBrands"
-      :coords="coords"
-      :use-object-manager="true"
-      :init-without-markers="true"
-      :cluster-options="clusterOptions"
-      zoom="10"
-    >
-      <ymap-marker
-        v-for="(point, index) in filterBrands"
-        :key="point.id"
-        :marker-id="point.id"
-        :coords="[point.latitude, point.longitude]"
-        :balloon="{
-          header: balloonHeader(point.delivery_brand_name, point.name),
-          body: balloonBody(index),
-          footer: balloonFooter(point)
-        }"
-        :cluster-name="point.delivery_brand_alias"
-        :icon="{ color: colorIcon(point.delivery_brand_alias) }"
-      />
-    </yandex-map>
-    <div class="map__baloon-btns-hidden">
-      <button
-        v-for="point in filterBrands"
-        :key="point.id"
-        class="map__baloon-btn"
-        type="button"
-        @click="
-          onClick(point.id, point.address, point.delivery_alias, point.cost)
-        "
-      />
-    </div>
+      </div>
+    </v-container>
   </v-card>
 </template>
 
@@ -77,11 +83,11 @@ export default {
       pointSelected: '',
       brandSelected: [],
       colors: {
-        'Vsemayki.ru': 'pink.png',
-        СДЭК: 'darkGreen.png',
-        Boxberry: 'red.png',
-        DPD: 'blue.png',
-        PickPoint: 'orange.png'
+        'Vsemayki.ru': 'pink',
+        СДЭК: 'darkGreen',
+        Boxberry: 'red',
+        DPD: 'blue',
+        PickPoint: 'orange'
       }
     };
   },
@@ -125,13 +131,14 @@ export default {
   },
   methods: {
     onClick(id, address, alias, cost) {
-      this.$store.state.pointIdDelivery = id;
+      console.log(id, address, alias, cost);
+      /* this.$store.state.pointIdDelivery = id;
       this.$store.state.address = address;
       this.$store.state.pointAddress = address;
       this.$store.state.deliveryCost = cost;
       this.$store.state.pointCost = cost;
       this.pointSelected = address;
-      this.$store.state.deliveryAlias = alias;
+      this.$store.state.deliveryAlias = alias; */
     },
     colorIcon(alias) {
       if (alias) {
@@ -148,29 +155,37 @@ export default {
       return `
           <div class="map__baloon">
             <button type="button" onclick="javascript: document.querySelectorAll('.map__baloon-btn')[${index}]
-              .click();" class="map__baloon-choice">Выбрать</button>
+              .click();" class="v-btn v-btn--contained theme--light v-size--small primary">Выбрать</button>
           </div>
         `;
     },
     balloonFooter(point) {
       return `
           <div>
-            Адрес: ${point.address}
+            <span class="font-weight-bold">Адрес:</span> ${point.address}
           </div>
           <div>
-            Время работы: ${point.work_time}
+            <span class="font-weight-bold">Время работы:</span> ${
+              point.work_time
+            }
           </div>
           <div>
-            Стоимость доставки: ${point.cost} руб.
+            <span class="font-weight-bold">Стоимость доставки:</span> ${
+              point.cost
+            } руб.
           </div>
           <div>
-            Оплата: ${this.payments(point.allowed_payments)}
+            <span class="font-weight-bold">Оплата:</span> ${this.payments(
+              point.allowed_payments
+            )}
           </div>
           <div>
-            Срок доставки: ${this.duration(point.duration)}
+            <span class="font-weight-bold">Срок доставки:</span> ${this.duration(
+              point.duration
+            )}
           </div>
           <div>
-            Описание: ${point.description}
+            <span class="font-weight-bold">Описание:</span> ${point.description}
           </div>
         `;
     },
@@ -202,59 +217,7 @@ export default {
 <style lang="scss">
 .ymap-container {
   height: 600px;
-}
-
-.map-modal {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  overflow-y: scroll;
-  z-index: 99;
-  width: 100%;
-  height: 100vh;
-  background: rgba(0, 0, 0, 0.2);
-
-  &__wrapper {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-
-  &__inner {
-    width: 80%;
-    margin: 40px 20px;
-    background: #fff;
-    border-radius: 8px;
-    padding-top: 20px;
-    position: relative;
-  }
-
-  &__menu {
-    position: absolute;
-    top: 60px;
-    right: 0;
-    background-color: rgba(255, 255, 255, 0.9);
-    width: 350px;
-    max-height: 100%;
-    z-index: 10;
-    padding: 15px;
-  }
-
-  &__h4 {
-    margin-bottom: 15px;
-  }
-
-  &__label {
-    display: block;
-    padding: 10px 0;
-  }
-
-  &__icon {
-    margin-left: 8px;
-    width: 22px;
-  }
+  max-height: 100%;
 }
 
 .map {

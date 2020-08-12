@@ -117,7 +117,7 @@
     <v-btn type="submit" depressed color="grey darken-3" dark large block>
       Оформить
     </v-btn>
-    <v-dialog v-model="isSelectPoint" max-width="600">
+    <v-dialog v-model="isSelectPoint" max-width="1200" class="overflow-hidden">
       <SelectPoint />
     </v-dialog>
   </v-form>
@@ -249,3 +249,9 @@ export default {
   }
 };
 </script>
+
+<style lang="scss" scoped>
+.v-dialog {
+  overflow: hidden;
+}
+</style>
