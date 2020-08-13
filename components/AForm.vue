@@ -1,22 +1,27 @@
 <template>
   <v-form @submit="submitForm">
     <v-row>
-      <v-col cols="12" md="4">
-        <AInput label="Фамилия *" name="last-name" model="lastName" />
+      <v-col cols="12" md="4" class="form-input">
+        <AInput
+          label="Фамилия *"
+          name="last-name"
+          model="lastName"
+          :required="false"
+        />
       </v-col>
-      <v-col cols="12" md="4">
+      <v-col cols="12" md="4" class="form-input">
         <AInput label="Имя *" name="first-name" model="firstName" />
       </v-col>
-      <v-col cols="12" md="4">
+      <v-col cols="12" md="4" class="form-input">
         <AInput label="Отчество *" name="middle-name" model="middleName" />
       </v-col>
-      <v-col cols="12" md="6">
-        <AInput label="Телефон *" name="phone" model="phone" />
+      <v-col cols="12" md="6" class="form-input">
+        <AInput label="Телефон *" name="phone" model="phone" counter="18" />
       </v-col>
-      <v-col cols="12" md="6">
+      <v-col cols="12" md="6" class="form-input">
         <AInput label="E-mail *" name="email" model="email" />
       </v-col>
-      <v-col cols="12">
+      <v-col cols="12" class="form-input">
         <v-combobox
           v-model="city"
           :items="items"
@@ -24,8 +29,8 @@
           :loading="isLoading"
           :allow-overflow="false"
           :search-input.sync="search"
+          :rules="[!!city || 'Необходимо заполнить']"
           hide-no-data
-          hide-details
           item-text="city"
           label="Город *"
           name="city"
@@ -39,10 +44,10 @@
           </template>
         </v-combobox>
       </v-col>
-      <v-col cols="12">
+      <v-col cols="12" class="form-input">
         <AInput label="Адрес *" name="address" model="address" />
       </v-col>
-      <v-col cols="12">
+      <v-col cols="12" class="form-input">
         <h3 class="h3">Способ доставки</h3>
         <v-radio-group v-model="selectDeliveries" column>
           <v-radio
@@ -77,7 +82,7 @@
           </v-radio>
         </v-radio-group>
       </v-col>
-      <v-col cols="12">
+      <v-col cols="12" class="form-input">
         <h3 class="h3">Способ оплаты</h3>
         <v-radio-group v-model="paymentAlias" column>
           <v-radio
@@ -134,7 +139,8 @@ export default {
         return this.stateCity;
       },
       set(value) {
-        this.setCity(value);
+        this.setRegionInfo(value);
+        this.setCity(value ? value.city : value);
       }
     },
     paymentAlias: {
@@ -156,12 +162,10 @@ export default {
       this.$axios
         .get(`/delivery_suggest.php?text=${this.search}`)
         .then((res) => {
+          console.log(res.data);
           this.items = res.data;
         })
         .finally(() => (this.isLoading = false));
-    },
-    city() {
-      this.getDelivery(this.city);
     },
     selectDeliveries() {
       this.isSelectPoint =
@@ -171,12 +175,16 @@ export default {
         name: 'deliveryAlias',
         value: this.selectDeliveries
       });
+    },
+    city() {
+      this.getDelivery(this.city);
     }
   },
   methods: {
     ...mapMutations({
       setOrderData: 'order/setData',
-      setCity: 'order/setCity'
+      setCity: 'order/setCity',
+      setRegionInfo: 'order/setRegionInfo'
     }),
     ...mapActions({
       getDelivery: 'form/getDelivery',
@@ -207,8 +215,7 @@ export default {
       return cost;
     },
     submitForm(e) {
-      e.preventDefault();
-      this.sendForm(this.city);
+      this.sendForm(e);
     }
   }
 };
@@ -217,5 +224,10 @@ export default {
 <style lang="scss" scoped>
 .v-dialog {
   overflow: hidden;
+}
+
+.form-input {
+  padding-top: 0;
+  padding-bottom: 0;
 }
 </style>

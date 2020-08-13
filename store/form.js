@@ -26,7 +26,7 @@ export const actions = {
         country: 'Россия',
         region: '',
         region_type: '',
-        city: city.city ? city.city : city,
+        city,
         address: 'string',
         postcode: '0'
       },

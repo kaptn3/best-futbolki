@@ -24,6 +24,10 @@ export const mutations = {
     state[name] = value;
   },
   setCity(state, data) {
+    state.delivery = '';
+    state.pickupDeliveryAlias = '';
+    state.deliveryAlias = '';
+    state.pickupPointId = '';
     state.city = data;
     window.localStorage.setItem('city', data);
   },
@@ -33,7 +37,8 @@ export const mutations = {
 };
 
 export const actions = {
-  sendForm({ state, commit }) {
+  sendForm({ state, commit }, e) {
+    // const fill = !!state.e.preventDefault();
     // const formData = new FormData();
     const receiver = {};
     const address = {
