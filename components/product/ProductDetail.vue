@@ -51,14 +51,6 @@ export default {
       tab: 'Описание'
     };
   },
-  mounted() {
-    this.getMoreInfo(this.productType);
-  },
-  methods: {
-    ...mapActions({
-      getMoreInfo: 'product/getMoreInfo'
-    })
-  },
   computed: {
     ...mapState({
       moreInfo: (state) => state.product.moreInfo,
@@ -67,6 +59,14 @@ export default {
     items() {
       return this.details.filter((item) => item.alias !== 'description');
     }
+  },
+  mounted() {
+    this.getMoreInfo(this.productType);
+  },
+  methods: {
+    ...mapActions({
+      getMoreInfo: 'product/getMoreInfo'
+    })
   }
 };
 </script>

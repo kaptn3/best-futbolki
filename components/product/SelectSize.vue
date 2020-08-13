@@ -25,7 +25,7 @@
       Таблица размеров
     </v-btn>
     <v-dialog v-model="isOpenSizeTable" max-width="918px" scrollable>
-      <v-card v-html="sizeTable.text" class="size-table" />
+      <v-card class="size-table" v-html="sizeTable.text" />
     </v-dialog>
   </div>
 </template>

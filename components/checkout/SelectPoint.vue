@@ -2,7 +2,7 @@
   <v-card>
     <v-container>
       <v-row>
-        <v-col cols="10">
+        <v-col sm="9" md="10">
           <yandex-map
             v-if="filterBrands"
             :coords="coords"
@@ -26,21 +26,19 @@
             />
           </yandex-map>
         </v-col>
-        <v-col cols="2">
+        <v-col sm="3" md="2">
           <v-checkbox
-            v-model="brandSelected"
             v-for="item in checkboxes"
             :key="item"
+            v-model="brandSelected"
             :value="item"
             :color="colors[item]"
             hide-details
           >
             <template v-slot:label>
-              <img
-                :src="`/img/icons/${colors[item]}.png`"
-                style="margin-right: 10px;"
-              />
-              {{ item }}
+              <span :class="`${colors[item]}--text`">
+                {{ item }}
+              </span>
             </template>
           </v-checkbox>
         </v-col>
@@ -62,7 +60,7 @@
 
 <script>
 import { yandexMap, ymapMarker } from 'vue-yandex-maps';
-import { mapState } from 'vuex';
+import { mapState, mapMutations } from 'vuex';
 
 const colors = {
   VSEMAYKI: 'pink',
@@ -80,7 +78,6 @@ export default {
   },
   data() {
     return {
-      pointSelected: '',
       brandSelected: [],
       colors: {
         'Vsemayki.ru': 'pink',
@@ -130,15 +127,31 @@ export default {
     }
   },
   methods: {
+    ...mapMutations({
+      setData: 'order/setData'
+    }),
     onClick(id, address, alias, cost) {
       console.log(id, address, alias, cost);
-      /* this.$store.state.pointIdDelivery = id;
-      this.$store.state.address = address;
+      // this.$store.state.address = address;
+      this.setData({
+        name: 'address',
+        value: address
+      });
+      // this.$store.state.deliveryAlias = alias;
+      this.setData({
+        name: 'pickupDeliveryAlias',
+        value: alias
+      });
+      // this.$store.state.pointIdDelivery = id;
+      this.setData({
+        name: 'pickupPointId',
+        value: id
+      });
+      /* 
       this.$store.state.pointAddress = address;
       this.$store.state.deliveryCost = cost;
       this.$store.state.pointCost = cost;
-      this.pointSelected = address;
-      this.$store.state.deliveryAlias = alias; */
+       */
     },
     colorIcon(alias) {
       if (alias) {
