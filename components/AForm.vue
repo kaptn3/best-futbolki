@@ -79,6 +79,16 @@
       </v-col>
       <v-col cols="12">
         <h3 class="h3">Способ оплаты</h3>
+        <v-radio-group v-model="paymentAlias" column>
+          <v-radio
+            v-for="item in payments"
+            :key="item.alias"
+            :value="item.alias"
+            :label="item.title"
+            class="align-start my-2"
+            required
+          />
+        </v-radio-group>
       </v-col>
     </v-row>
     <v-btn type="submit" depressed color="grey darken-3" dark large block>
@@ -115,7 +125,9 @@ export default {
       stateCity: (state) => state.order.city,
       deliveries: (state) => state.form.deliveries,
       deliveryAlias: (state) => state.order.deliveryAlias,
-      pickupDeliveryAlias: (state) => state.order.pickupDeliveryAlias
+      pickupDeliveryAlias: (state) => state.order.pickupDeliveryAlias,
+      payments: (state) => state.form.payments,
+      payment: (state) => state.order.payment
     }),
     city: {
       get() {
@@ -123,6 +135,17 @@ export default {
       },
       set(value) {
         this.setCity(value);
+      }
+    },
+    paymentAlias: {
+      get() {
+        return this.payment;
+      },
+      set(value) {
+        this.setOrderData({
+          name: 'payment',
+          value
+        });
       }
     }
   },
@@ -144,7 +167,7 @@ export default {
       this.isSelectPoint =
         this.selectDeliveries === 'merge_postamat_delivery' &&
         this.pickupDeliveryAlias.length === 0;
-      this.setDeliveryAlias({
+      this.setOrderData({
         name: 'deliveryAlias',
         value: this.selectDeliveries
       });
@@ -152,7 +175,7 @@ export default {
   },
   methods: {
     ...mapMutations({
-      setDeliveryAlias: 'order/setData',
+      setOrderData: 'order/setData',
       setCity: 'order/setCity'
     }),
     ...mapActions({

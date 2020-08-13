@@ -33,7 +33,7 @@ export const mutations = {
 };
 
 export const actions = {
-  sendForm({ state, commit }, city) {
+  sendForm({ state, commit }) {
     // const formData = new FormData();
     const receiver = {};
     const address = {
@@ -43,7 +43,8 @@ export const actions = {
       region_type: '',
       postcode: '0'
     };
-    address.city = city.city ? city.city : city;
+    console.log(state.city);
+    address.city = state.city.city ? state.city.city : state.city;
 
     receiver.address = address;
     receiver['last-name'] = state.lastName;
@@ -94,7 +95,7 @@ export const actions = {
         })
         .then((res) => {
           commit('setCity', res.data.city);
-          commit('setRegion', res.data);
+          commit('setRegionInfo', res.data);
         });
     } else {
       commit('setCity', localCity);
