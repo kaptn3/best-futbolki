@@ -20,17 +20,11 @@
           </v-btn>
         </v-container>
       </v-app-bar>
-      <v-navigation-drawer
-        v-model="isCart"
-        width="770px"
-        right
-        absolute
-        temporary
-      >
+      <v-navigation-drawer v-model="isCart" width="770px" right temporary app>
         <div class="d-flex my-3">
           <v-spacer />
           <v-btn icon @click="isCart = !isCart">
-            <v-icon large>mdi-close</v-icon>
+            <v-icon small>mdi-close</v-icon>
           </v-btn>
         </div>
         <CartWrapper />
@@ -77,7 +71,7 @@ export default {
   },
   computed: {
     ...mapState({
-      cartCount: (state) => state.cart.cartCount,
+      cartCount: (state) => state.cart.cart.length || 0,
       city: (state) => state.order.city,
       cities: (state) => state.user.cities,
       ipCity: (state) => state.order.ipCity
@@ -109,7 +103,6 @@ export default {
 </script>
 
 <style lang="scss">
-html,
 .hidden {
   overflow: auto !important;
 }

@@ -45,6 +45,7 @@
               type="number"
               placeholder="Количество"
               height="44px"
+              min="1"
               solo
               dense
               hide-details
@@ -72,7 +73,7 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex';
+import { mapActions, mapMutations } from 'vuex';
 import SelectColor from './SelectColor';
 import SelectSize from './SelectSize';
 
@@ -107,8 +108,10 @@ export default {
   },
   methods: {
     ...mapActions({
-      addItemToCart: 'cart/addToCart',
       getPrintType: 'product/getPrintType'
+    }),
+    ...mapMutations({
+      addItemToCart: 'cart/addToCart'
     }),
     initData() {
       if (this.data) {
@@ -171,7 +174,7 @@ export default {
           colorName: color,
           size: sizeAlias,
           color: colorAlias,
-          count: this.count,
+          count: Number(this.count),
           title: this.name,
           model: this.model,
           in_stock: this.product.available,

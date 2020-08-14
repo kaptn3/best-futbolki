@@ -1,43 +1,25 @@
-let cart = JSON.parse(window.localStorage.getItem('cart'));
-let cartCount = 0;
-if (cart) {
-  const product = cart;
-  for (let i = 0; i < cart.length; i++) {
-    cartCount += Number(product[i].count);
-  }
-} else {
-  cart = [];
-}
-cartCount = Number(cartCount);
+const cart = JSON.parse(window.localStorage.getItem('cart')) || [];
 
 export const state = () => ({
-  cart,
-  cartCount
+  cart
 });
 
-export const mutations = {
+/* export const mutations = {
   addToCart(state, item) {
     state.cart.push(item);
   },
   removeFromCart(state, { count, index }) {
     state.cartCount -= count;
     state.cart.splice(index, 1);
-  },
-  updateCartCount(state) {
-    // counting
-    state.cartCount = 0;
-    for (let i = 0; i < state.cart.length; i++) {
-      state.cartCount += Number(state.cart[i].count);
-    }
   }
-};
+}; */
 
-export const actions = {
-  addToCart(context, item) {
+export const mutations = {
+  addToCart(state, item) {
     let found = {};
-    if (context.state.cart) {
+    if (state.cart) {
       // find dublicate product in cart for update count
-      found = context.state.cart.find((product) => {
+      found = state.cart.find((product) => {
         let dublicate = 0;
         const attr = ['model', 'id', 'sizeName', 'colorName'];
         for (let i = 0; i < attr.length; i++) {
@@ -47,27 +29,32 @@ export const actions = {
       });
     }
     if (found) {
-      found.count += item.count;
+      found.count += Number(item.count);
     } else {
-      context.commit('addToCart', item);
+      state.cart.push(item);
     }
-    context.dispatch('saveCart');
+    window.localStorage.setItem('cart', JSON.stringify(state.cart));
   },
-  removeFromCart(context, item) {
-    const index = context.state.cart.indexOf(item);
+  removeFromCart(state, item) {
+    const index = state.cart.indexOf(item);
 
     if (index > -1) {
-      const product = context.state.cart[index];
-      context.commit('removeFromCart', {
-        index,
-        count: Number(product.count)
-      });
+      const product = state.cart[index];
+      state.cartCount -= Number(product.count);
+      state.cart.splice(index, 1);
     }
-    context.dispatch('saveCart');
+    window.localStorage.setItem('cart', JSON.stringify(state.cart));
   },
-  saveCart(context) {
-    context.commit('updateCartCount');
-    window.localStorage.setItem('cart', JSON.stringify(context.state.cart));
-    window.localStorage.setItem('cartCount', context.state.cart.length);
+  changeProductCount(state, { cartItem, value }) {
+    for (let i = 0; i < state.cart.length; i++) {
+      let same = true;
+      for (const name in cartItem) {
+        same = same && cartItem[name] === state.cart[i][name];
+      }
+      if (same) {
+        state.cart[i].count = Number(value);
+      }
+    }
+    window.localStorage.setItem('cart', JSON.stringify(state.cart));
   }
 };

@@ -2,12 +2,7 @@
   <v-form @submit="submitForm">
     <v-row>
       <v-col cols="12" md="4" class="form-input">
-        <AInput
-          label="Фамилия *"
-          name="last-name"
-          model="lastName"
-          :required="false"
-        />
+        <AInput label="Фамилия *" name="last-name" model="lastName" />
       </v-col>
       <v-col cols="12" md="4" class="form-input">
         <AInput label="Имя *" name="first-name" model="firstName" />
