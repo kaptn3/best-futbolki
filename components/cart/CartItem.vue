@@ -41,13 +41,15 @@
       <span v-if="!checkout && cart.old_price > 0" class="cart-item__price_old">
         {{ cart.old_price }} руб
       </span>
-      <button
+      <v-btn
         v-if="!checkout"
-        class="cart-item__remove"
+        class="mt-15"
+        text
+        small
         @click="removeFromCart(cart)"
       >
-        Убрать
-      </button>
+        Убрать <v-icon>mdi-cart-off</v-icon>
+      </v-btn>
     </div>
   </div>
 </template>
@@ -130,18 +132,6 @@ img {
       text-decoration: line-through;
       text-align: right;
     }
-  }
-
-  &__remove {
-    background: transparent url(/img/icons/cart-remove.svg) no-repeat center
-      right;
-    display: block;
-    border: none;
-    outline: none;
-    height: 22px;
-    font-size: 12px;
-    padding: 0 30px 0 0;
-    margin-top: 100px;
   }
 
   &__quantity {
