@@ -1,5 +1,6 @@
 export const state = () => ({
   ip: null,
+  ipCity: null,
   lastName: '',
   middleName: '',
   email: '',
@@ -87,23 +88,23 @@ export const actions = {
   },
   getCity({ commit }) {
     const localCity = window.localStorage.getItem('city');
-    if (!localCity) {
-      this.$axios
-        .get('https://www.cloudflare.com/cdn-cgi/trace')
-        .then((res) => {
-          let text = res.data;
-          const indexIp = text.indexOf('ip=') + 3;
-          text = text.substring(indexIp);
-          const ip = text.substring(0, text.indexOf('ts='));
-          commit('setIp', ip);
-          return this.$axios.get(`/geo_ip.php?ip=${ip}`);
-        })
-        .then((res) => {
-          commit('setCity', res.data.city);
-          commit('setRegionInfo', res.data);
-        });
-    } else {
-      commit('setCity', localCity);
-    }
+    this.$axios
+      .get('https://www.cloudflare.com/cdn-cgi/trace')
+      .then((res) => {
+        let text = res.data;
+        const indexIp = text.indexOf('ip=') + 3;
+        text = text.substring(indexIp);
+        const ip = text.substring(0, text.indexOf('ts='));
+        commit('setIp', ip);
+        return this.$axios.get(`/geo_ip.php?ip=${ip}`);
+      })
+      .then((res) => {
+        commit('setData', { name: 'ipCity', value: res.data.city });
+        commit('setCity', res.data.city);
+        commit('setRegionInfo', res.data);
+        if (localCity) {
+          commit('setCity', localCity);
+        }
+      });
   }
 };

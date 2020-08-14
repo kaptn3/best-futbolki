@@ -6,7 +6,7 @@
           <v-toolbar-title>Best futbolki</v-toolbar-title>
           <v-spacer />
           <v-btn class="ma-2" text small @click="isChangeCity = true">
-            {{ city }} <v-icon>mdi-chevron-down</v-icon>
+            {{ cityForHeader }} <v-icon>mdi-chevron-down</v-icon>
           </v-btn>
           <v-btn icon @click="isCart = !isCart">
             <v-badge
@@ -79,8 +79,12 @@ export default {
     ...mapState({
       cartCount: (state) => state.cart.cartCount,
       city: (state) => state.order.city,
-      cities: (state) => state.user.cities
-    })
+      cities: (state) => state.user.cities,
+      ipCity: (state) => state.order.ipCity
+    }),
+    cityForHeader() {
+      return this.city || this.ipCity;
+    }
   },
   mounted() {
     this.getCity();
