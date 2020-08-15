@@ -1,6 +1,6 @@
 <template>
   <v-col cols="12" class="details">
-    <v-col cols="10" class="details__wrap">
+    <v-col cols="12" sm="10" class="details__wrap">
       <v-tabs v-model="tab" background-color="#f2f2f2" color="green darken-1">
         <v-tab>
           Описание

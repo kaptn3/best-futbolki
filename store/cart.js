@@ -4,6 +4,16 @@ export const state = () => ({
   cart
 });
 
+export const getters = {
+  productCount(state) {
+    let count = 0;
+    for (let i = 0; i < state.cart.length; i++) {
+      count += Number(state.cart[i].count);
+    }
+    return count;
+  }
+};
+
 /* export const mutations = {
   addToCart(state, item) {
     state.cart.push(item);

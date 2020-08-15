@@ -10,8 +10,8 @@
           </v-btn>
           <v-btn icon @click="isCart = !isCart">
             <v-badge
-              :value="cartCount"
-              :content="cartCount"
+              :value="productCount"
+              :content="productCount"
               color="grey"
               overlap
             >
@@ -56,7 +56,7 @@
 </template>
 
 <script>
-import { mapState, mapActions, mapMutations } from 'vuex';
+import { mapState, mapActions, mapMutations, mapGetters } from 'vuex';
 import CartWrapper from '~/components/cart/CartWrapper';
 
 export default {
@@ -71,10 +71,12 @@ export default {
   },
   computed: {
     ...mapState({
-      cartCount: (state) => state.cart.cart.length || 0,
       city: (state) => state.order.city,
       cities: (state) => state.user.cities,
       ipCity: (state) => state.order.ipCity
+    }),
+    ...mapGetters({
+      productCount: 'cart/productCount'
     }),
     cityForHeader() {
       return this.city || this.ipCity;

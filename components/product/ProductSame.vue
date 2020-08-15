@@ -1,11 +1,13 @@
 <template>
-  <v-col cols="10">
+  <v-col cols="12" sm="10">
     <h3 class="h3 text-center">Другие товары:</h3>
     <v-row>
       <v-col
         v-for="item in same"
         :key="'item-' + item.id"
-        cols="3"
+        cols="12"
+        sm="6"
+        md="3"
         class="text-center"
       >
         <v-card :to="`/product/${item.id}`" class="card">
