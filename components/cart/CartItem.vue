@@ -38,7 +38,7 @@
     </div>
     <div>
       <span class="cart-item__price">{{ cart.price }} руб</span>
-      <span v-if="!checkout && cart.old_price > 0" class="cart-item__price_old">
+      <span v-if="cart.old_price > 0" class="cart-item__price_old">
         {{ cart.old_price }} руб
       </span>
       <v-btn

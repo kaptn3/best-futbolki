@@ -9,15 +9,15 @@
     </div>
     <div class="summary__item">
       <h4>Цена без скидки</h4>
-      <span> {{ price('old_price') }} руб </span>
+      <span> {{ oldSum }} руб </span>
     </div>
     <div class="summary__item">
       <h4>Скидка</h4>
-      <span> {{ discount() }} руб </span>
+      <span> {{ discount }} руб </span>
     </div>
     <div class="summary__item">
       <h4>Итого</h4>
-      <span> {{ price('price') }} руб </span>
+      <span> {{ sum }} руб </span>
     </div>
   </div>
 </template>
@@ -32,23 +32,12 @@ export default {
       cart: (state) => state.cart.cart
     }),
     ...mapGetters({
-      productCount: 'cart/productCount'
-    })
-  },
-  methods: {
-    price(name) {
-      let price = 0;
-      for (let i = 0; i < this.cart.length; i++) {
-        if (this.cart[i].old_price === 0) {
-          price += this.cart[i].price * Number(this.cart[i].count);
-        } else {
-          price += this.cart[i][name] * Number(this.cart[i].count);
-        }
-      }
-      return price;
-    },
+      productCount: 'cart/productCount',
+      sum: 'cart/sum',
+      oldSum: 'cart/oldSum'
+    }),
     discount() {
-      return this.price('old_price') - this.price('price');
+      return this.oldSum - this.sum;
     }
   }
 };

@@ -11,6 +11,20 @@ export const getters = {
       count += Number(state.cart[i].count);
     }
     return count;
+  },
+  sum(state) {
+    let price = 0;
+    for (let i = 0; i < state.cart.length; i++) {
+      price += state.cart[i].price * Number(state.cart[i].count);
+    }
+    return price;
+  },
+  oldSum(state) {
+    let price = 0;
+    for (let i = 0; i < state.cart.length; i++) {
+      price += state.cart[i].old_price * Number(state.cart[i].count);
+    }
+    return price;
   }
 };
 

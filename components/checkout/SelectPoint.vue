@@ -1,6 +1,6 @@
 <template>
   <v-card>
-    <v-container>
+    <v-container fluid>
       <v-row>
         <v-col sm="9" md="10">
           <yandex-map
@@ -25,6 +25,17 @@
               :icon="{ color: colorIcon(point.delivery_brand_alias) }"
             />
           </yandex-map>
+          <!--div
+            v-for="(point, index) in filterBrands"
+            :key="point.id"
+            class="map__mobile-baloon"
+          >
+            <div
+              v-html="balloonHeader(point.delivery_brand_name, point.name)"
+            />
+            <div v-html="balloonBody(index)" />
+            <div v-html="balloonFooter(point)" />
+          </div-->
         </v-col>
         <v-col sm="3" md="2">
           <v-checkbox
@@ -81,7 +92,7 @@ export default {
       brandSelected: [],
       colors: {
         'Vsemayki.ru': 'pink',
-        СДЭК: 'darkGreen',
+        СДЭК: 'green',
         Boxberry: 'red',
         DPD: 'blue',
         PickPoint: 'orange'
@@ -146,6 +157,18 @@ export default {
       this.setData({
         name: 'pickupPointId',
         value: id
+      });
+      this.setData({
+        name: 'pointCost',
+        value: cost
+      });
+      this.setData({
+        name: 'deliveryCost',
+        value: cost
+      });
+      this.setData({
+        name: 'pointAddress',
+        value: address
       });
       /* 
       this.$store.state.pointAddress = address;

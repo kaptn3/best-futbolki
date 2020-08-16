@@ -70,7 +70,7 @@
                   style="width: 100%;"
                   @click="isSelectPoint = true"
                 >
-                  Выбрать точку
+                  {{ textSelectPoint }}
                 </div>
               </div>
             </template>
@@ -127,7 +127,9 @@ export default {
       deliveryAlias: (state) => state.order.deliveryAlias,
       pickupDeliveryAlias: (state) => state.order.pickupDeliveryAlias,
       payments: (state) => state.form.payments,
-      payment: (state) => state.order.payment
+      payment: (state) => state.order.payment,
+      pointCost: (state) => state.order.pointCost,
+      pointAddress: (state) => state.order.pointAddress
     }),
     city: {
       get() {
@@ -148,6 +150,12 @@ export default {
           value
         });
       }
+    },
+    textSelectPoint() {
+      if (this.pickupDeliveryAlias.length > 0) {
+        return this.pointAddress;
+      }
+      return 'Выбрать точку';
     }
   },
   watch: {
@@ -170,6 +178,23 @@ export default {
         name: 'deliveryAlias',
         value: this.selectDeliveries
       });
+      for (let k = 0; k < this.deliveries.length; k++) {
+        if (this.deliveries[k].alias === this.selectDeliveries) {
+          this.setOrderData({
+            name: 'deliveryCost',
+            value: this.deliveries[k].cost
+          });
+        }
+      }
+      if (
+        this.selectDeliveries === 'merge_postamat_delivery' &&
+        this.pickupDeliveryAlias.length > 0
+      ) {
+        this.setOrderData({
+          name: 'deliveryCost',
+          value: this.pointCost
+        });
+      }
     },
     city() {
       this.getDelivery(this.city);
@@ -202,8 +227,8 @@ export default {
     },
     deliveryCostHandle(cost, alias) {
       if (alias === 'merge_postamat_delivery') {
-        if (this.$store.state.pointCost > 0) {
-          return this.$store.state.pointCost;
+        if (this.pointCost > 0) {
+          return this.pointCost;
         }
         return `от ${cost}`;
       }
