@@ -8,24 +8,31 @@
       <div class="checkout__summary-item">Скидка: {{ promoSum }} руб.</div>
       <div class="checkout__summary-item">Итого: {{ endSum }} руб.</div>
     </div>
-    <div class="promocode">
-      <v-text
-        id="promocode"
+    <div class="d-flex">
+      <v-text-field
         v-model="code"
-        :required="false"
         name="promo_code"
         placeholder="Промокод"
-        class="promocode__input"
+        class="pt-0"
+        hide-details
       />
       <v-btn @click="applyPromo">
         Применить
       </v-btn>
     </div>
+    <v-textarea
+      v-model="comment"
+      name="comment"
+      placeholder="Комментарий"
+      rows="2"
+      hide-details
+      no-resize
+    />
   </div>
 </template>
 
 <script>
-import { mapGetters, mapState } from 'vuex';
+import { mapGetters, mapState, mapMutations } from 'vuex';
 
 export default {
   name: 'Summary',
@@ -40,11 +47,36 @@ export default {
   computed: {
     ...mapState({
       deliveryCost: (state) => state.order.deliveryCost,
-      deliveryAlias: (state) => state.order.deliveryAlias
+      deliveryAlias: (state) => state.order.deliveryAlias,
+      promocodeValue: (state) => state.order.promocode,
+      commentValue: (state) => state.order.comment,
+      cart: (state) => state.cart.cart
     }),
     ...mapGetters({
       sum: 'cart/sum'
     }),
+    promocode: {
+      get() {
+        return this.promocodeValue;
+      },
+      set(value) {
+        this.setData({
+          name: 'promocode',
+          value
+        });
+      }
+    },
+    comment: {
+      get() {
+        return this.commentValue;
+      },
+      set(value) {
+        this.setData({
+          name: 'comment',
+          value
+        });
+      }
+    },
     endSum() {
       return this.sum + this.deliveryCost - this.promoSum;
     },
@@ -62,23 +94,25 @@ export default {
     this.applyPromo(true);
   },
   methods: {
+    ...mapMutations({
+      setData: 'order/setData'
+    }),
     applyPromo(isMounted) {
-      const { cart } = this.$store.state;
-      this.cart = [];
-      for (let i = 0; i < cart.length; i++) {
+      const cart = [];
+      for (let i = 0; i < this.cart.length; i++) {
         const obj = {};
-        const item = cart[i];
+        const item = this.cart[i];
         obj.article = item.design;
         obj.product_tkey = item.product_type;
         obj.qty = item.count;
         obj.size_tkey = item.size;
         obj.color_tkey = item.color;
         obj.price = item.price;
-        this.cart.push(obj);
+        cart.push(obj);
       }
       const data = {
-        cart: this.cart,
-        promocode: this.code
+        cart,
+        promocode: this.promocode
       };
       const url = 'http://api.best-futbolki.ru/API/promocode.php';
       this.$axios.post(url, data).then((res) => {

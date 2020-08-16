@@ -2,7 +2,8 @@ export const state = () => ({
   deliveries: null,
   points: null,
   group: null,
-  payments: null
+  payments: null,
+  pointModal: false
 });
 
 export const mutations = {
@@ -13,6 +14,9 @@ export const mutations = {
   },
   setPoints(state, points) {
     state.points = points;
+  },
+  changeModal(state, pointModal) {
+    state.pointModal = pointModal;
   }
 };
 

@@ -109,5 +109,8 @@ export const actions = {
           commit('setCity', localCity);
         }
       });
-  }
+  } /*,
+  setPromocode({ commit }) {
+
+  } */
 };

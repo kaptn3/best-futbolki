@@ -116,8 +116,7 @@ export default {
       items: [],
       isLoading: false,
       search: null,
-      selectDeliveries: null,
-      isSelectPoint: false
+      selectDeliveries: null
     };
   },
   computed: {
@@ -129,7 +128,8 @@ export default {
       payments: (state) => state.form.payments,
       payment: (state) => state.order.payment,
       pointCost: (state) => state.order.pointCost,
-      pointAddress: (state) => state.order.pointAddress
+      pointAddress: (state) => state.order.pointAddress,
+      pointModal: (state) => state.form.pointModal
     }),
     city: {
       get() {
@@ -149,6 +149,14 @@ export default {
           name: 'payment',
           value
         });
+      }
+    },
+    isSelectPoint: {
+      get() {
+        return this.pointModal;
+      },
+      set(value) {
+        this.changeModal(value);
       }
     },
     textSelectPoint() {
@@ -204,7 +212,8 @@ export default {
     ...mapMutations({
       setOrderData: 'order/setData',
       setCity: 'order/setCity',
-      setRegionInfo: 'order/setRegionInfo'
+      setRegionInfo: 'order/setRegionInfo',
+      changeModal: 'form/changeModal'
     }),
     ...mapActions({
       getDelivery: 'form/getDelivery',

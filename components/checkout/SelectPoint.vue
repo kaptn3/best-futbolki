@@ -139,21 +139,19 @@ export default {
   },
   methods: {
     ...mapMutations({
-      setData: 'order/setData'
+      setData: 'order/setData',
+      changeModal: 'form/changeModal'
     }),
     onClick(id, address, alias, cost) {
       console.log(id, address, alias, cost);
-      // this.$store.state.address = address;
       this.setData({
         name: 'address',
         value: address
       });
-      // this.$store.state.deliveryAlias = alias;
       this.setData({
         name: 'pickupDeliveryAlias',
         value: alias
       });
-      // this.$store.state.pointIdDelivery = id;
       this.setData({
         name: 'pickupPointId',
         value: id
@@ -170,11 +168,7 @@ export default {
         name: 'pointAddress',
         value: address
       });
-      /* 
-      this.$store.state.pointAddress = address;
-      this.$store.state.deliveryCost = cost;
-      this.$store.state.pointCost = cost;
-       */
+      this.changeModal(false);
     },
     colorIcon(alias) {
       if (alias) {
