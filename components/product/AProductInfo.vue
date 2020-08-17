@@ -100,7 +100,8 @@ export default {
       product: [],
       variants: [],
       count: 1,
-      cartText: 'Добавить в корзину'
+      cartText: 'Добавить в корзину',
+      cartTextTimeout: null
     };
   },
   mounted() {
@@ -145,6 +146,8 @@ export default {
       this.currentProduct();
     },
     currentProduct() {
+      this.cartText = 'Добавить в корзину';
+      clearTimeout(this.cartTextTimeout);
       this.product = [];
       // init selected product
       [this.product] = this.variants.filter((variant) => {
@@ -188,11 +191,13 @@ export default {
         };
         this.addItemToCart(selected);
         this.cartText = 'Перейти в корзину';
-        setTimeout(() => {
+        this.cartTextTimeout = setTimeout(() => {
           this.cartText = 'Добавить в корзину';
         }, 5000);
       } else {
-        window.open('/checkout');
+        this.$router.push({
+          path: '/checkout'
+        });
       }
     }
   }

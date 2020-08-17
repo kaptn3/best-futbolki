@@ -14,7 +14,7 @@
           Вернуться к покупкам
         </v-btn>
         <v-btn to="/checkout" color="grey darken-3" large dark>
-          Оформить
+          Оформить заказ
         </v-btn>
       </div>
     </div>

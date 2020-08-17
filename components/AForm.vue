@@ -188,6 +188,9 @@ export default {
       return 'Выбрать точку';
     }
   },
+  mounted() {
+    this.getDelivery(this.city);
+  },
   watch: {
     search(val) {
       this.isLoading = true;
