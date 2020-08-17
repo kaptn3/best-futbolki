@@ -114,8 +114,21 @@
     <v-btn type="submit" depressed color="grey darken-3" dark large block>
       Оформить
     </v-btn>
-    <v-dialog v-model="isSelectPoint" max-width="1200" class="overflow-hidden">
-      <SelectPoint />
+    <v-dialog
+      v-model="isSelectPoint"
+      :fullscreen="fullscreen"
+      max-width="1200"
+      class="overflow-hidden"
+    >
+      <v-card>
+        <div class="d-flex">
+          <v-spacer />
+          <v-btn icon @click="isSelectPoint = !isSelectPoint">
+            <v-icon medium>mdi-close</v-icon>
+          </v-btn>
+        </div>
+        <SelectPoint />
+      </v-card>
     </v-dialog>
   </v-form>
 </template>
@@ -137,7 +150,8 @@ export default {
       isLoading: false,
       search: null,
       selectDeliveries: null,
-      valid: false
+      valid: false,
+      fullscreen: false
     };
   },
   computed: {
@@ -190,6 +204,14 @@ export default {
   },
   mounted() {
     this.getDelivery(this.city);
+    const t = this;
+    window.addEventListener('resize', () => {
+      if (window.innerWidth < 600) {
+        t.fullscreen = true;
+      } else {
+        t.fullscreen = false;
+      }
+    });
   },
   watch: {
     search(val) {
