@@ -42,7 +42,14 @@
       <v-col cols="12" class="form-input">
         <AInput label="Адрес *" name="address" model="address" />
       </v-col>
-      <v-col cols="12" class="form-input">
+      <div
+        v-if="loading"
+        class="d-flex justify-center pa-10"
+        style="width: 100%;"
+      >
+        <v-progress-circular :size="50" color="primary" indeterminate />
+      </div>
+      <v-col v-else cols="12" class="form-input">
         <h3 class="h3">Способ доставки</h3>
         <v-radio-group v-model="selectDeliveries" column>
           <v-radio
@@ -76,8 +83,6 @@
             </template>
           </v-radio>
         </v-radio-group>
-      </v-col>
-      <v-col cols="12" class="form-input">
         <h3 class="h3">Способ оплаты</h3>
         <v-radio-group v-model="paymentAlias" column>
           <v-radio
@@ -129,7 +134,8 @@ export default {
       payment: (state) => state.order.payment,
       pointCost: (state) => state.order.pointCost,
       pointAddress: (state) => state.order.pointAddress,
-      pointModal: (state) => state.form.pointModal
+      pointModal: (state) => state.form.pointModal,
+      loading: (state) => state.form.loadingDelivery
     }),
     city: {
       get() {

@@ -16,26 +16,11 @@
               :key="point.id"
               :marker-id="point.id"
               :coords="[point.latitude, point.longitude]"
-              :balloon="{
-                header: balloonHeader(point.delivery_brand_name, point.name),
-                body: balloonBody(index),
-                footer: balloonFooter(point)
-              }"
+              :balloon-template="balloonTemplate(index, point)"
               :cluster-name="point.delivery_brand_alias"
               :icon="{ color: colorIcon(point.delivery_brand_alias) }"
             />
           </yandex-map>
-          <!--div
-            v-for="(point, index) in filterBrands"
-            :key="point.id"
-            class="map__mobile-baloon"
-          >
-            <div
-              v-html="balloonHeader(point.delivery_brand_name, point.name)"
-            />
-            <div v-html="balloonBody(index)" />
-            <div v-html="balloonFooter(point)" />
-          </div-->
         </v-col>
         <v-col sm="3" md="2">
           <v-checkbox
@@ -176,48 +161,38 @@ export default {
       }
       return 'blue';
     },
-    balloonHeader(type, name) {
-      return `
-          Пункт выдачи ${type}: ${name}
-        `;
-    },
-    balloonBody(index) {
-      return `
-          <div class="map__baloon">
-            <button type="button" onclick="javascript: document.querySelectorAll('.map__baloon-btn')[${index}]
-              .click();" class="v-btn v-btn--contained theme--light v-size--small primary">Выбрать</button>
-          </div>
-        `;
-    },
-    balloonFooter(point) {
-      return `
-          <div>
-            <span class="font-weight-bold">Адрес:</span> ${point.address}
-          </div>
-          <div>
-            <span class="font-weight-bold">Время работы:</span> ${
-              point.work_time
-            }
-          </div>
-          <div>
-            <span class="font-weight-bold">Стоимость доставки:</span> ${
-              point.cost
-            } руб.
-          </div>
-          <div>
-            <span class="font-weight-bold">Оплата:</span> ${this.payments(
-              point.allowed_payments
-            )}
-          </div>
-          <div>
-            <span class="font-weight-bold">Срок доставки:</span> ${this.duration(
-              point.duration
-            )}
-          </div>
-          <div>
-            <span class="font-weight-bold">Описание:</span> ${point.description}
-          </div>
-        `;
+    balloonTemplate(index, point) {
+      return `<h2 class="subtitle-2">Пункт выдачи ${
+        point.delivery_brand_name
+      }: ${point.name}</h2>
+      <div class="map__baloon">
+        <button type="button" onclick="javascript: document.querySelectorAll('.map__baloon-btn')[${index}]
+          .click();" class="v-btn v-btn--contained theme--light v-size--small primary">Выбрать</button>
+      </div>
+      <div>
+        <span class="font-weight-bold">Адрес:</span> ${point.address}
+      </div>
+      <div>
+        <span class="font-weight-bold">Время работы:</span> ${point.work_time}
+      </div>
+      <div>
+        <span class="font-weight-bold">Стоимость доставки:</span> ${
+          point.cost
+        } руб.
+      </div>
+      <div>
+        <span class="font-weight-bold">Оплата:</span> ${this.payments(
+          point.allowed_payments
+        )}
+      </div>
+      <div>
+        <span class="font-weight-bold">Срок доставки:</span> ${this.duration(
+          point.duration
+        )}
+      </div>
+      <div>
+        <span class="font-weight-bold">Описание:</span> ${point.description}
+      </div>`;
     },
     payments(array) {
       const payments = ['Наличными', 'Банковской картой'];
@@ -246,8 +221,7 @@ export default {
 
 <style lang="scss">
 .ymap-container {
-  height: 600px;
-  max-height: 100%;
+  height: 70vh;
 }
 
 .map {

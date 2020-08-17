@@ -3,7 +3,8 @@ export const state = () => ({
   points: null,
   group: null,
   payments: null,
-  pointModal: false
+  pointModal: false,
+  loadingDelivery: false
 });
 
 export const mutations = {
@@ -17,11 +18,15 @@ export const mutations = {
   },
   changeModal(state, pointModal) {
     state.pointModal = pointModal;
+  },
+  setLoading(state, value) {
+    state.loadingDelivery = value;
   }
 };
 
 export const actions = {
   getDelivery({ commit }, city) {
+    commit('setLoading', true);
     const body = {
       user_id: 0,
       cart: [],
@@ -37,19 +42,24 @@ export const actions = {
       is_merge_pickup_points: true
     };
 
-    this.$axios.post('/delivery.php', body).then((res) => {
-      const { deliveries } = res.data;
-      console.log(res.data);
-      for (let i = 0; i < deliveries.length; i++) {
-        if (deliveries[i].alias === 'merge_postamat_delivery') {
-          commit('setPoints', deliveries[i].pickup_points);
+    this.$axios
+      .post('/delivery.php', body)
+      .then((res) => {
+        const { deliveries } = res.data;
+        console.log(res.data);
+        for (let i = 0; i < deliveries.length; i++) {
+          if (deliveries[i].alias === 'merge_postamat_delivery') {
+            commit('setPoints', deliveries[i].pickup_points);
+          }
         }
-      }
-      commit('setInfo', {
-        deliveries: res.data.deliveries,
-        group: res.data.groups,
-        payments: res.data.payments
+        commit('setInfo', {
+          deliveries: res.data.deliveries,
+          group: res.data.groups,
+          payments: res.data.payments
+        });
+      })
+      .finally(() => {
+        commit('setLoading', false);
       });
-    });
   }
 };
