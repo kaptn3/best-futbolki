@@ -53,8 +53,15 @@
         <h3 class="h3">Способ доставки</h3>
         <v-radio-group
           v-model="selectDeliveries"
-          :rules="[!!selectDeliveries || '']"
+          :rules="[
+            (!!selectDeliveries &&
+              ((selectDeliveries === 'merge_postamat_delivery' &&
+                pickupDeliveryAlias.length > 0) ||
+                selectDeliveries !== 'merge_postamat_delivery')) ||
+              ''
+          ]"
           column
+          validate-on-blur
         >
           <v-radio
             v-for="item in deliveries"
