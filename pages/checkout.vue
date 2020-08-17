@@ -1,13 +1,13 @@
 <template>
   <v-row justify="center">
-    <v-col cols="12" sm="10">
+    <v-col v-if="cart.length > 0" cols="12" sm="10">
       <v-row>
         <v-col cols="12" md="7">
           <AForm />
         </v-col>
         <v-col cols="12" md="5">
           <div class="summary">
-            <div class="pa-5">
+            <div class="pa-3">
               <CartItem
                 v-for="(item, index) in cart"
                 :key="index"
@@ -42,6 +42,11 @@
           />
         </v-col>
       </v-row>
+    </v-col>
+    <v-col v-else cols="12" sm="10">
+      <h1 class="text-h1">
+        Пустая корзина!
+      </h1>
     </v-col>
   </v-row>
 </template>

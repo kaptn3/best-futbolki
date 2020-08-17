@@ -7,9 +7,9 @@
     />
     <div class="cart-item__data">
       <span class="cart-item__title">
-        <router-link :to="'/product/' + cart.id">
+        <nuxt-link :to="'/product/' + cart.id">
           {{ cart.title }}
-        </router-link>
+        </nuxt-link>
       </span>
       <span class="cart-item__model">
         {{ cart.model }}
@@ -39,7 +39,7 @@
     </div>
     <div>
       <span class="cart-item__price">{{ cart.price }} руб</span>
-      <span v-if="cart.old_price > 0" class="cart-item__price_old">
+      <span v-if="cart.old_price > 0 && !checkout" class="cart-item__price_old">
         {{ cart.old_price }} руб
       </span>
       <v-btn
@@ -115,7 +115,7 @@ img {
     }
   }
 
-  &__title {
+  &__title a {
     font-size: 18px;
     color: #4f4f4f;
   }
@@ -127,6 +127,7 @@ img {
   &__price {
     font-size: 18px;
     text-align: right;
+    white-space: nowrap;
 
     &_old {
       color: #828282;
