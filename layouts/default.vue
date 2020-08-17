@@ -27,7 +27,7 @@
             <v-icon small>mdi-close</v-icon>
           </v-btn>
         </div>
-        <CartWrapper />
+        <Cart />
       </v-navigation-drawer>
       <v-main>
         <v-container fluid>
@@ -57,11 +57,11 @@
 
 <script>
 import { mapState, mapActions, mapMutations, mapGetters } from 'vuex';
-import CartWrapper from '~/components/cart/CartWrapper';
+import Cart from '~/components/cart/Cart';
 
 export default {
   components: {
-    CartWrapper
+    Cart
   },
   data() {
     return {
