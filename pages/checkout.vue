@@ -52,7 +52,7 @@
 </template>
 
 <script>
-import { mapState, mapMutations } from 'vuex';
+import { mapState, mapMutations, mapGetters } from 'vuex';
 import Summary from '~/components/checkout/Summary';
 import AForm from '~/components/AForm';
 import CartItem from '~/components/cart/CartItem';
@@ -76,6 +76,9 @@ export default {
       cart: (state) => state.cart.cart,
       commentValue: (state) => state.order.comment
     }),
+    ...mapGetters({
+      sum: 'cart/sum'
+    }),
     comment: {
       get() {
         return this.commentValue;
@@ -88,48 +91,55 @@ export default {
       }
     }
   },
+  watch: {
+    sum() {
+      this.applyPromo();
+    }
+  },
   methods: {
     ...mapMutations({
       setData: 'order/setData'
     }),
     applyPromo() {
-      const cart = [];
-      for (let i = 0; i < this.cart.length; i++) {
-        const obj = {};
-        const item = this.cart[i];
-        obj.article = item.design;
-        obj.product_tkey = item.product_type;
-        obj.qty = item.count;
-        obj.size_tkey = item.size;
-        obj.color_tkey = item.color;
-        obj.price = item.price;
-        cart.push(obj);
-      }
-      const data = {
-        cart,
-        promocode: this.code
-      };
-      this.$axios.post('/promocode.php', data).then((res) => {
-        if (res.data.promocodes) {
-          this.error = '';
-          this.success = res.data.promocode_description.text;
-          this.promoSum = res.data.order_sum;
-          this.setData({
-            name: 'promocode',
-            value: this.code
-          });
-        } else {
-          this.success = '';
-          this.error = res.data.discountRejectReasons
-            ? res.data.discountRejectReasons.promocode[0].message
-            : 'Неправильный код';
-          this.promoSum = 0;
-          this.setData({
-            name: 'promocode',
-            value: ''
-          });
+      if (this.code) {
+        const cart = [];
+        for (let i = 0; i < this.cart.length; i++) {
+          const obj = {};
+          const item = this.cart[i];
+          obj.article = item.design;
+          obj.product_tkey = item.product_type;
+          obj.qty = item.count;
+          obj.size_tkey = item.size;
+          obj.color_tkey = item.color;
+          obj.price = item.price;
+          cart.push(obj);
         }
-      });
+        const data = {
+          cart,
+          promocode: this.code
+        };
+        this.$axios.post('/promocode.php', data).then((res) => {
+          if (res.data.promocodes) {
+            this.error = '';
+            this.success = res.data.promocode_description.text;
+            this.promoSum = res.data.order_sum;
+            this.setData({
+              name: 'promocode',
+              value: this.code
+            });
+          } else {
+            this.success = '';
+            this.error = res.data.discountRejectReasons
+              ? res.data.discountRejectReasons.promocode[0].message
+              : 'Неправильный код';
+            this.promoSum = 0;
+            this.setData({
+              name: 'promocode',
+              value: ''
+            });
+          }
+        });
+      }
     }
   }
 };

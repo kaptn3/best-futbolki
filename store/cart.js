@@ -28,16 +28,6 @@ export const getters = {
   }
 };
 
-/* export const mutations = {
-  addToCart(state, item) {
-    state.cart.push(item);
-  },
-  removeFromCart(state, { count, index }) {
-    state.cartCount -= count;
-    state.cart.splice(index, 1);
-  }
-}; */
-
 export const mutations = {
   addToCart(state, item) {
     let found = {};
