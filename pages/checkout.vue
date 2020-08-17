@@ -15,11 +15,15 @@
                 checkout
               />
             </div>
-            <Summary />
+            <Summary :promo-sum="promoSum" />
           </div>
           <div class="d-flex mt-5">
             <v-text-field
               v-model="code"
+              :error-messages="error"
+              :error="error.length > 0"
+              :success-messages="success"
+              :success="success.length > 0"
               name="promo_code"
               placeholder="Промокод"
               class="pt-0"
@@ -54,23 +58,19 @@ export default {
     CartItem,
     Summary
   },
+  data() {
+    return {
+      code: '',
+      error: '',
+      success: '',
+      promoSum: 0
+    };
+  },
   computed: {
     ...mapState({
       cart: (state) => state.cart.cart,
-      promocodeValue: (state) => state.order.promocode,
       commentValue: (state) => state.order.comment
     }),
-    promocode: {
-      get() {
-        return this.promocodeValue;
-      },
-      set(value) {
-        this.setData({
-          name: 'promocode',
-          value
-        });
-      }
-    },
     comment: {
       get() {
         return this.commentValue;
@@ -87,7 +87,7 @@ export default {
     ...mapMutations({
       setData: 'order/setData'
     }),
-    applyPromo(isMounted) {
+    applyPromo() {
       const cart = [];
       for (let i = 0; i < this.cart.length; i++) {
         const obj = {};
@@ -102,20 +102,27 @@ export default {
       }
       const data = {
         cart,
-        promocode: this.promocode
+        promocode: this.code
       };
-      const url = 'http://api.best-futbolki.ru/API/promocode.php';
-      this.$axios.post(url, data).then((res) => {
-        this.orderSum = res.data.order_sum;
-        if (isMounted) {
-          this.oldSum = this.orderSum;
-        }
+      this.$axios.post('/promocode.php', data).then((res) => {
         if (res.data.promocodes) {
           this.error = '';
-          this.promoSum = this.oldSum - this.orderSum;
+          this.success = res.data.promocode_description.text;
+          this.promoSum = res.data.order_sum;
+          this.setData({
+            name: 'promocode',
+            value: this.code
+          });
         } else {
-          this.error = res.data.discountRejectReasons.promocode[0].message;
+          this.success = '';
+          this.error = res.data.discountRejectReasons
+            ? res.data.discountRejectReasons.promocode[0].message
+            : 'Неправильный код';
           this.promoSum = 0;
+          this.setData({
+            name: 'promocode',
+            value: ''
+          });
         }
       });
     }

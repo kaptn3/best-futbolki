@@ -5,7 +5,7 @@
       <div class="checkout__summary-item">
         Доставка: {{ deliveryCostDisplay }}
       </div>
-      <div class="checkout__summary-item">Скидка: {{ promoSum }} руб.</div>
+      <div class="checkout__summary-item">Скидка: {{ discount }} руб.</div>
       <div class="checkout__summary-item">Итого: {{ endSum }} руб.</div>
     </div>
   </div>
@@ -16,10 +16,11 @@ import { mapGetters, mapState } from 'vuex';
 
 export default {
   name: 'Summary',
-  data() {
-    return {
-      promoSum: 0
-    };
+  props: {
+    promoSum: {
+      type: Number,
+      default: 0
+    }
   },
   computed: {
     ...mapState({
@@ -30,10 +31,10 @@ export default {
       sum: 'cart/sum'
     }),
     endSum() {
-      return this.sum + this.deliveryCost - this.promoSum;
+      return this.sum + this.deliveryCost - this.discount;
     },
     discount() {
-      return 0;
+      return this.promoSum > 0 ? this.sum - this.promoSum : 0;
     },
     deliveryCostDisplay() {
       if (this.deliveryAlias) {

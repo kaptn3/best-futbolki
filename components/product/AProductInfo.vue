@@ -169,7 +169,7 @@ export default {
 
         const selected = {
           id: this.data.id,
-          design: Number(this.id),
+          design: Number(this.data.design.id),
           sizeName: size,
           colorName: color,
           size: sizeAlias,
