@@ -54,6 +54,7 @@ export const actions = {
     };
     console.log(state.city);
     address.city = state.city.city ? state.city.city : state.city;
+    address.address = state.address;
 
     receiver.address = address;
     receiver['last-name'] = state.lastName;

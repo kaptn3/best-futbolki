@@ -61,6 +61,9 @@ export default {
         const pattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
         rules.push(pattern.test(this.value) || 'Неправильный e-mail.');
       }
+      if (this.name === 'phone') {
+        rules.push(this.value.length === 18 || 'Необходимо заполнить');
+      }
       return rules;
     }
   }

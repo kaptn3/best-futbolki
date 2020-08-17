@@ -26,6 +26,7 @@
       </span>
       <span v-if="checkout"> Количество: {{ cart.count }} </span>
       <v-text-field
+        v-if="!checkout"
         :value="cart.count"
         style="width: 100px;"
         type="number"

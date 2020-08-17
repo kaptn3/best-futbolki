@@ -1,5 +1,5 @@
 <template>
-  <v-form @submit="submitForm">
+  <v-form v-model="valid" ref="form" @submit="submitForm">
     <v-row>
       <v-col cols="12" md="4" class="form-input">
         <AInput label="Фамилия *" name="last-name" model="lastName" />
@@ -51,7 +51,11 @@
       </div>
       <v-col v-else cols="12" class="form-input">
         <h3 class="h3">Способ доставки</h3>
-        <v-radio-group v-model="selectDeliveries" column>
+        <v-radio-group
+          v-model="selectDeliveries"
+          :rules="[!!selectDeliveries || '']"
+          column
+        >
           <v-radio
             v-for="item in deliveries"
             :key="item.alias"
@@ -84,7 +88,11 @@
           </v-radio>
         </v-radio-group>
         <h3 class="h3">Способ оплаты</h3>
-        <v-radio-group v-model="paymentAlias" column>
+        <v-radio-group
+          v-model="paymentAlias"
+          :rules="[!!paymentAlias || '']"
+          column
+        >
           <v-radio
             v-for="item in payments"
             :key="item.alias"
@@ -121,7 +129,8 @@ export default {
       items: [],
       isLoading: false,
       search: null,
-      selectDeliveries: null
+      selectDeliveries: null,
+      valid: false
     };
   },
   computed: {
@@ -250,7 +259,11 @@ export default {
       return cost;
     },
     submitForm(e) {
-      this.sendForm(e);
+      e.preventDefault();
+      this.$refs.form.validate();
+      if (this.valid) {
+        this.sendForm();
+      }
     }
   }
 };
