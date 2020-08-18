@@ -1,6 +1,6 @@
 <template>
   <v-row justify="center">
-    <v-col v-if="cart.length > 0" cols="12" sm="10">
+    <v-col v-if="cart.length > 0 && status === ''" cols="12" sm="10">
       <v-row>
         <v-col cols="12" md="7">
           <AForm />
@@ -43,6 +43,12 @@
         </v-col>
       </v-row>
     </v-col>
+    <v-col v-else-if="status === 'in-progress'" cols="12" sm="10">
+      <v-progress-circular :size="50" color="primary" indeterminate />
+    </v-col>
+    <v-col v-else-if="status === 'ok'" cols="12" sm="10">
+      Заказ номер {{ id }} принят.
+    </v-col>
     <v-col v-else cols="12" sm="10">
       <h1 class="text-h1">
         Пустая корзина!
@@ -52,7 +58,7 @@
 </template>
 
 <script>
-import { mapState, mapMutations, mapGetters } from 'vuex';
+import { mapState, mapMutations, mapGetters, mapActions } from 'vuex';
 import Summary from '~/components/checkout/Summary';
 import AForm from '~/components/AForm';
 import CartItem from '~/components/cart/CartItem';
@@ -74,7 +80,9 @@ export default {
   computed: {
     ...mapState({
       cart: (state) => state.cart.cart,
-      commentValue: (state) => state.order.comment
+      commentValue: (state) => state.order.comment,
+      id: (state) => state.order.orderId,
+      status: (state) => state.order.orderStatus
     }),
     ...mapGetters({
       sum: 'cart/sum'
@@ -96,9 +104,21 @@ export default {
       this.applyPromo();
     }
   },
+  mounted() {
+    this.initFromLocal();
+  },
+  beforeDestroy() {
+    this.setData({
+      name: 'orderStatus',
+      value: ''
+    });
+  },
   methods: {
     ...mapMutations({
       setData: 'order/setData'
+    }),
+    ...mapActions({
+      initFromLocal: 'order/initFromLocal'
     }),
     applyPromo() {
       if (this.code) {

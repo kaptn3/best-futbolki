@@ -1,5 +1,5 @@
 <template>
-  <v-form v-model="valid" ref="form" @submit="submitForm">
+  <v-form ref="form" v-model="valid" @submit="submitForm">
     <v-row>
       <v-col cols="12" md="4" class="form-input">
         <AInput label="Фамилия *" name="last-name" model="lastName" />
@@ -149,7 +149,6 @@ export default {
       items: [],
       isLoading: false,
       search: null,
-      selectDeliveries: null,
       valid: false,
       fullscreen: false
     };
@@ -165,15 +164,27 @@ export default {
       pointCost: (state) => state.order.pointCost,
       pointAddress: (state) => state.order.pointAddress,
       pointModal: (state) => state.form.pointModal,
-      loading: (state) => state.form.loadingDelivery
+      loading: (state) => state.form.loadingDelivery,
+      cart: (state) => state.cart.cart
     }),
+    selectDeliveries: {
+      get() {
+        return this.deliveryAlias;
+      },
+      set(value) {
+        this.setOrderData({
+          name: 'deliveryAlias',
+          value
+        });
+      }
+    },
     city: {
       get() {
         return this.stateCity;
       },
       set(value) {
         this.setRegionInfo(value);
-        this.setCity(value ? value.city : value);
+        this.setCity({ data: value ? value.city : value });
       }
     },
     paymentAlias: {
@@ -202,17 +213,6 @@ export default {
       return 'Выбрать точку';
     }
   },
-  mounted() {
-    this.getDelivery(this.city);
-    const t = this;
-    window.addEventListener('resize', () => {
-      if (window.innerWidth < 600) {
-        t.fullscreen = true;
-      } else {
-        t.fullscreen = false;
-      }
-    });
-  },
   watch: {
     search(val) {
       this.isLoading = true;
@@ -220,25 +220,25 @@ export default {
       this.$axios
         .get(`/delivery_suggest.php?text=${this.search}`)
         .then((res) => {
-          console.log(res.data);
           this.items = res.data;
         })
         .finally(() => (this.isLoading = false));
+    },
+    city() {
+      this.getDelivery(this.city);
     },
     selectDeliveries() {
       this.isSelectPoint =
         this.selectDeliveries === 'merge_postamat_delivery' &&
         this.pickupDeliveryAlias.length === 0;
-      this.setOrderData({
-        name: 'deliveryAlias',
-        value: this.selectDeliveries
-      });
-      for (let k = 0; k < this.deliveries.length; k++) {
-        if (this.deliveries[k].alias === this.selectDeliveries) {
-          this.setOrderData({
-            name: 'deliveryCost',
-            value: this.deliveries[k].cost
-          });
+      if (this.deliveries) {
+        for (let k = 0; k < this.deliveries.length; k++) {
+          if (this.deliveries[k].alias === this.selectDeliveries) {
+            this.setOrderData({
+              name: 'deliveryCost',
+              value: this.deliveries[k].cost
+            });
+          }
         }
       }
       if (
@@ -250,10 +250,22 @@ export default {
           value: this.pointCost
         });
       }
-    },
-    city() {
-      this.getDelivery(this.city);
     }
+  },
+  mounted() {
+    this.getDelivery(this.city);
+    const t = this;
+    const changeFull = () => {
+      if (window.innerWidth < 600) {
+        t.fullscreen = true;
+      } else {
+        t.fullscreen = false;
+      }
+    };
+    window.addEventListener('resize', () => {
+      changeFull();
+    });
+    changeFull();
   },
   methods: {
     ...mapMutations({
@@ -266,12 +278,6 @@ export default {
       getDelivery: 'form/getDelivery',
       sendForm: 'order/sendForm'
     }),
-    alias(alias) {
-      if (alias === 'merge_postamat_delivery') {
-        return this.deliveryAlias;
-      }
-      return alias;
-    },
     durationHandle(duration) {
       let res = `от ${duration} `;
       if (duration === 0 || duration > 1) {
@@ -294,7 +300,7 @@ export default {
       e.preventDefault();
       this.$refs.form.validate();
       if (this.valid) {
-        this.sendForm();
+        this.sendForm(this.cart);
       }
     }
   }

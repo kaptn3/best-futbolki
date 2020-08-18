@@ -1,13 +1,13 @@
 <template>
   <v-text-field
     v-model="value"
+    v-mask="name === 'phone' ? '+7 (###) ###-##-##' : null"
     :filled="value.length > 0"
     :label="label"
     :name="name"
     :required="required"
     :counter="counter"
     :rules="rules"
-    v-mask="name === 'phone' ? '+7 (###) ###-##-##' : null"
     validate-on-blur
   />
 </template>

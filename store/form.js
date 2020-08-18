@@ -46,7 +46,6 @@ export const actions = {
       .post('/delivery.php', body)
       .then((res) => {
         const { deliveries } = res.data;
-        console.log('##########', res.data);
         for (let i = 0; i < deliveries.length; i++) {
           if (deliveries[i].alias === 'merge_postamat_delivery') {
             commit('setPoints', deliveries[i].pickup_points);

@@ -70,5 +70,9 @@ export const mutations = {
       }
     }
     window.localStorage.setItem('cart', JSON.stringify(state.cart));
+  },
+  clearCart(state) {
+    state.cart = [];
+    window.localStorage.removeItem('cart');
   }
 };

@@ -1,4 +1,6 @@
 export const state = () => ({
+  orderStatus: '',
+  orderId: '',
   ip: null,
   ipCity: null,
   lastName: '',
@@ -26,23 +28,31 @@ export const mutations = {
   },
   setData(state, { name, value }) {
     state[name] = value;
+    window.localStorage.setItem(name, value);
   },
-  setCity(state, data) {
+  setCity(state, { data, loaded }) {
+    // if (!loaded) {
     state.delivery = '';
-    state.pickupDeliveryAlias = '';
     state.deliveryAlias = '';
+    state.pointAddress = '';
+    state.pickupDeliveryAlias = '';
     state.pickupPointId = '';
+    state.pointCost = 0;
+    // }
     state.city = data;
     window.localStorage.setItem('city', data);
   },
   setRegionInfo(state, data) {
     state.region = data;
+  },
+  setOk(state, { status, id }) {
+    state.orderStatus = status;
+    state.orderId = id;
   }
 };
 
 export const actions = {
-  sendForm({ state, commit }, e) {
-    // const fill = !!state.e.preventDefault();
+  sendForm({ state, commit }, cart) {
     // const formData = new FormData();
     const receiver = {};
     const address = {
@@ -52,7 +62,6 @@ export const actions = {
       region_type: '',
       postcode: '0'
     };
-    console.log(state.city);
     address.city = state.city.city ? state.city.city : state.city;
     address.address = state.address;
 
@@ -77,18 +86,19 @@ export const actions = {
         ? state.pickupPointId
         : '0';
     data.promo_code = state.promocode;
+    data.cart = cart;
     // Object.assign(data, { cart: this.$store.state.cart });
-    console.log(data);
-    // const url = 'http://api.best-futbolki.ru/API/order.php';
-    /* this.$axios.post(url, data).then((res) => {
-      console.log(res);
-      this.status = 'ok';
-      this.id = res.data.id;
-      this.$store.state.cart = [];
-      this.$store.state.cartCount = 0;
-      window.localStorage.removeItem('cart');
-      window.localStorage.removeItem('cartCount');
-    }); */
+    commit('setData', {
+      name: 'orderStatus',
+      value: 'in-progress'
+    });
+    this.$axios.post('/order.php', data).then((res) => {
+      commit('setOk', {
+        status: 'ok',
+        id: res.data.id
+      });
+      commit('cart/clearCart', null, { root: true });
+    });
   },
   getCity({ commit }) {
     const localCity = window.localStorage.getItem('city');
@@ -104,14 +114,32 @@ export const actions = {
       })
       .then((res) => {
         commit('setData', { name: 'ipCity', value: res.data.city });
-        commit('setCity', res.data.city);
         commit('setRegionInfo', res.data);
         if (localCity) {
-          commit('setCity', localCity);
+          commit('setCity', { data: localCity, loaded: true });
+        } else {
+          commit('setCity', { data: res.data.city, loaded: true });
         }
       });
-  } /*,
-  setPromocode({ commit }) {
-
-  } */
+  },
+  initFromLocal({ commit }) {
+    const array = [
+      'lastName',
+      'middleName',
+      'email',
+      'firstName',
+      'phone',
+      'address',
+      'payment',
+      'promocode',
+      'comment'
+    ];
+    for (let i = 0; i < array.length; i++) {
+      const value = window.localStorage.getItem(array[i]) || '';
+      commit('setData', {
+        name: array[i],
+        value
+      });
+    }
+  }
 };

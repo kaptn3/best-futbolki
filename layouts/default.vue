@@ -96,7 +96,7 @@ export default {
       setRegionInfo: 'order/setRegionInfo'
     }),
     changeCity(item) {
-      this.setCity(item.city);
+      this.setCity({ data: item.city });
       this.setRegionInfo(item);
       this.isChangeCity = false;
     }

@@ -1,14 +1,7 @@
 <template>
   <v-container class="pt-0" fluid>
     <v-row>
-      <v-col cols="12" sm="9" md="10" class="map">
-        <v-combobox
-          v-model="point"
-          :items="points"
-          hide-no-data
-          item-text="address"
-          return-object
-        />
+      <v-col cols="12" sm="9" class="map">
         <v-tabs v-model="tabs" color="green darken-1" class="tabs" grow>
           <v-tab>
             На карте
@@ -19,22 +12,40 @@
         </v-tabs>
         <v-tabs-items v-model="tabs" touchless>
           <v-tab-item key="На карте">
+            <v-autocomplete
+              v-model="point"
+              :items="filterBrands"
+              :allow-overflow="false"
+              prepend-icon="mdi-magnify"
+              hide-no-data
+              item-text="address"
+              placeholder="Поиск по пунктам"
+              class="mobile-search"
+              return-object
+              clearable
+            />
             <yandex-map
               v-if="filterBrands"
               :coords="coords"
               :cluster-options="clusterOptions"
+              :zoom="10"
+              :controls="[
+                'fullscreenControl',
+                'geolocationControl',
+                'zoomControl'
+              ]"
               use-object-manager
               init-without-markers
-              zoom="10"
+              @map-was-initialized="mapLoaded"
             >
               <ymap-marker
-                v-for="(point, index) in filterBrands"
-                :key="point.id"
-                :marker-id="point.id"
-                :coords="[point.latitude, point.longitude]"
-                :balloon-template="balloonTemplate(index, point)"
-                :cluster-name="point.delivery_brand_alias"
-                :icon="{ color: colorIcon(point.delivery_brand_alias) }"
+                v-for="(pointItem, index) in filterBrands"
+                :key="pointItem.id"
+                :marker-id="pointItem.id"
+                :coords="[pointItem.latitude, pointItem.longitude]"
+                :balloon-template="balloonTemplate(index, pointItem)"
+                :cluster-name="pointItem.delivery_brand_alias"
+                :icon="{ color: colorIcon(pointItem.delivery_brand_alias) }"
               />
             </yandex-map>
           </v-tab-item>
@@ -59,15 +70,15 @@
                   </div>
                 </div>
                 <div
-                  v-for="point in groupPoints(index)"
-                  :key="'point-list-' + point.id"
+                  v-for="pointI in groupPoints(index)"
+                  :key="'point-list-' + pointI.id"
                   class="py-3 pr-2 pl-10"
                   @click="
                     onClick(
-                      point.id,
-                      point.address,
-                      point.delivery_alias,
-                      point.cost
+                      pointI.id,
+                      pointI.address,
+                      pointI.delivery_alias,
+                      pointI.cost
                     )
                   "
                 >
@@ -78,7 +89,20 @@
           </v-tab-item>
         </v-tabs-items>
       </v-col>
-      <v-col cols="12" sm="3" md="2" class="checkboxes">
+      <v-col cols="12" sm="3" class="checkboxes" style="z-index: 99;">
+        <v-autocomplete
+          v-model="point"
+          :items="filterBrands"
+          :allow-overflow="false"
+          prepend-icon="mdi-magnify"
+          hide-no-data
+          item-text="address"
+          placeholder="Поиск по пунктам"
+          class="pt-0"
+          return-object
+          hide-details
+          clearable
+        />
         <v-checkbox
           v-for="item in checkboxes"
           :key="item"
@@ -95,14 +119,20 @@
         </v-checkbox>
       </v-col>
     </v-row>
+    <div
+      v-if="!myMap"
+      class="d-flex justify-center align-center pa-10 map__prog"
+    >
+      <v-progress-circular :size="50" color="primary" indeterminate />
+    </div>
     <div class="map__baloon-btns-hidden">
       <button
-        v-for="point in filterBrands"
-        :key="point.id"
+        v-for="pointF in filterBrands"
+        :key="pointF.id"
         class="map__baloon-btn"
         type="button"
         @click="
-          onClick(point.id, point.address, point.delivery_alias, point.cost)
+          onClick(pointF.id, pointF.address, pointF.delivery_alias, pointF.cost)
         "
       />
     </div>
@@ -138,7 +168,8 @@ export default {
         DPD: 'blue',
         PickPoint: 'orange'
       },
-      point: ''
+      point: null,
+      myMap: null
     };
   },
   computed: {
@@ -179,11 +210,22 @@ export default {
       return points;
     }
   },
+  watch: {
+    point() {
+      if (this.point) {
+        this.myMap.setCenter([this.point.latitude, this.point.longitude], 16);
+      }
+      // this.myMap.balloon.open(this.coords);
+    }
+  },
   mounted() {
     const t = this;
     window.addEventListener('resize', () => {
       if (window.innerWidth > 599 && t.tabs !== 'На карте') {
         t.tabs = 'На карте';
+      }
+      if (window.innerWidth < 600) {
+        this.brandSelected = [];
       }
     });
   },
@@ -200,6 +242,9 @@ export default {
         return points;
       }
       return false;
+    },
+    mapLoaded(myMap) {
+      this.myMap = myMap;
     },
     onClick(id, address, alias, cost) {
       this.setData({
@@ -312,9 +357,19 @@ export default {
   &__selected {
     padding: 20px 0;
   }
+
+  &__prog {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #fff;
+  }
 }
 
-.tabs {
+.tabs,
+.mobile-search {
   display: none;
 }
 
@@ -335,6 +390,12 @@ export default {
 
   .tabs {
     display: block;
+  }
+
+  .mobile-search {
+    display: flex;
+    padding-left: 20px;
+    padding-right: 20px;
   }
 
   .checkboxes {
