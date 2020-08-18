@@ -34,12 +34,29 @@
           <Nuxt />
         </v-container>
       </v-main>
-      <v-dialog v-model="isChangeCity" max-width="400">
+      <v-dialog v-model="isChangeCity" max-width="640">
         <v-card>
           <v-card-title class="headline">
             Поменять город
           </v-card-title>
           <v-card-text>
+            <v-combobox
+              v-model="citySearched"
+              :items="items"
+              :loading="isLoading"
+              :allow-overflow="false"
+              :search-input.sync="search"
+              hide-no-data
+              item-text="city"
+              label="Поиск"
+              return-object
+              no-filter
+            >
+              <template v-slot:item="data">
+                <span v-if="data.item.region">{{ data.item.region }}, </span>
+                {{ data.item.city }}
+              </template>
+            </v-combobox>
             <v-btn
               v-for="item in cities"
               :key="`choice-${item.city}`"
@@ -66,7 +83,11 @@ export default {
   data() {
     return {
       isCart: false,
-      isChangeCity: false
+      isChangeCity: false,
+      citySearched: '',
+      items: [],
+      isLoading: false,
+      search: ''
     };
   },
   computed: {
@@ -80,6 +101,21 @@ export default {
     }),
     cityForHeader() {
       return this.city || this.ipCity;
+    }
+  },
+  watch: {
+    search(val) {
+      this.isLoading = true;
+
+      this.$axios
+        .get(`/delivery_suggest.php?text=${this.search}`)
+        .then((res) => {
+          this.items = res.data;
+        })
+        .finally(() => (this.isLoading = false));
+    },
+    citySearched(val) {
+      this.changeCity(val);
     }
   },
   mounted() {
