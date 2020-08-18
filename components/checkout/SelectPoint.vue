@@ -82,7 +82,7 @@
                     )
                   "
                 >
-                  {{ point.address }}
+                  {{ pointI.address }}
                 </div>
               </div>
             </div>
