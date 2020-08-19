@@ -229,6 +229,9 @@ export default {
       }
     });
   },
+  beforeDestroy() {
+    this.myMap = null;
+  },
   methods: {
     ...mapMutations({
       setData: 'order/setData',

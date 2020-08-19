@@ -127,7 +127,7 @@
             <v-icon medium>mdi-close</v-icon>
           </v-btn>
         </div>
-        <SelectPoint />
+        <SelectPoint v-if="isSelectPoint" />
       </v-card>
     </v-dialog>
   </v-form>
