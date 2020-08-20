@@ -288,7 +288,7 @@ export default {
       }: ${point.name}</h2>
       <div class="map__baloon">
         <button type="button" onclick="javascript: document.querySelectorAll('.map__baloon-btn')[${index}]
-          .click();" class="v-btn v-btn--contained theme--light v-size--small primary">Выбрать</button>
+          .click();" class="v-btn v-btn--contained theme--light v-size--small primary" style="background-color: #43a047 !important; border-color: #43a047 !important;">Выбрать</button>
       </div>
       <div>
         <span class="font-weight-bold">Адрес:</span> ${point.address}
