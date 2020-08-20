@@ -6,6 +6,7 @@
           v-for="(item, i) in slides"
           :key="'slide' + i"
           :src="item.big"
+          class="a-carousel"
         />
       </v-carousel>
     </v-col>
@@ -204,7 +205,7 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 .product {
   &__price {
     margin-bottom: 40px;
@@ -239,6 +240,11 @@ export default {
 @media screen and (max-width: 599px) {
   .add-to-cart {
     max-width: calc(100vw - 24px);
+  }
+
+  .a-carousel .v-image__image--cover {
+    background-size: contain !important;
+    background-color: #e9e9e9;
   }
 }
 </style>
