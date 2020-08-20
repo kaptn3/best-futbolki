@@ -141,14 +141,7 @@ img {
   }
 }
 
-@media screen and (max-width: 767px) {
-  img {
-    width: 100px;
-    height: auto;
-  }
-}
-
-@media screen and (max-width: 565px) {
+@media screen and (max-width: 599px) {
   .cart-item {
     &__title {
       font-size: 14px;
@@ -164,6 +157,11 @@ img {
       &_old {
         font-size: 12px;
       }
+    }
+
+    &__img {
+      width: 100px;
+      height: auto;
     }
   }
 }
