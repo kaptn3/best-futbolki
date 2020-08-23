@@ -1,7 +1,7 @@
 <template>
   <v-row justify="center">
     <v-col v-if="cart.length > 0 && status === ''" cols="12" sm="10">
-      <v-row>
+      <v-row class="checkout-form">
         <v-col cols="12" md="7">
           <AForm />
         </v-col>
@@ -169,5 +169,11 @@ export default {
 .summary {
   border: 2px solid #f2f2f2;
   border-radius: 8px;
+}
+
+@media screen and (max-width: 960px) {
+  .checkout-form {
+    flex-direction: column-reverse;
+  }
 }
 </style>
