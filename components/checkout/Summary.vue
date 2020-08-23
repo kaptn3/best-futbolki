@@ -5,7 +5,9 @@
       <div class="checkout__summary-item">
         Доставка: {{ deliveryCostDisplay }}
       </div>
-      <div class="checkout__summary-item">Скидка: {{ discount }} руб.</div>
+      <div v-if="discount > 0" class="checkout__summary-item">
+        Скидка: {{ discount }} руб.
+      </div>
       <div class="checkout__summary-item">Итого: {{ endSum }} руб.</div>
     </div>
   </div>
