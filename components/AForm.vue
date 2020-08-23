@@ -39,9 +39,6 @@
           </template>
         </v-combobox>
       </v-col>
-      <v-col cols="12" class="form-input">
-        <AInput label="Адрес *" name="address" model="address" />
-      </v-col>
       <div
         v-if="loading"
         class="d-flex justify-center pa-10"
@@ -94,6 +91,20 @@
             </template>
           </v-radio>
         </v-radio-group>
+      </v-col>
+      <v-col cols="12" class="form-input">
+        <AInput
+          label="Адрес *"
+          name="address"
+          model="address"
+          :style="
+            selectDeliveries === 'merge_postamat_delivery'
+              ? 'display: none;'
+              : ''
+          "
+        />
+      </v-col>
+      <v-col cols="12" class="form-input">
         <h3 class="h3">Способ оплаты</h3>
         <v-radio-group
           v-model="paymentAlias"
