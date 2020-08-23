@@ -10,7 +10,7 @@
       />
       <CartSummary />
       <div class="d-flex justify-space-between align-center my-4">
-        <v-space />
+        <v-spacer />
         <v-btn to="/checkout" color="grey darken-3" large dark>
           Оформить заказ
         </v-btn>
