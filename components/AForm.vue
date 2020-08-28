@@ -312,6 +312,11 @@ export default {
       this.$refs.form.validate();
       if (this.valid) {
         this.sendForm(this.cart);
+      } else {
+        window.scrollTo({
+          top: 0,
+          behavior: 'smooth'
+        });
       }
     }
   }
