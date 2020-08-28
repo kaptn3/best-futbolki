@@ -110,6 +110,8 @@ export default {
 <style lang="scss" scoped>
 .card {
   padding: 20px;
-  margin: 0 15px 40px 15px;
+  margin: 0 15px;
+  height: 100%;
+  text-align: center;
 }
 </style>

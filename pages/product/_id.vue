@@ -32,6 +32,11 @@ export default {
 </script>
 
 <style>
+.VueCarousel-slide {
+  padding-bottom: 20px;
+  padding-top: 20px;
+}
+
 @media screen and (max-width: 768px) {
   .VueCarousel-navigation-next {
     transform: translateY(-50%) translateX(0) !important;
