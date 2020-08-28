@@ -5,7 +5,8 @@ export const state = () => ({
   moreInfo: null,
   printType: null,
   printTypes: [],
-  same: []
+  same: [],
+  structure: []
 });
 
 export const mutations = {
@@ -37,10 +38,10 @@ export const mutations = {
     }
   },
   setSame(state, data) {
-    state.same = [];
-    for (let i = 0; i < 8; i++) {
-      state.same.push(data[i]);
-    }
+    state.same = data;
+  },
+  setStructure(state, data) {
+    state.structure = data;
   }
 };
 
@@ -82,6 +83,14 @@ export const actions = {
   getSame(context, id) {
     this.$axios.get(`/ean.php?i=${id}`).then((res) => {
       context.commit('setSame', res.data.items);
+      console.log(res.data);
     });
+  },
+  getStructure(context) {
+    if (context.state.structure.length === 0) {
+      this.$axios.get('/catalog_structure.php').then((res) => {
+        context.commit('setStructure', res.data);
+      });
+    }
   }
 };

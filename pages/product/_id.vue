@@ -30,3 +30,13 @@ export default {
   }
 };
 </script>
+
+<style>
+.VueCarousel-navigation-next {
+  transform: translateY(-50%) translateX(0) !important;
+}
+
+.VueCarousel-navigation-prev {
+  transform: translateY(-50%) translateX(0%) !important;
+}
+</style>

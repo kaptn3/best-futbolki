@@ -16,6 +16,7 @@
     "@nuxtjs/vuetify": "^1.11.2",
     "nuxt": "^2.14.0",
     "v-mask": "^2.2.3",
+    "vue-carousel": "^0.18.0",
     "vue-imask": "^6.0.5",
     "vue-yandex-maps": "^0.10.9"
   },

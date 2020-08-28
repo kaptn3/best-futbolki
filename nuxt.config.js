@@ -12,7 +12,7 @@ export default {
   },
   head,
   css: [],
-  plugins: [],
+  plugins: ['~plugins/vue-carousel'],
   env: {
     apiUrl: process.env.API_URL
   },
@@ -25,7 +25,7 @@ export default {
   ],
   modules: [
     // Doc: https://axios.nuxtjs.org/usage
-    '@nuxtjs/axios',
+    '@nuxtjs/axios'
   ],
   vuetify: {
     theme: {
@@ -49,4 +49,4 @@ export default {
    ** See https://nuxtjs.org/api/configuration-build/
    */
   build: {}
-}
+};
