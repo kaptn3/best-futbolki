@@ -32,11 +32,13 @@ export default {
 </script>
 
 <style>
-.VueCarousel-navigation-next {
-  transform: translateY(-50%) translateX(0) !important;
-}
+@media screen and (max-width: 768px) {
+  .VueCarousel-navigation-next {
+    transform: translateY(-50%) translateX(0) !important;
+  }
 
-.VueCarousel-navigation-prev {
-  transform: translateY(-50%) translateX(0%) !important;
+  .VueCarousel-navigation-prev {
+    transform: translateY(-50%) translateX(0%) !important;
+  }
 }
 </style>
