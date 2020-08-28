@@ -9,15 +9,15 @@
     <v-tabs-items v-model="tabs" touchless>
       <v-tab-item v-for="(item, index) in cats" :key="index">
         <Carousel
-          :minSwipeDistance="16"
-          :perPageCustom="[
+          :min-swipe-distance="16"
+          :per-page-custom="[
             [0, 1],
             [500, 2],
             [768, 3],
             [1024, 4]
           ]"
-          :paginationEnabled="false"
-          navigationEnabled
+          :pagination-enabled="false"
+          navigation-enabled
         >
           <Slide v-for="i in item" :key="'item-' + i.id">
             <v-card :to="`/product/${i.id}`" class="card">

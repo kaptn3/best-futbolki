@@ -83,7 +83,6 @@ export const actions = {
   getSame(context, id) {
     this.$axios.get(`/ean.php?i=${id}`).then((res) => {
       context.commit('setSame', res.data.items);
-      console.log(res.data);
     });
   },
   getStructure(context) {
