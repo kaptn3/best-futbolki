@@ -4,6 +4,11 @@
       <h1 class="text-h4 text-center">
         Best Futbolki - популярные товары
       </h1>
+      <v-row class="products-list">
+        <v-col v-for="i in products" :key="i.id" cols="12" sm="6" md="3">
+          <ProductCard :item="i" />
+        </v-col>
+      </v-row>
       <div
         v-if="loading"
         class="d-flex justify-center pa-10"
@@ -11,11 +16,6 @@
       >
         <v-progress-circular :size="50" color="primary" indeterminate />
       </div>
-      <v-row>
-        <v-col v-for="i in products" :key="i.id" cols="12" sm="6" md="3">
-          <ProductCard :item="i" />
-        </v-col>
-      </v-row>
     </div>
   </div>
 </template>
@@ -28,19 +28,44 @@ export default {
   data() {
     return {
       products: [],
-      loading: true
+      loading: false,
+      end: false
     };
+  },
+  computed: {
+    offset() {
+      return this.products.length;
+    }
   },
   mounted() {
     this.getData();
+    const t = this;
+    window.addEventListener('scroll', () => {
+      const listHeight = document.querySelector('.products-list').clientHeight;
+      const cardHeight = document.querySelector('.products-list .card')
+        .clientHeight;
+      const scroll = window.pageYOffset;
+      if (listHeight - cardHeight * 2 < scroll && !this.loading && !this.end) {
+        t.getData();
+      }
+    });
   },
   methods: {
     getData() {
-      this.loading = true;
-      this.$axios('/main.php?offset=0').then((res) => {
-        this.products = res.data.items;
-        this.loading = false;
-      });
+      if (!this.loading) {
+        this.loading = true;
+        this.$axios.get(`/main.php?offset=${this.offset}`).then((res) => {
+          if (this.products.length === 0) {
+            this.products = res.data.items;
+          } else if (res.data.items) {
+            this.products = this.products.concat(res.data.items);
+          }
+          this.loading = false;
+          if (!res.data.items) {
+            this.end = true;
+          }
+        });
+      }
     }
   }
 };
