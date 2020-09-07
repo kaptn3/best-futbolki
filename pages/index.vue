@@ -1,12 +1,12 @@
 <template>
   <div class="container">
     <div>
-      <h1 class="text-h4 text-center">
+      <h1 class="text-h4 text-center mb-4">
         Best Futbolki - популярные товары
       </h1>
       <v-row class="products-list">
         <v-col v-for="i in products" :key="i.id" cols="12" sm="6" md="3">
-          <ProductCard :item="i" />
+          <ProductCard :item="i" slides />
         </v-col>
       </v-row>
       <div
@@ -28,13 +28,15 @@ export default {
   data() {
     return {
       products: [],
-      loading: false,
-      end: false
+      loading: false
     };
   },
   computed: {
     offset() {
       return this.products.length;
+    },
+    end() {
+      return this.products.length > 100;
     }
   },
   mounted() {
@@ -61,9 +63,6 @@ export default {
             this.products = this.products.concat(res.data.items);
           }
           this.loading = false;
-          if (!res.data.items) {
-            this.end = true;
-          }
         });
       }
     }
