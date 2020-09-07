@@ -3,7 +3,11 @@
     <v-sheet class="overflow-hidden" style="position: relative;">
       <v-app-bar max-height="64px" flat fixed>
         <v-container class="d-flex align-center">
-          <v-toolbar-title>Best futbolki</v-toolbar-title>
+          <v-toolbar-title>
+            <v-btn to="/" text>
+              Best futbolki
+            </v-btn>
+          </v-toolbar-title>
           <v-spacer />
           <v-btn class="ma-2" text small @click="isChangeCity = true">
             {{ cityForHeader }} <v-icon>mdi-chevron-down</v-icon>

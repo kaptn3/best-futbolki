@@ -20,26 +20,7 @@
           navigation-enabled
         >
           <Slide v-for="i in item" :key="'item-' + i.id">
-            <v-card :to="`/product/${i.id}`" class="card">
-              <img
-                :src="i.sides[0].small"
-                width="90%"
-                alt=""
-                class="text-center"
-              />
-              <p class="subtitle-2">
-                {{ i.title }}<br />
-                <span class="subtitle-1">{{ i.category.title }}</span>
-              </p>
-              <p class="font-weight-medium">
-                <span
-                  v-if="i.old_price !== 0"
-                  class="text-decoration-line-through"
-                  >{{ i.old_price }}</span
-                >
-                <span>{{ i.price }}</span>
-              </p>
-            </v-card>
+            <ProductCard :item="i" />
           </Slide>
         </Carousel>
       </v-tab-item>
@@ -50,10 +31,11 @@
 <script>
 import { mapActions, mapState } from 'vuex';
 import { Carousel, Slide } from 'vue-carousel';
+import ProductCard from './ProductCard';
 
 export default {
   name: 'ProductSame',
-  components: { Carousel, Slide },
+  components: { Carousel, Slide, ProductCard },
   props: {
     id: {
       type: Number,
@@ -109,9 +91,6 @@ export default {
 
 <style lang="scss" scoped>
 .card {
-  padding: 20px;
   margin: 0 15px;
-  height: 100%;
-  text-align: center;
 }
 </style>
