@@ -43,6 +43,7 @@
                       v-for="i in tagsByParent"
                       :key="i.title"
                       :to="`/tags/${i.id}`"
+                      @click.native="catalogMobile = false"
                     >
                       {{ i.title }}
                     </nuxt-link>
@@ -125,20 +126,27 @@ export default {
     this.getTags();
   },
   mounted() {
-    window.addEventListener('mouseover', (e) => {
-      const catalog = document.querySelector('.catalog');
-      if (!catalog.contains(e.target)) {
-        this.showForTag = false;
-        this.currentCat = null;
-      }
-    });
+    window.addEventListener('mouseover', this.clickOutsideHandle);
     window.addEventListener('resize', this.catalogHandle);
     this.catalogHandle();
+  },
+  beforeDestroy() {
+    window.removeEventListener('mouseover', this.clickOutsideHandle);
+    window.removeEventListener('resize', this.catalogHandle);
   },
   methods: {
     ...mapActions({
       getTags: 'catalog/getTags'
     }),
+    clickOutsideHandle(e) {
+      if (window.innerWidth >= 600) {
+        const catalog = document.querySelector('.catalog');
+        if (!catalog.contains(e.target)) {
+          this.showForTag = false;
+          this.currentCat = null;
+        }
+      }
+    },
     catalogHandle(e) {
       this.mobile = window.innerWidth < 600;
       this.catalogMobile = !this.mobile;
