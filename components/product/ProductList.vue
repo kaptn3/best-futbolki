@@ -1,9 +1,6 @@
 <template>
   <div class="product-list">
     <h1 class="text-h4 text-center mb-4">Best Futbolki - {{ text }}</h1>
-    <div v-if="pagination || length > 1" class="text-right">
-      <v-pagination v-model="page" :length="length" :total-visible="5" />
-    </div>
     <v-row class="products-list">
       <v-col v-for="i in products" :key="i.id" cols="12" sm="6" md="4" lg="3">
         <ProductCard :item="i" slides />
@@ -15,6 +12,9 @@
       style="width: 100%;"
     >
       <v-progress-circular :size="50" color="primary" indeterminate />
+    </div>
+    <div v-if="(pagination || length > 1) && !loading" class="text-right">
+      <v-pagination v-model="page" :length="length" :total-visible="5" />
     </div>
     <div v-if="products.length === 0 && !loading">
       <p>
@@ -73,6 +73,8 @@ export default {
   },
   beforeDestroy() {
     window.removeEventListener('scroll', this.scrollAction);
+    this.products = [];
+    this.page = 1;
   },
   methods: {
     getData() {
@@ -81,7 +83,7 @@ export default {
         if (this.pagination) {
           this.products = [];
         }
-        const offset = this.pagination ? this.page * 36 : this.offset;
+        const offset = this.pagination ? (this.page - 1) * 36 : this.offset;
         this.$axios.get(`${this.link}offset=${offset}`).then((res) => {
           if (this.products.length === 0 || this.pagination) {
             this.products = res.data.items;
