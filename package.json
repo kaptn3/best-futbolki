@@ -13,8 +13,8 @@
   "dependencies": {
     "@nuxtjs/axios": "^5.12.0",
     "@nuxtjs/dotenv": "^1.4.0",
-    "@nuxtjs/vuetify": "^1.11.2",
-    "nuxt": "^2.14.0",
+    "@nuxtjs/vuetify": "^1.12.3",
+    "nuxt": "^3.0.0",
     "v-mask": "^2.2.3",
     "vue-carousel": "^0.18.0",
     "vue-imask": "^6.0.5",
